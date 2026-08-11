@@ -4,33 +4,33 @@ SensorsManager::SensorsManager(QObject *parent)
     : QObject { parent }
 {}
 
-SerialSensor* SensorsManager::addNewSensor(const QString &serialPortName, const QString &tag)
+SerialSensor* SensorsManager::addNewSensor(const QString &serialPortName, const QString &name)
 {
-    Q_ASSERT(!exists(tag));
+    Q_ASSERT(!exists(name));
 
     SerialSensor* sensor = new SerialSensor(serialPortName, this);
     Q_ASSERT(sensor);
 
-    if(!tag.isNull() && !tag.isEmpty())
+    if(!name.isNull() && !name.isEmpty())
     {
-        sensor->setTag(tag);
+        sensor->setName(name);
     }
 
     mSensors.push_back(sensor);
 
     connect(sensor, &SerialSensor::dataReceived, this, [sensor, this](const QByteArray& data)
     {
-        emit dataReceived(sensor->tag(), data);
+        emit dataReceived(sensor->name(), data);
     });
 
     return sensor;
 }
 
-SerialSensor* SensorsManager::findSensorByTag(const QString &tag)
+SerialSensor* SensorsManager::findSensorByName(const QString &name)
 {
     Q_FOREACH(SerialSensor* sensor, mSensors)
     {
-        if(sensor->tag() == tag)
+        if(sensor->name() == name)
         {
             return sensor;
         }
@@ -39,11 +39,11 @@ SerialSensor* SensorsManager::findSensorByTag(const QString &tag)
     return nullptr;
 }
 
-bool SensorsManager::deleteSensorByTag(const QString &tag)
+bool SensorsManager::deleteSensorByName(const QString &name)
 {
     Q_FOREACH(SerialSensor* sensor, mSensors)
     {
-        if(sensor->tag() == tag)
+        if(sensor->name() == name)
         {
             bool bSuccess = mSensors.removeOne(sensor);
             Q_ASSERT(bSuccess);
@@ -55,11 +55,11 @@ bool SensorsManager::deleteSensorByTag(const QString &tag)
     return false;
 }
 
-bool SensorsManager::exists(const QString &sensorTag)
+bool SensorsManager::exists(const QString &name)
 {
     Q_FOREACH(SerialSensor* sensor, mSensors)
     {
-        if(sensor->tag() == sensorTag)
+        if(sensor->name() == name)
         {
             return true;
         }

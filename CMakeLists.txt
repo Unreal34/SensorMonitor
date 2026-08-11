@@ -17,10 +17,20 @@ set(TS_FILES SensorMonitor_en_US.ts)
 
 set(PROJECT_SOURCES
         main.cpp
-        MainWindow.cpp
-        MainWindow.hpp
-        Console.cpp
-        Console.hpp
+        Back/Objects/SerialSensor.hpp Back/Objects/SerialSensor.cpp
+        Back/Objects/SensorsManager.hpp Back/Objects/SensorsManager.cpp
+        Front/Tables/Model/BaseDataTableModel.hpp Front/Tables/Model/BaseDataTableModel.cpp
+        Front/Tables/View/SensorsTableView.hpp Front/Tables/View/SensorsTableView.cpp
+        Front/Tables/View/BaseDataTableView.hpp Front/Tables/View/BaseDataTableView.cpp
+        Front/Tables/Model/SensorsTableModel.hpp Front/Tables/Model/SensorsTableModel.cpp
+        Front/Dialogs/BaseDialog.hpp Front/Dialogs/BaseDialog.cpp
+        Front/Windows/MainWindow.hpp Front/Windows/MainWindow.cpp
+        Front/Widgets/Console.hpp Front/Widgets/Console.cpp
+        Back/Structs/SensorData.hpp
+        Back/Utility/Utility.hpp
+        Back/Utility/Application.hpp
+        Back/Utility/ApplicationLogger.hpp Back/Utility/ApplicationLogger.cpp
+        Front/Dialogs/SensorsEditorDialog.hpp  Front/Dialogs/SensorsEditorDialog.cpp
         ${TS_FILES}
 )
 
@@ -29,13 +39,23 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         Resource.qrc
-        SerialSensor.hpp SerialSensor.cpp
-        SensorsManager.hpp SensorsManager.cpp
+        Front/Widgets/SensorsEditorWidget.hpp Front/Widgets/SensorsEditorWidget.cpp Front/Widgets/SensorsEditorWidget.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET SensorMonitor APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+
+target_include_directories(SensorMonitor PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Tables/View
+    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Tables/Model
+    ${CMAKE_CURRENT_SOURCE_DIR}/Back/Structs
+    ${CMAKE_CURRENT_SOURCE_DIR}/Back/Objects
+    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Dialogs
+    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Widgets
+    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Windows
+    ${CMAKE_CURRENT_SOURCE_DIR}/Back/Utility
+)
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()

@@ -7,18 +7,16 @@
 class SerialSensor : public QObject
 {
     Q_OBJECT
-
 public:
     SerialSensor(const QString& portName, QObject *parent = nullptr);
     ~SerialSensor();
 
 public:
-    inline bool isOnline() const { return mSerialPort->isOpen(); }
+    inline bool isAvailable() const { return mSerialPort->isOpen(); }
 
 public:
-    void setSerialPort(const QString& newSerialPort);
-    inline void setTag(const QString& newTag) { mTag = newTag; };
-    inline const QString& tag() const { return mTag; };
+    inline void setName(const QString& newName) { mName = newName; };
+    inline const QString& name() const { return mName; };
     inline QString serialPortName() const { return mSerialPort->portName(); };
 
 private slots:
@@ -31,7 +29,7 @@ signals:
 private:
     QSerialPort* mSerialPort = nullptr;
     QString mPortName = {};
-    QString mTag = {};
+    QString mName = {};
 };
 
 #endif // SERIALSENSOR_H

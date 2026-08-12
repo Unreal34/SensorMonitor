@@ -2,7 +2,6 @@
 #define SENSORS_HPP
 
 #define GEIGER_SENSOR       "Geiger"
-#define TEMP_SENSOR         "Temperature"
-#define HUMIDITY_SENSOR     "Humidity"
+#define HTU21D_SENSOR       "HTU21D"
 
 #endif // SENSORS_HPP

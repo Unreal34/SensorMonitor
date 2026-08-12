@@ -69,6 +69,23 @@ void MainWindow::onDataReceived(const QString &sensor, const QByteArray &data)
             mConsole->appendLog(message, ConsoleWidget::ELogType::Information);
         }
     }
+    else if(sensor == HTU21D_SENSOR)
+    {
+        QList<QByteArray> split = data.split(';');
+
+        if(split.size() == 2)
+        {
+            bool bSuccess = false;
+            float temperature = split[0].toFloat(&bSuccess);
+            Q_ASSERT(bSuccess);
+
+            float humidity = split[1].toFloat(&bSuccess);
+            Q_ASSERT(bSuccess);
+
+            QString message = QString("Temperature: %1°c - Humidity: %2%").arg(temperature).arg(humidity);
+            mConsole->appendLog(message, ConsoleWidget::ELogType::Information);
+        }
+    }
 }
 
 void MainWindow::openSensorsEditorDialog()

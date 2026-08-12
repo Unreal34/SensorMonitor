@@ -3,7 +3,7 @@
 
 BaseDialog::BaseDialog(bool *ok, const QString& validateLabel, const QString& cancelLabel, QWidget* parent) : QDialog(parent)
 , mValidate(new QPushButton(QIcon("://Icons/Checked.png"), validateLabel, this))
-, mCancel(new QPushButton(QIcon("://Icons/Clear.png"),cancelLabel, this))
+, mCancel(new QPushButton(QIcon("://Icons/Cancel.png"), cancelLabel, this))
 , mOk(ok)
 {
     setWindowIcon(QIcon(APPLICATION_ICON));

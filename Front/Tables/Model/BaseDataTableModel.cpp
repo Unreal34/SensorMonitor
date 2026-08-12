@@ -14,11 +14,6 @@ int BaseDataTableModel::rowCount(const QModelIndex &parent) const
     return parent.isValid() ? 0 : mData.count();
 }
 
-QList<QVariant> BaseDataTableModel::getDataList()
-{
-    return mData;
-}
-
 void BaseDataTableModel::clear()
 {
     unsigned int rowIndex = mData.count() - 1;

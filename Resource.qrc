@@ -3,5 +3,10 @@
         <file>Icons/RS232.png</file>
         <file>Icons/Add.png</file>
         <file>Icons/Delete.png</file>
+        <file>Icons/Sensor.png</file>
+        <file>Icons/Checked.png</file>
+        <file>Icons/Cancel.png</file>
+        <file>Icons/Play.png</file>
+        <file>Icons/Stop.png</file>
     </qresource>
 </RCC>

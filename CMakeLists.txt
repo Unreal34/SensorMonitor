@@ -23,14 +23,16 @@ set(PROJECT_SOURCES
         Front/Tables/View/SensorsTableView.hpp Front/Tables/View/SensorsTableView.cpp
         Front/Tables/View/BaseDataTableView.hpp Front/Tables/View/BaseDataTableView.cpp
         Front/Tables/Model/SensorsTableModel.hpp Front/Tables/Model/SensorsTableModel.cpp
+        Front/Tables/Delegate/SensorsItemDelegate.hpp Front/Tables/Delegate/SensorsItemDelegate.cpp
         Front/Dialogs/BaseDialog.hpp Front/Dialogs/BaseDialog.cpp
         Front/Windows/MainWindow.hpp Front/Windows/MainWindow.cpp
-        Front/Widgets/Console.hpp Front/Widgets/Console.cpp
+        Front/Widgets/ConsoleWidget.hpp Front/Widgets/ConsoleWidget.cpp
         Back/Structs/SensorData.hpp
         Back/Utility/Utility.hpp
         Back/Utility/Application.hpp
         Back/Utility/ApplicationLogger.hpp Back/Utility/ApplicationLogger.cpp
         Front/Dialogs/SensorsEditorDialog.hpp  Front/Dialogs/SensorsEditorDialog.cpp
+        Front/Widgets/SensorsEditorWidget.hpp Front/Widgets/SensorsEditorWidget.cpp Front/Widgets/SensorsEditorWidget.ui
         ${TS_FILES}
 )
 
@@ -39,7 +41,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         Resource.qrc
-        Front/Widgets/SensorsEditorWidget.hpp Front/Widgets/SensorsEditorWidget.cpp Front/Widgets/SensorsEditorWidget.ui
+        Front/Tables/Widgets/SerialPortCombobox.hpp Front/Tables/Widgets/SerialPortCombobox.cpp
+        Back/Utility/Sensors.hpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET SensorMonitor APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -49,6 +52,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 target_include_directories(SensorMonitor PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Front/Tables/View
     ${CMAKE_CURRENT_SOURCE_DIR}/Front/Tables/Model
+    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Tables/Delegate
+    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Tables/Widgets
     ${CMAKE_CURRENT_SOURCE_DIR}/Back/Structs
     ${CMAKE_CURRENT_SOURCE_DIR}/Back/Objects
     ${CMAKE_CURRENT_SOURCE_DIR}/Front/Dialogs

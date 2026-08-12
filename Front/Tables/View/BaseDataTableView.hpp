@@ -16,7 +16,7 @@ public slots:
     void clear();
 
     /**
-     * @brief Used to clear and fill the table from a QVariantList of structs.
+     * @brief Used to clear and fill the table from a QVariantList.
      * @param data
      * @param selectedIndex
      */
@@ -28,6 +28,12 @@ public slots:
      * @param selectedIndex
      */
     void append(const QVariantList& data, int selectedIndex = 0);
+
+    /**
+     * @brief Return all entries available in the table model as QVariantList.
+     * @return
+     */
+    const QVariantList& data() const { return dataTableModel()->data(); }
 
 protected:
     bool mClearing = false;

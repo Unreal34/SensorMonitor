@@ -1,5 +1,5 @@
-#ifndef CONSOLE_HPP
-#define CONSOLE_HPP
+#ifndef CONSOLEWIDGET_H
+#define CONSOLEWIDGET_H
 
 #include <QWidget>
 
@@ -7,7 +7,7 @@
 
 class QTextEdit;
 
-class Console : public QWidget
+class ConsoleWidget : public QWidget
 {
     Q_OBJECT
 public:
@@ -22,10 +22,10 @@ public:
     Q_ENUM(ELogType)
 
 public:
-    Console(QWidget *parent = nullptr);
+    ConsoleWidget(QWidget *parent = nullptr);
 
 public slots:
-    void appendLog(const QString& message, Console::ELogType logType = Information);
+    void appendLog(const QString& message, ConsoleWidget::ELogType logType = Information);
     void clear();
 
 private:
@@ -33,4 +33,4 @@ private:
     QTextEdit* mTextArea;
 };
 
-#endif // CONSOLE_HPP
+#endif // CONSOLEWIDGET_H

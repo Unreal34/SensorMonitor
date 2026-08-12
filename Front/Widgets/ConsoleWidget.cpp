@@ -1,4 +1,4 @@
-#include "Console.hpp"
+#include "ConsoleWidget.hpp"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -8,7 +8,7 @@
 #include <QFile>
 #include <QCoreApplication>
 
-Console::Console(QWidget *parent) : QWidget(parent)
+ConsoleWidget::ConsoleWidget(QWidget *parent) : QWidget(parent)
 , mTextArea(new QTextEdit(this))
 {
     QHBoxLayout* hbox = new QHBoxLayout(this);
@@ -19,7 +19,7 @@ Console::Console(QWidget *parent) : QWidget(parent)
     mTextArea->setReadOnly(true);
 }
 
-void Console::appendLog(const QString &message, ELogType logType)
+void ConsoleWidget::appendLog(const QString &message, ELogType logType)
 {
     QString type;
 
@@ -70,7 +70,7 @@ void Console::appendLog(const QString &message, ELogType logType)
     }
 }
 
-void Console::clear()
+void ConsoleWidget::clear()
 {
     mTextArea->setPlainText("");
 }

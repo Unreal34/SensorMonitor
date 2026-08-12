@@ -4,7 +4,7 @@ SensorsManager::SensorsManager(QObject *parent)
     : QObject { parent }
 {}
 
-SerialSensor* SensorsManager::addNewSensor(const QString &serialPortName, const QString &name)
+SerialSensor* SensorsManager::registerNewSensor(const QString &serialPortName, const QString &name)
 {
     Q_ASSERT(!exists(name));
 
@@ -53,6 +53,16 @@ bool SensorsManager::deleteSensorByName(const QString &name)
     }
 
     return false;
+}
+
+void SensorsManager::clear()
+{
+    Q_FOREACH(SerialSensor* sensor, mSensors)
+    {
+        delete sensor;
+    }
+
+    mSensors.clear();
 }
 
 bool SensorsManager::exists(const QString &name)

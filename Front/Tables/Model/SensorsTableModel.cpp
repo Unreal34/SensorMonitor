@@ -12,10 +12,6 @@ Qt::ItemFlags SensorsTableModel::flags(const QModelIndex &index) const
     switch(index.column())
     {
         case Column::SensorName:
-        {
-            return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-        }
-
         case Column::SerialPortName:
         {
             if(mIsEditable)
@@ -45,7 +41,7 @@ QVariant SensorsTableModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    if (role == Qt::DisplayRole)
+   if(role == Qt::DisplayRole || role == Qt::EditRole)
     {
         switch(index.column())
         {
@@ -106,7 +102,7 @@ QVariant SensorsTableModel::headerData(int section, Qt::Orientation orientation,
         {
             case Column::SensorName:
             {
-                return QIcon("://Icons/RS232.png");
+                return QIcon("://Icons/Sensor.png");
             }
 
             case Column::SerialPortName:
@@ -130,27 +126,34 @@ bool SensorsTableModel::setData(const QModelIndex &index, const QVariant &value,
         return false;
     }
 
-    if(role == Qt::EditRole || role == Qt::DisplayRole)
+    if(role != Qt::EditRole)
     {
-        switch(index.column())
-        {
-            case Column::SensorName:
-            {
-                SensorData data = mData[index.row()].value<SensorData>();
-                data.sensor_name = value.toString();
-                mData[index.row()] = QVariant::fromValue(data);
-            }
-
-            case Column::SerialPortName:
-            {
-                SensorData data = mData[index.row()].value<SensorData>();
-                data.sensor_portName = value.toString();
-                mData[index.row()] = QVariant::fromValue(data);
-            }
-        }
-
-        return true;
+        return false;
     }
 
-    return false;
+    SensorData data = mData[index.row()].value<SensorData>();
+
+    switch(index.column())
+    {
+        case Column::SensorName:
+        {
+            data.sensor_name = value.toString();
+            break;
+        }
+
+        case Column::SerialPortName:
+        {
+            data.sensor_portName = value.toString();
+            break;
+        }
+
+        default:
+            return false;
+    }
+
+    mData[index.row()] = QVariant::fromValue(data);
+
+    emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
+
+    return true;
 }

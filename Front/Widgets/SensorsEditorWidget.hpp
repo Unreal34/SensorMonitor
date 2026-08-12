@@ -13,12 +13,19 @@ class SensorsEditorWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit SensorsEditorWidget(QWidget *parent = nullptr);
+    explicit SensorsEditorWidget(const QVector<SensorData>& sensors, QWidget *parent = nullptr);
     ~SensorsEditorWidget();
 
+public:
+    /**
+     * @brief Return a list of SensorData udpated by the user.
+     * @return
+     */
+    QVector<SensorData> updatedSensorData();
+
 private slots:
-    void openNewSensorDialog();
-    void deleteCurrentSensor();
+    void addNewSensor();
+    void deleteCurrentSelectedSensor();
 
 private:
     Ui::SensorsEditorWidget *ui;

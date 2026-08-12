@@ -19,11 +19,10 @@ public:
 public:
     size_t dataCount() const;
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    QList<QVariant> getDataList();
+    const QList<QVariant>& data() const { return mData; }
     void setIsEditable(bool newIsSelectable);
 
 public slots :
-
     void clear();
     void fill(const QList<QVariant>& dataList);
     void clearAndFill(const QList<QVariant>& dataList);

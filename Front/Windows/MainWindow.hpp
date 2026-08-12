@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "Console.hpp"
+#include "ConsoleWidget.hpp"
 #include "SensorsManager.hpp"
 
 class MainWindow : public QMainWindow
@@ -12,17 +12,20 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
 
+public:
+    SensorsManager* sensorsManager() const { return mSensorsManager; }
+
 private:
-    void initializeTools();
+    void initializeActions();
 
 private slots:
-    void onSerialSelected(QAction* action);
     void onDataReceived(const QString& sensor, const QByteArray& data);
     void openSensorsEditorDialog();
+    void toggleDataAcquisition();
 
 private:
-    Console* mConsole = nullptr;
-    QMenu* mToolsMenu = nullptr;
-    SensorsManager* mSensorsManager;
+    ConsoleWidget* mConsole = nullptr;
+    SensorsManager* mSensorsManager = nullptr;
+    bool mAcquisitionStarted = false;
 };
 #endif // MAINWINDOW_HPP

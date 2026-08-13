@@ -114,7 +114,7 @@ void MainWindow::toggleDataAcquisition()
     {
         if(sensorsManager()->savedSensorData().size() <= 0)
         {
-            QMessageBox::critical(this, APPLICATION_NAME, tr("No sensor available! Plase configure at least one sensor in the sensor editor tool."), QMessageBox::Ok);
+            QMessageBox::critical(this, APPLICATION_NAME, tr("No sensor available!\nPlase configure at least one sensor in the sensor editor tool."), QMessageBox::Ok);
             return;
         }
 
@@ -132,7 +132,6 @@ void MainWindow::toggleDataAcquisition()
             {
                 QString message = QString("Unable to open serial port %1 for sensor %2").arg(sensor->serialPortName(), sensor->name());
                 mConsole->appendLog(message, ConsoleWidget::ELogType::Error);
-                action->setChecked(false);
             }
         }
     }

@@ -20,6 +20,10 @@ public:
     inline QString serialPortName() const { return mSerialPort->portName(); };
 
 private slots:
+
+    /**
+     * @brief Data received from the connected serial port is forwarded through this signal.
+     */
     void onSerialDataReceived();
 
 signals:
@@ -27,8 +31,20 @@ signals:
     void error(const QString& message);
 
 private:
+
+    /**
+     * @brief The serial object used to handle the hardware connection between the sensor and this application.
+     */
     QSerialPort* mSerialPort = nullptr;
+
+    /**
+     * @brief The serial port used by this sensor.
+     */
     QString mPortName = {};
+
+    /**
+     * @brief The unique name of the sensor. Used to link a sensor with a serial port for example.
+     */
     QString mName = {};
 };
 

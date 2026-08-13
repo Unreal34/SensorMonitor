@@ -1,4 +1,5 @@
 #include "SensorsTableView.hpp"
+#include "SensorUtility.hpp"
 #include "SensorsItemDelegate.hpp"
 #include "SensorsTableModel.hpp"
 
@@ -18,12 +19,13 @@ void SensorsTableView::deleteSelectedSensor()
 {
     if(mSelectedSensor.isValid())
     {
-        QVariantList currentDataList = dataTableModel()->data();
+        QVariantList currentDataList = dataTableModel()->dataList();
 
         int indexToRemove = -1;
 
         for(int i = 0; i < currentDataList.size(); i++)
         {
+            Q_ASSERT(currentDataList[i].canConvert<SensorData>());
             SensorData data = currentDataList[i].value<SensorData>();
 
             if(data.sensor_guid == mSelectedSensor.sensor_guid)
@@ -43,13 +45,10 @@ void SensorsTableView::deleteSelectedSensor()
 
 QVector<SensorData> SensorsTableView::sensorDataList()
 {
-    QVariantList currentDataList = data();
-    QVector<SensorData> sensorDataList(currentDataList.size());
-
-    for (int i = 0; i < currentDataList.size(); i++)
-    {
-        sensorDataList[i] = currentDataList[i].value<SensorData>();
-    }
+    QVariantList currentDataList = dataList();
+    QVector<SensorData> sensorDataList;
+    bool bSuccess = SensorUtility::variantListToSensorDataList(currentDataList, sensorDataList);
+    Q_ASSERT(bSuccess);
 
     return sensorDataList;
 }

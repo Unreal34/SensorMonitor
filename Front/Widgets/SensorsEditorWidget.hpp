@@ -18,13 +18,21 @@ public:
 
 public:
     /**
-     * @brief Return a list of SensorData udpated by the user.
+     * @brief Returns the list of SensorData updated by the user through the editor.
      * @return
      */
     QVector<SensorData> updatedSensorData();
 
 private slots:
+
+    /**
+     * @brief Adds a new sensor entry to the table with a default name and no serial port selected.
+     */
     void addNewSensor();
+
+    /**
+     * @brief Deletes the currently selected sensor entry if it is valid.
+     */
     void deleteCurrentSelectedSensor();
 
 private:

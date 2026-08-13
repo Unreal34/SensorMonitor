@@ -6,6 +6,11 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
+/**
+ * @brief Base class for all dialogs in the application.
+ * BaseDialog provides a common footer with standard dialog buttons,
+ * such as Validate and Cancel.
+ */
 class BaseDialog : public QDialog
 {
     Q_OBJECT

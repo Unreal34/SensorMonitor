@@ -1,9 +1,14 @@
 #include "SensorsItemDelegate.hpp"
+#include "Application.hpp"
+#include "SensorData.hpp"
 #include "SensorsTableModel.hpp"
 #include "SerialPortCombobox.hpp"
 #include <QTextOption>
 #include <QPainter>
 #include <qserialportinfo.h>
+#include <SensorUtility.hpp>
+#include <QMessageBox>
+#include <QLineEdit>
 
 SensorsItemDelegate::SensorsItemDelegate(QObject *parent) : QItemDelegate{parent}
 {}
@@ -12,7 +17,13 @@ QWidget *SensorsItemDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 {
     QWidget* editor = nullptr;
 
-    if(index.column() == SensorsTableModel::Column::SerialPortName)
+    if(index.column() == SensorsTableModel::Column::SensorName)
+    {
+        QWidget* editor = new QLineEdit(parent);
+        editor->setAutoFillBackground(true);
+        return editor;
+    }
+    else if(index.column() == SensorsTableModel::Column::SerialPortName)
     {
         QWidget* editor = new SerialPortCombobox(parent);
 
@@ -32,13 +43,20 @@ QWidget *SensorsItemDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 
 void SensorsItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-    if(index.column() == SensorsTableModel::Column::SerialPortName)
+    if(index.column() == SensorsTableModel::Column::SensorName)
+    {
+        QLineEdit* lineEdit = qobject_cast<QLineEdit*>(editor);
+        Q_ASSERT(lineEdit);
+
+        QString sensorName = index.model()->data(index, Qt::EditRole).toString();
+        lineEdit->setText(sensorName);
+    }
+    else if(index.column() == SensorsTableModel::Column::SerialPortName)
     {
         SerialPortCombobox* combobox = qobject_cast<SerialPortCombobox*>(editor);
         Q_ASSERT(combobox);
 
         QString portName = index.model()->data(index, Qt::EditRole).toString();
-
         combobox->setCurrentText(portName);
     }
     else
@@ -49,12 +67,46 @@ void SensorsItemDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 
 void SensorsItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    if(index.column() == SensorsTableModel::Column::SerialPortName)
+    SensorsTableModel* sensorsTableModel = qobject_cast<SensorsTableModel*>(model);
+    Q_ASSERT(sensorsTableModel);
+
+    QVector<SensorData> sensorData;
+    bool bSuccess = SensorUtility::variantListToSensorDataList(sensorsTableModel->dataList(), sensorData);
+    Q_ASSERT(bSuccess);
+
+    if(index.column() == SensorsTableModel::Column::SensorName)
+    {
+        QLineEdit* lineEdit = qobject_cast<QLineEdit*>(editor);
+        Q_ASSERT(lineEdit);
+
+        QString newName = lineEdit->text();
+
+        if(SensorUtility::checkUniqueName(newName, sensorData))
+        {
+            model->setData(index, newName, Qt::EditRole);
+        }
+        else
+        {
+            QMessageBox::critical(nullptr, APPLICATION_NAME, tr("Name is already used by one of the sensor."), QMessageBox::Ok);
+            return;
+        }
+    }
+    else if(index.column() == SensorsTableModel::Column::SerialPortName)
     {
         SerialPortCombobox* combobox = qobject_cast<SerialPortCombobox*>(editor);
         Q_ASSERT(combobox);
 
-        model->setData(index, combobox->currentText(), Qt::EditRole);
+        QString newPort = combobox->currentText();
+
+        if(SensorUtility::checkUniqueSerialPort(newPort, sensorData))
+        {
+            model->setData(index, newPort, Qt::EditRole);
+        }
+        else
+        {
+            QMessageBox::critical(nullptr, APPLICATION_NAME, tr("Serial port is already used by a sensor."), QMessageBox::Ok);
+            return;
+        }
     }
     else
     {

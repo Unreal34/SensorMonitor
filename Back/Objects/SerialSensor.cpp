@@ -2,10 +2,10 @@
 #include <QUuid>
 
 SerialSensor::SerialSensor(const QString &portName, QObject *parent)
-    : QObject { parent }
-    , mPortName(portName)
-    , mName(QUuid().toString(QUuid::StringFormat::WithoutBraces))
-    , mSerialPort(new QSerialPort(this))
+: QObject { parent }
+, mPortName(portName)
+, mName(QUuid().toString(QUuid::StringFormat::WithoutBraces))
+, mSerialPort(new QSerialPort(this))
 {
     Q_ASSERT(mSerialPort);
 

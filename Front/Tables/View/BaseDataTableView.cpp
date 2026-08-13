@@ -34,7 +34,7 @@ void BaseDataTableView::clearAndFill(const QVariantList &data, int selectedIndex
 
 void BaseDataTableView::append(const QVariantList &data, int selectedIndex)
 {
-    QVariantList current = dataTableModel()->data();
+    QVariantList current = dataTableModel()->dataList();
     current += data;
     clearAndFill(current);
 }

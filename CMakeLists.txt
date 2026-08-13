@@ -13,7 +13,8 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt6 REQUIRED COMPONENTS SerialPort)
 
-set(TS_FILES SensorMonitor_en_US.ts)
+set(TS_FILES #SensorMonitor_en_US.ts
+)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -33,6 +34,9 @@ set(PROJECT_SOURCES
         Back/Utility/ApplicationLogger.hpp Back/Utility/ApplicationLogger.cpp
         Front/Dialogs/SensorsEditorDialog.hpp  Front/Dialogs/SensorsEditorDialog.cpp
         Front/Widgets/SensorsEditorWidget.hpp Front/Widgets/SensorsEditorWidget.cpp Front/Widgets/SensorsEditorWidget.ui
+        Front/Tables/Widgets/SerialPortCombobox.hpp Front/Tables/Widgets/SerialPortCombobox.cpp
+        Back/Utility/Sensors.hpp
+        Back/Utility/SensorUtility.hpp Back/Utility/SensorUtility.cpp
         ${TS_FILES}
 )
 
@@ -41,8 +45,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         Resource.qrc
-        Front/Tables/Widgets/SerialPortCombobox.hpp Front/Tables/Widgets/SerialPortCombobox.cpp
-        Back/Utility/Sensors.hpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET SensorMonitor APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

@@ -38,7 +38,6 @@ void SensorsEditorWidget::addNewSensor()
     QVariantList data;
 
     SensorData s1;
-
     s1.sensor_name = s1.sensor_guid.toString(QUuid::WithoutBraces);
     s1.sensor_portName = "NONE";
 

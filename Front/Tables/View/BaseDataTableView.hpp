@@ -33,7 +33,7 @@ public slots:
      * @brief Return all entries available in the table model as QVariantList.
      * @return
      */
-    const QVariantList& data() const { return dataTableModel()->data(); }
+    const QVariantList& dataList() const { return dataTableModel()->dataList(); }
 
 protected:
     bool mClearing = false;

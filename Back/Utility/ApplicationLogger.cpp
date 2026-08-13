@@ -5,7 +5,8 @@
 #include <QDateTime>
 #include <QMetaEnum>
 
-ApplicationLogger::ApplicationLogger(QObject *parent) : QObject{parent}
+ApplicationLogger::ApplicationLogger(QObject *parent)
+: QObject{parent}
 {}
 
 void ApplicationLogger::log(const QString &message, ELogType type, const QString& logFile)

@@ -11,8 +11,7 @@
 #include <QMessageBox>
 #include <QApplication>
 
-MainWindow::MainWindow(QWidget *parent)
-: QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 , mConsole(new ConsoleWidget(this))
 , mSensorsManager(new SensorsManager(this))
 {

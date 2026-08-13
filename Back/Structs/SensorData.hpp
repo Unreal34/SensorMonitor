@@ -4,6 +4,9 @@
 #include <QString>
 #include <quuid.h>
 
+/**
+ * @brief Struct used to handle new sensor in the sensor editor widget fort example.
+ */
 struct SensorData
 {
     SensorData()

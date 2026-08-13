@@ -3,6 +3,9 @@
 
 #include <QObject>
 
+/**
+ * @brief Static class used to append log to a file located next to the executable.
+ */
 class ApplicationLogger : public QObject
 {
     Q_OBJECT

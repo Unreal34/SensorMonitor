@@ -17,6 +17,7 @@ public:
     /**
      * @brief Creates and registers a new sensor with a name and a serial port.
      * @note Data are ready to be received after calling this function if the serial port and sensor are available.
+     * @warning Each sensor name must be unique!
      * @param serialPortName
      * @param name
      * @return
@@ -68,7 +69,7 @@ public:
 
 signals:
     /**
-     * @brief Triggered for each new data transfered on the serial port connected to the sensor.
+     * @brief Triggered for each new data received on the serial port connected to the sensor.
      * @param sensorName
      * @param data
      */
@@ -76,7 +77,7 @@ signals:
 
 private:
     /**
-     * @brief Manages a list of sensors connected to a serial port and available for data transfer.
+     * @brief Manages a list of sensors. Each sensor is connected to a serial port and available for data transfer.
      */
     QVector<SerialSensor*> mSensors = {};
 

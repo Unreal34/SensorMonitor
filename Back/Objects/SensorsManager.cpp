@@ -1,13 +1,11 @@
 #include "SensorsManager.hpp"
 
-SensorsManager::SensorsManager(QObject *parent)
-    : QObject { parent }
+SensorsManager::SensorsManager(QObject *parent) : QObject { parent }
 {}
 
 SerialSensor* SensorsManager::registerNewSensor(const QString &serialPortName, const QString &name)
 {
     Q_ASSERT(!exists(name));
-
     SerialSensor* sensor = new SerialSensor(serialPortName, this);
     Q_ASSERT(sensor);
 

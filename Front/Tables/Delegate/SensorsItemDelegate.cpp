@@ -67,12 +67,19 @@ void SensorsItemDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 
 void SensorsItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
+    // Retrieve model.
     SensorsTableModel* sensorsTableModel = qobject_cast<SensorsTableModel*>(model);
     Q_ASSERT(sensorsTableModel);
 
+    // Retrieve all available sensor data.
     QVector<SensorData> sensorData;
     bool bSuccess = SensorUtility::variantListToSensorDataList(sensorsTableModel->dataList(), sensorData);
     Q_ASSERT(bSuccess);
+
+    // Retrieve the current sensor data linked to the current table entry (index).
+    QVariant variant = model->data(index, BaseDataTableModel::ValueType);
+    Q_ASSERT(variant.canConvert<SensorData>());
+    SensorData currentSensorData = variant.value<SensorData>();
 
     if(index.column() == SensorsTableModel::Column::SensorName)
     {
@@ -81,7 +88,7 @@ void SensorsItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *mode
 
         QString newName = lineEdit->text();
 
-        if(SensorUtility::checkUniqueName(newName, sensorData))
+        if(SensorUtility::checkUniqueName(newName, sensorData, currentSensorData.sensor_guid))
         {
             model->setData(index, newName, Qt::EditRole);
         }
@@ -98,7 +105,7 @@ void SensorsItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *mode
 
         QString newPort = combobox->currentText();
 
-        if(SensorUtility::checkUniqueSerialPort(newPort, sensorData))
+        if(SensorUtility::checkUniqueSerialPort(newPort, sensorData, currentSensorData.sensor_guid))
         {
             model->setData(index, newPort, Qt::EditRole);
         }

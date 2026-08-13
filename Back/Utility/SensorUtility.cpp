@@ -1,11 +1,11 @@
 #include "SensorUtility.hpp"
 #include <QVariant>
 
-bool SensorUtility::checkUniqueName(const QString &name, const QVector<SensorData> &sensorData)
+bool SensorUtility::checkUniqueName(const QString &name, const QVector<SensorData> &sensorData, const QUuid &escapeSensor)
 {
     Q_FOREACH(const SensorData& sensor, sensorData)
     {
-        if(sensor.sensor_name == name)
+        if(sensor.sensor_guid != escapeSensor && sensor.sensor_name == name)
         {
             return false;
         }
@@ -14,11 +14,11 @@ bool SensorUtility::checkUniqueName(const QString &name, const QVector<SensorDat
     return true;
 }
 
-bool SensorUtility::checkUniqueSerialPort(const QString &serialPort, const QVector<SensorData> &sensorData)
+bool SensorUtility::checkUniqueSerialPort(const QString &serialPort, const QVector<SensorData> &sensorData, const QUuid &escapeSensor)
 {
     Q_FOREACH(const SensorData& sensor, sensorData)
     {
-        if(sensor.sensor_portName == serialPort && serialPort != INVALID_PORT)
+        if(sensor.sensor_guid != escapeSensor && sensor.sensor_portName == serialPort && serialPort != INVALID_SERIAL_PORT)
         {
             return false;
         }

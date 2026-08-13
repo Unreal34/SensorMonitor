@@ -27,8 +27,11 @@ private slots:
     void onSerialDataReceived();
 
 signals:
+    /**
+     * @brief Triggered when a new data is available on the serial port associated with this sensor.
+     * @param data
+     */
     void dataReceived(const QByteArray& data);
-    void error(const QString& message);
 
 private:
 

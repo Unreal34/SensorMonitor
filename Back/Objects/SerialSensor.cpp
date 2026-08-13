@@ -1,8 +1,7 @@
 #include "SerialSensor.hpp"
 #include <QUuid>
 
-SerialSensor::SerialSensor(const QString &portName, QObject *parent)
-: QObject { parent }
+SerialSensor::SerialSensor(const QString &portName, QObject *parent) : QObject { parent }
 , mPortName(portName)
 , mName(QUuid().toString(QUuid::StringFormat::WithoutBraces))
 , mSerialPort(new QSerialPort(this))

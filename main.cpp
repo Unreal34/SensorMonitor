@@ -1,4 +1,5 @@
 #include "MainWindow.hpp"
+#include "TranslationManager.hpp"
 
 #include <QApplication>
 #include <QLocale>
@@ -6,23 +7,14 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
 
-    QTranslator translator;
-    const QStringList uiLanguages = QLocale::system().uiLanguages();
+    const QString locale = QLocale::system().name();
+    TranslationManager trManager;
+    trManager.setLanguage("en_US");
 
-    for (const QString &locale : uiLanguages)
-    {
-        const QString baseName = "SensorMonitor_" + QLocale(locale).name();
+    MainWindow window;
+    window.show();
 
-        if (translator.load(":/i18n/" + baseName))
-        {
-            a.installTranslator(&translator);
-            break;
-        }
-    }
-
-    MainWindow w;
-    w.show();
-    return a.exec();
+    return app.exec();
 }

@@ -9,10 +9,13 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+enable_testing()
+
 find_package(Qt6 REQUIRED COMPONENTS
     Widgets
     SerialPort
     LinguistTools
+    Test
 )
 
 set(TS_FILES
@@ -75,13 +78,14 @@ set(PROJECT_SOURCES
     Front/Windows/MainWindow.hpp
     Front/Windows/MainWindow.cpp
 
+    Back/Objects/TranslationManager.hpp Back/Objects/TranslationManager.cpp
+
     Resource.qrc
 )
 
 qt_add_executable(SensorMonitor
     MANUAL_FINALIZATION
     ${PROJECT_SOURCES}
-    Back/Objects/TranslationManager.hpp Back/Objects/TranslationManager.cpp
 )
 
 target_include_directories(SensorMonitor PRIVATE
@@ -131,6 +135,50 @@ install(TARGETS SensorMonitor
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+function(add_qt_test TEST_NAME)
+    qt_add_executable(${TEST_NAME}
+        ${ARGN}
+    )
+
+    target_link_libraries(${TEST_NAME} PRIVATE
+        Qt6::Core
+        Qt6::Test
+        Qt6::SerialPort
+    )
+
+    add_test(
+        NAME ${TEST_NAME}
+        COMMAND ${TEST_NAME}
+    )
+
+    target_include_directories(${TEST_NAME} PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/Back/Structs
+            ${CMAKE_CURRENT_SOURCE_DIR}/Back/Objects
+            ${CMAKE_CURRENT_SOURCE_DIR}/Back/Utility
+            ${CMAKE_CURRENT_SOURCE_DIR}/Tests
+        )
+endfunction()
+
+add_qt_test(SensorsManagerTest
+    Tests/SensorsManagerTest.cpp
+    Back/Objects/SensorsManager.cpp
+    Back/Objects/SensorsManager.hpp
+    Back/Objects/SerialSensor.cpp
+    Back/Objects/SerialSensor.hpp
+    Back/Structs/SensorData.hpp
+)
+
+add_qt_test(SensorUtilityTest
+    Tests/SensorUtilityTest.cpp
+    Back/Utility/SensorUtility.hpp Back/Utility/SensorUtility.cpp
+    Back/Structs/SensorData.hpp
+)
+
+add_qt_test(SerialSensorTest
+    Tests/SerialSensorTest.cpp
+    Back/Objects/SerialSensor.hpp Back/Objects/SerialSensor.cpp
 )
 
 qt_finalize_executable(SensorMonitor)

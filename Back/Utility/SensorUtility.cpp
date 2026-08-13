@@ -29,7 +29,7 @@ bool SensorUtility::checkUniqueSerialPort(const QString &serialPort, const QVect
 
 bool SensorUtility::variantListToSensorDataList(const QVariantList &variantList, QVector<SensorData> &sensorData)
 {
-    sensorData.empty();
+    sensorData.clear();
     sensorData.resize(variantList.size());
 
     for(int i = 0; i < variantList.size(); i++)

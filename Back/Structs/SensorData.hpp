@@ -10,8 +10,15 @@
 struct SensorData
 {
     SensorData()
+        : sensor_guid(QUuid::createUuid())
     {
-        sensor_guid = QUuid::createUuid();
+    }
+
+    SensorData(const QString& _sensor_name, const QString & _sensor_portName)
+        : sensor_guid(QUuid::createUuid())
+        , sensor_name(_sensor_name)
+        , sensor_portName(_sensor_portName)
+    {
     }
 
     bool isValid()

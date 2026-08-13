@@ -1,10 +1,12 @@
 #include "SerialSensor.hpp"
+#include "SensorUtility.hpp"
 #include <QUuid>
 
 SerialSensor::SerialSensor(const QString &portName, QObject *parent) : QObject { parent }
 , mPortName(portName)
 , mName(QUuid().toString(QUuid::StringFormat::WithoutBraces))
 , mSerialPort(new QSerialPort(this))
+, mDevice(mSerialPort)
 {
     Q_ASSERT(mSerialPort);
 
@@ -15,22 +17,33 @@ SerialSensor::SerialSensor(const QString &portName, QObject *parent) : QObject {
     mSerialPort->setStopBits(QSerialPort::OneStop);
     mSerialPort->setFlowControl(QSerialPort::NoFlowControl);
 
-    if(mSerialPort->open(QIODevice::ReadOnly))
+    if(mDevice->open(QIODevice::ReadOnly))
     {
-        connect(mSerialPort, &QSerialPort::readyRead, this, &SerialSensor::onSerialDataReceived);
+        connect(mDevice, &QSerialPort::readyRead, this, &SerialSensor::onSerialDataReceived);
+    }
+}
+
+SerialSensor::SerialSensor(QIODevice *device, QObject *parent) : QObject { parent }
+, mPortName(INVALID_SERIAL_PORT)
+, mName(QUuid().toString(QUuid::StringFormat::WithoutBraces))
+, mDevice(device)
+{
+    if(mDevice->open(QIODevice::ReadOnly))
+    {
+        connect(mDevice, &QSerialPort::readyRead, this, &SerialSensor::onSerialDataReceived);
     }
 }
 
 SerialSensor::~SerialSensor()
 {
-    mSerialPort->close();
+    mDevice->close();
 }
 
 void SerialSensor::onSerialDataReceived()
 {
-    while (mSerialPort->canReadLine())
+    while (mDevice->canReadLine())
     {
-        const QByteArray data = mSerialPort->readLine().trimmed();
+        const QByteArray data = mDevice->readLine().trimmed();
         emit dataReceived(data);
     }
 }

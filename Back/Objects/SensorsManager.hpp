@@ -53,19 +53,19 @@ public:
     /**
      * @brief Clear the saved sensor data buffer.
      */
-    inline void resetSavedSensorData() { mSavedSensorsData.clear(); }
+     void resetSavedSensorData() { mSavedSensorsData.clear(); }
 
     /**
      * @brief Save a list of SensorData.
      * @param newSavedSensorsData
      */
-    inline void setSavedSensorsData(const QVector<SensorData>& newSavedSensorsData) { mSavedSensorsData = newSavedSensorsData; }
+     void setSavedSensorsData(const QVector<SensorData>& newSavedSensorsData) { mSavedSensorsData = newSavedSensorsData; }
 
     /**
      * @brief Get access to saved sensor data buffer.
      * @return
      */
-    inline const QVector<SensorData>& savedSensorData() const { return mSavedSensorsData; }
+     const QVector<SensorData>& savedSensorData() const { return mSavedSensorsData; }
 
 signals:
     /**

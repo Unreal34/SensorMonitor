@@ -5,7 +5,11 @@ SensorsManager::SensorsManager(QObject *parent) : QObject { parent }
 
 SerialSensor* SensorsManager::registerNewSensor(const QString &serialPortName, const QString &name)
 {
-    Q_ASSERT(!exists(name));
+    if(exists(name))
+    {
+        return nullptr;
+    }
+
     SerialSensor* sensor = new SerialSensor(serialPortName, this);
     Q_ASSERT(sensor);
 

@@ -9,15 +9,22 @@ class SerialSensor : public QObject
     Q_OBJECT
 public:
     SerialSensor(const QString& portName, QObject *parent = nullptr);
+
+    /**
+     * @brief For testing purpose only.
+     * @param device
+     * @param parent
+     */
+    SerialSensor(QIODevice* device, QObject *parent = nullptr);
     ~SerialSensor();
 
 public:
-    inline bool isAvailable() const { return mSerialPort->isOpen(); }
+    bool isAvailable() const { return mSerialPort->isOpen(); }
 
 public:
-    inline void setName(const QString& newName) { mName = newName; };
-    inline const QString& name() const { return mName; };
-    inline QString serialPortName() const { return mSerialPort->portName(); };
+    void setName(const QString& newName) { mName = newName; };
+    const QString& name() const { return mName; };
+    QString serialPortName() const { return mSerialPort->portName(); };
 
 private slots:
 
@@ -49,6 +56,11 @@ private:
      * @brief The unique name of the sensor. Used to link a sensor with a serial port for example.
      */
     QString mName = {};
+
+    /**
+     * @brief mDevice
+     */
+    QIODevice* mDevice = nullptr;
 };
 
 #endif // SERIALSENSOR_H

@@ -43,6 +43,8 @@ void SerialSensor::onSerialDataReceived()
 {
     while (mDevice->canReadLine())
     {
+        // Returns a copy of this byte array with spacing characters removed from the start and end.
+        // Spacing characters list: tabulation '\t', line feed '\n', carriage return '\r', vertical tabulation '\v', form feed '\f', and space ' '.
         const QByteArray data = mDevice->readLine().trimmed();
         emit dataReceived(data);
     }

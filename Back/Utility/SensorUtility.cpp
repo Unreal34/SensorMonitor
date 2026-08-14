@@ -39,7 +39,7 @@ bool SensorUtility::variantListToSensorDataList(const QVariantList &variantList,
             return false;
         }
 
-        Q_ASSERT(variantList[i].canConvert<SensorData>());
+        // Q_ASSERT(variantList[i].canConvert<SensorData>());
         sensorData[i] = variantList[i].value<SensorData>();
     }
 

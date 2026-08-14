@@ -9,6 +9,7 @@ class SensorUtilityTest : public QObject
 private slots:
     void checkUniqueName();
     void checkUniqueSerialPort();
+    void variantListToSensorDataList();
 };
 
 void SensorUtilityTest::checkUniqueName()
@@ -63,6 +64,22 @@ void SensorUtilityTest::checkUniqueSerialPort()
     testDataList.push_back(testSensorData4);
 
     QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData4.sensor_portName, testDataList, testSensorData4.sensor_guid) == true);
+}
+
+void SensorUtilityTest::variantListToSensorDataList()
+{
+    QVariantList variantList;
+    variantList.push_back(QVariant::fromValue(SensorData("Sensor1", "COM1")));
+    variantList.push_back(QVariant::fromValue(SensorData("Sensor2", "COM2")));
+    variantList.push_back(QVariant::fromValue(SensorData("Sensor3", "COM3")));
+    variantList.push_back(QVariant::fromValue(SensorData("Sensor4", "COM4")));
+
+    QVector<SensorData> dataList;
+    QVERIFY(SensorUtility::variantListToSensorDataList(variantList, dataList) == true);
+    QVERIFY(dataList.size() == 4);
+
+    variantList.push_back(QVariant::fromValue(QString("Test")));
+    QVERIFY(SensorUtility::variantListToSensorDataList(variantList, dataList) == false);
 }
 
 QTEST_MAIN(SensorUtilityTest)

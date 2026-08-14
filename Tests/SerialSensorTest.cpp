@@ -1,46 +1,7 @@
 #include <QtTest>
 
 #include "SerialSensor.hpp"
-
-class SimulatedSerialDevice : public QIODevice
-{
-    Q_OBJECT
-
-public:
-    explicit SimulatedSerialDevice(QObject* parent = nullptr)
-        : QIODevice(parent)
-    {
-    }
-
-    void simulateIncomingData(const QByteArray& data)
-    {
-        mData.append(data);
-        emit readyRead();
-    }
-
-protected:
-    virtual qint64 readData(char* data, qint64 maxSize) override
-    {
-        const qint64 size = qMin(maxSize, static_cast<qint64>(mData.size()));
-        memcpy(data, mData.constData(), size);
-        mData.remove(0, size);
-        return size;
-    }
-
-    virtual qint64 writeData(const char* data, qint64 maxSize) override
-    {
-        Q_UNUSED(data);
-        return maxSize;
-    }
-
-    virtual bool canReadLine() const override
-    {
-        return mData.contains('\n');
-    }
-
-private:
-    QByteArray mData;
-};
+#include "SimulatedSerialDevice.hpp"
 
 class SerialSensorTest : public QObject
 {

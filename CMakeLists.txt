@@ -86,6 +86,7 @@ set(PROJECT_SOURCES
 qt_add_executable(SensorMonitor
     MANUAL_FINALIZATION
     ${PROJECT_SOURCES}
+    Back/Objects/SimulatedSerialDevice.hpp Back/Objects/SimulatedSerialDevice.cpp
 )
 
 target_include_directories(SensorMonitor PRIVATE
@@ -161,6 +162,7 @@ function(add_qt_test TEST_NAME)
         )
 endfunction()
 
+# Handle unit tests
 add_qt_test(SensorsManagerTest
     Tests/SensorsManagerTest.cpp
     Back/Objects/SensorsManager.cpp
@@ -178,6 +180,7 @@ add_qt_test(SensorUtilityTest
 
 add_qt_test(SerialSensorTest
     Tests/SerialSensorTest.cpp
+    Back/Objects/SimulatedSerialDevice.hpp Back/Objects/SimulatedSerialDevice.cpp
     Back/Objects/SerialSensor.hpp Back/Objects/SerialSensor.cpp
 )
 

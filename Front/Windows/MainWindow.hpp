@@ -39,6 +39,13 @@ private slots:
      */
     void toggleDataAcquisition();
 
+    /**
+     * @brief Handle error received by sensors manager.
+     * @param sensor
+     * @param error
+     */
+    void onErrorReceived(const QString& sensor, const QString& port, SensorsManager::ESensorsManagerError error);
+
 private:
     /**
      * @brief Main widget to handle logging.

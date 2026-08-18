@@ -1,8 +1,14 @@
 #include "SimulatedSerialDevice.hpp"
+#include <qdebug.h>
 
 SimulatedSerialDevice::SimulatedSerialDevice(QObject *parent)
     : QIODevice{parent}
 {}
+
+SimulatedSerialDevice::~SimulatedSerialDevice()
+{
+    qDebug() << "~SimulatedSerialDevice()";
+}
 
 void SimulatedSerialDevice::simulateIncomingData(const QByteArray& data)
 {

@@ -16,11 +16,6 @@ SerialSensor::SerialSensor(const QString &portName, QObject *parent) : QObject {
     mSerialPort->setParity(QSerialPort::NoParity);
     mSerialPort->setStopBits(QSerialPort::OneStop);
     mSerialPort->setFlowControl(QSerialPort::NoFlowControl);
-
-    if(mDevice->open(QIODevice::ReadOnly))
-    {
-        connect(mDevice, &QSerialPort::readyRead, this, &SerialSensor::onSerialDataReceived);
-    }
 }
 
 SerialSensor::SerialSensor(QIODevice *device, QObject *parent) : QObject { parent }
@@ -28,15 +23,26 @@ SerialSensor::SerialSensor(QIODevice *device, QObject *parent) : QObject { paren
 , mName(QUuid().toString(QUuid::StringFormat::WithoutBraces))
 , mDevice(device)
 {
-    if(mDevice->open(QIODevice::ReadOnly))
-    {
-        connect(mDevice, &QSerialPort::readyRead, this, &SerialSensor::onSerialDataReceived);
-    }
 }
 
 SerialSensor::~SerialSensor()
 {
+    Q_ASSERT(mDevice);
     mDevice->close();
+}
+
+bool SerialSensor::open()
+{
+    Q_ASSERT(mDevice);
+
+    bool bIsOpened = mDevice->open(QIODevice::ReadOnly);
+
+    if(bIsOpened)
+    {
+        connect(mDevice, &QSerialPort::readyRead, this, &SerialSensor::onSerialDataReceived);
+    }
+
+    return bIsOpened;
 }
 
 void SerialSensor::onSerialDataReceived()

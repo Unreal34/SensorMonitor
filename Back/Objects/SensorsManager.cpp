@@ -3,21 +3,35 @@
 SensorsManager::SensorsManager(QObject *parent) : QObject { parent }
 {}
 
-SerialSensor* SensorsManager::registerNewSensor(const QString &serialPortName, const QString &name)
+bool SensorsManager::registerNewSensor(const QString &serialPortName, const QString &name, QIODevice* simulatedDevice)
 {
     if(exists(name))
     {
-        return nullptr;
+        emit errorHandled(name, serialPortName, ESensorsManagerError::InvalidSensorName);
+        return false;
     }
 
-    SerialSensor* sensor = new SerialSensor(serialPortName, this);
+    SerialSensor* sensor = nullptr;
+
+    if(simulatedDevice)
+    {
+        sensor = new SerialSensor(simulatedDevice, this);
+    }
+    else
+    {
+        sensor = new SerialSensor(serialPortName, this);
+    }
+
     Q_ASSERT(sensor);
 
-    if(!name.isNull() && !name.isEmpty())
+    if(name.isNull() || name.isEmpty())
     {
-        sensor->setName(name);
+        delete sensor;
+        emit errorHandled(name, serialPortName, ESensorsManagerError::InvalidSensorName);
+        return false;
     }
 
+    sensor->setName(name);
     mSensors.push_back(sensor);
 
     connect(sensor, &SerialSensor::dataReceived, this, [sensor, this](const QByteArray& data)
@@ -25,7 +39,9 @@ SerialSensor* SensorsManager::registerNewSensor(const QString &serialPortName, c
         emit dataReceived(sensor->name(), data);
     });
 
-    return sensor;
+    emit errorHandled(name, serialPortName, ESensorsManagerError::Success);
+
+    return true;
 }
 
 SerialSensor* SensorsManager::findSensorByName(const QString &name)
@@ -39,6 +55,19 @@ SerialSensor* SensorsManager::findSensorByName(const QString &name)
     }
 
     return nullptr;
+}
+
+bool SensorsManager::openSensor(const QString &name)
+{
+    Q_FOREACH(SerialSensor* sensor, mSensors)
+    {
+        if(sensor->name() == name)
+        {
+            return sensor->open();
+        }
+    }
+
+    return false;
 }
 
 bool SensorsManager::deleteSensorByName(const QString &name)

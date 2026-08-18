@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     initializeActions();
 
     connect(mSensorsManager, &SensorsManager::dataReceived, this, &MainWindow::onDataReceived);
+    connect(mSensorsManager, &SensorsManager::errorHandled, this, &MainWindow::onErrorReceived);
 }
 
 void MainWindow::initializeActions()
@@ -119,19 +120,8 @@ void MainWindow::toggleDataAcquisition()
 
         Q_FOREACH(const SensorData& current, sensorsManager()->savedSensorData())
         {
-            SerialSensor* sensor = sensorsManager()->registerNewSensor(current.sensor_portName, current.sensor_name);
-            Q_ASSERT(sensor);
-
-            if (sensor->isAvailable())
-            {
-                QString message = QString("Using serial port %1 for sensor %2").arg(sensor->serialPortName(), sensor->name());
-                mConsole->appendLog(message, ConsoleWidget::ELogType::Success);
-            }
-            else
-            {
-                QString message = QString("Unable to open serial port %1 for sensor %2").arg(sensor->serialPortName(), sensor->name());
-                mConsole->appendLog(message, ConsoleWidget::ELogType::Error);
-            }
+            sensorsManager()->registerNewSensor(current.sensor_portName, current.sensor_name);
+            sensorsManager()->openSensor(current.sensor_name);
         }
     }
     else
@@ -142,4 +132,29 @@ void MainWindow::toggleDataAcquisition()
     mAcquisitionStarted = !mAcquisitionStarted;
     action->setIcon(mAcquisitionStarted ? QIcon("://Icons/Stop.png") : QIcon("://Icons/Play.png"));
     action->setText(mAcquisitionStarted ? tr("Stop data acquisition") : tr("Start data acquisition"));
+}
+
+void MainWindow::onErrorReceived(const QString &sensor, const QString& port, SensorsManager::ESensorsManagerError error)
+{
+    QString message = {};
+    ConsoleWidget::ELogType logType = ConsoleWidget::ELogType::Error;
+
+    switch(error)
+    {
+        case SensorsManager::Success:
+            logType = ConsoleWidget::ELogType::Success;
+            message = QString(tr("Using serial port %1 for sensor %2.")).arg(port, sensor);
+            break;
+        case SensorsManager::SerialPortIssue:
+            message = QString(tr("Unable to open serial port %1 for sensor %2.")).arg(port, sensor);
+            break;
+        case SensorsManager::InvalidSensorName:
+            message = QString(tr("Invalid sensor name %1.")).arg(sensor);
+            break;
+        case SensorsManager::Error:
+            message = QString(tr("Error on serial port %1 and sensor %2.")).arg(port, sensor);
+            break;
+    }
+
+    mConsole->appendLog(message, logType);
 }

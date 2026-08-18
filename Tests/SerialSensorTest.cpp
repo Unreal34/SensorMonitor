@@ -33,6 +33,7 @@ void SerialSensorTest::testDataReceived()
 {
     SimulatedSerialDevice device;
     SerialSensor sensor(&device);
+    sensor.open();
 
     QSignalSpy spy(&sensor, &SerialSensor::dataReceived);
 

@@ -19,12 +19,13 @@ public:
     ~SerialSensor();
 
 public:
-    bool isAvailable() const { return mSerialPort->isOpen(); }
+    bool isOpened() const { return mSerialPort->isOpen(); }
 
 public:
     void setName(const QString& newName) { mName = newName; };
     const QString& name() const { return mName; };
     QString serialPortName() const { return mSerialPort->portName(); };
+    bool open();
 
 private slots:
 

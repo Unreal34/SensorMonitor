@@ -10,6 +10,7 @@ class SimulatedSerialDevice : public QIODevice
 
 public:
     explicit SimulatedSerialDevice(QObject* parent = nullptr);
+    ~SimulatedSerialDevice();
 
 public:
     void simulateIncomingData(const QByteArray& data);

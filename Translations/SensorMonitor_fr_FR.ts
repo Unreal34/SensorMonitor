@@ -22,41 +22,61 @@
         <translation>Console</translation>
     </message>
     <message>
-        <location filename="../Front/Windows/MainWindow.cpp" line="39"/>
+        <location filename="../Front/Windows/MainWindow.cpp" line="40"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../Front/Windows/MainWindow.cpp" line="40"/>
+        <location filename="../Front/Windows/MainWindow.cpp" line="41"/>
         <source>&amp;Tools</source>
         <translation>&amp;Outils</translation>
     </message>
     <message>
-        <location filename="../Front/Windows/MainWindow.cpp" line="42"/>
+        <location filename="../Front/Windows/MainWindow.cpp" line="43"/>
         <source>Manage sensors and ports</source>
         <translation>Gérer les capteurs et les ports</translation>
     </message>
     <message>
-        <location filename="../Front/Windows/MainWindow.cpp" line="43"/>
-        <location filename="../Front/Windows/MainWindow.cpp" line="144"/>
+        <location filename="../Front/Windows/MainWindow.cpp" line="44"/>
+        <location filename="../Front/Windows/MainWindow.cpp" line="134"/>
         <source>Start data acquisition</source>
         <translation>Démarrer l&apos;acquisition</translation>
     </message>
     <message>
-        <location filename="../Front/Windows/MainWindow.cpp" line="44"/>
+        <location filename="../Front/Windows/MainWindow.cpp" line="45"/>
         <source>Exit</source>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../Front/Windows/MainWindow.cpp" line="116"/>
+        <location filename="../Front/Windows/MainWindow.cpp" line="117"/>
         <source>No sensor available!
 Plase configure at least one sensor in the sensor editor tool.</source>
         <translation>Aucun capteur disponible ! Merci de configurer au moins un capteur dans l&apos;outil d&apos;édition des capteurs.</translation>
     </message>
     <message>
-        <location filename="../Front/Windows/MainWindow.cpp" line="144"/>
+        <location filename="../Front/Windows/MainWindow.cpp" line="134"/>
         <source>Stop data acquisition</source>
         <translation>Terminer l&apos;acquisition</translation>
+    </message>
+    <message>
+        <location filename="../Front/Windows/MainWindow.cpp" line="146"/>
+        <source>Using serial port %1 for sensor %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Front/Windows/MainWindow.cpp" line="149"/>
+        <source>Unable to open serial port %1 for sensor %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Front/Windows/MainWindow.cpp" line="152"/>
+        <source>Invalid sensor name %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Front/Windows/MainWindow.cpp" line="155"/>
+        <source>Error on serial port %1 and sensor %2.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -170,18 +170,23 @@ add_qt_test(SensorsManagerTest
     Back/Objects/SerialSensor.cpp
     Back/Objects/SerialSensor.hpp
     Back/Structs/SensorData.hpp
+    Back/Objects/SimulatedSerialDevice.hpp
+    Back/Objects/SimulatedSerialDevice.cpp
 )
 
 add_qt_test(SensorUtilityTest
     Tests/SensorUtilityTest.cpp
-    Back/Utility/SensorUtility.hpp Back/Utility/SensorUtility.cpp
+    Back/Utility/SensorUtility.hpp
+    Back/Utility/SensorUtility.cpp
     Back/Structs/SensorData.hpp
 )
 
 add_qt_test(SerialSensorTest
     Tests/SerialSensorTest.cpp
-    Back/Objects/SimulatedSerialDevice.hpp Back/Objects/SimulatedSerialDevice.cpp
-    Back/Objects/SerialSensor.hpp Back/Objects/SerialSensor.cpp
+    Back/Objects/SimulatedSerialDevice.hpp
+    Back/Objects/SimulatedSerialDevice.cpp
+    Back/Objects/SerialSensor.hpp
+    Back/Objects/SerialSensor.cpp
 )
 
 qt_finalize_executable(SensorMonitor)

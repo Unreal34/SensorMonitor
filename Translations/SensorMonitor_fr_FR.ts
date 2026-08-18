@@ -61,22 +61,22 @@ Plase configure at least one sensor in the sensor editor tool.</source>
     <message>
         <location filename="../Front/Windows/MainWindow.cpp" line="146"/>
         <source>Using serial port %1 for sensor %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisation du port série %1 pour le capteur %2.</translation>
     </message>
     <message>
         <location filename="../Front/Windows/MainWindow.cpp" line="149"/>
         <source>Unable to open serial port %1 for sensor %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir le port série %1 pour le capteur %2.</translation>
     </message>
     <message>
         <location filename="../Front/Windows/MainWindow.cpp" line="152"/>
         <source>Invalid sensor name %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de capteur invalide %1.</translation>
     </message>
     <message>
         <location filename="../Front/Windows/MainWindow.cpp" line="155"/>
         <source>Error on serial port %1 and sensor %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur sur le port série %1 et le capteur %2.</translation>
     </message>
 </context>
 <context>

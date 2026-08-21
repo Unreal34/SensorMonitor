@@ -99,7 +99,7 @@ signals:
      * @param serialPortName
      * @param data
      */
-    void errorHandled(const QString& sensorName, const QString& serialPortName, ESensorsManagerError error);
+    void errorHandled(const QString& sensorName, const QString& serialPortName, SensorsManager::ESensorsManagerError error);
 
 private:
     /**
@@ -112,6 +112,9 @@ private:
      */
     QVector<SensorData> mSavedSensorsData = {};
 
+    /**
+     * @brief mDevice
+     */
     QIODevice* mDevice;
 };
 

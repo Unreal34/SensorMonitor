@@ -19,12 +19,21 @@ public:
     ~SerialSensor();
 
 public:
+    /**
+     * @brief Check if the device is opened.
+     * @return
+     */
     bool isOpened() const { return mSerialPort->isOpen(); }
 
 public:
     void setName(const QString& newName) { mName = newName; };
     const QString& name() const { return mName; };
     QString serialPortName() const { return mSerialPort->portName(); };
+
+    /**
+     * @brief Open the device in read-only mode.
+     * @return
+     */
     bool open();
 
 private slots:
@@ -59,7 +68,8 @@ private:
     QString mName = {};
 
     /**
-     * @brief mDevice
+     * @brief Hold the device
+     * @note Should be a real serial port or a simulated device.
      */
     QIODevice* mDevice = nullptr;
 };

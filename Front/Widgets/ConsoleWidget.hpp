@@ -25,7 +25,18 @@ public:
     ConsoleWidget(QWidget *parent = nullptr);
 
 public slots:
+
+    /**
+     * @brief Append a new log to console.
+     * @note The log type must be selected from the input enumerator.
+     * @param message
+     * @param logType
+     */
     void appendLog(const QString& message, ConsoleWidget::ELogType logType = Information);
+
+    /**
+    * @brief Clears all logs currently displayed in the console.
+    */
     void clear();
 
 private:

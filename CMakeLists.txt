@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(SensorMonitor VERSION 0.1 LANGUAGES CXX)
+project(SensorMonitor VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -18,11 +18,12 @@ find_package(Qt6 REQUIRED COMPONENTS
     Test
 )
 
+# Handle translation files here.
 set(TS_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/Translations/SensorMonitor_fr_FR.ts
 )
 
-# Add ts file in the resource file
+# Translation files are dynamically added to the ressource prefix during compilation.
 qt_add_translations(SensorMonitor
     TS_FILES
         ${TS_FILES}
@@ -124,7 +125,7 @@ set_target_properties(SensorMonitor PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING
-        ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
@@ -162,7 +163,7 @@ function(add_qt_test TEST_NAME)
         )
 endfunction()
 
-# Handle unit tests
+# Handle tests
 add_qt_test(SensorsManagerTest
     Tests/SensorsManagerTest.cpp
     Back/Objects/SensorsManager.cpp

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SensorsEditorWidget</class>
- <widget class="QWidget" name="SensorsEditorWidget">
+ <class>SerialSensorsEditorWidget</class>
+ <widget class="QWidget" name="SerialSensorsEditorWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -1,15 +1,15 @@
-#ifndef SENSORSITEMDELEGATE_HPP
-#define SENSORSITEMDELEGATE_HPP
+#ifndef SERIALSENSORSITEMDELEGATE_H
+#define SERIALSENSORSITEMDELEGATE_H
 
 #include <QItemDelegate>
 #include <QObject>
 
-class SensorsItemDelegate : public QItemDelegate
+class SerialSensorsItemDelegate : public QItemDelegate
 {
     Q_OBJECT
 
 public:
-    explicit SensorsItemDelegate(QObject *parent = nullptr);
+    explicit SerialSensorsItemDelegate(QObject *parent = nullptr);
 
 public:
     virtual QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
@@ -20,4 +20,4 @@ public:
     virtual bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override;
 };
 
-#endif // SENSORSITEMDELEGATE_HPP
+#endif // SERIALSENSORSITEMDELEGATE_H

@@ -1,9 +1,10 @@
 #include "SensorUtility.hpp"
 #include <QVariant>
+#include <QUuid>
 
-bool SensorUtility::checkUniqueName(const QString &name, const QVector<SensorData> &sensorData, const QUuid &escapeSensor)
+bool SensorUtility::checkUniqueName(const QString &name, const QVector<SerialSensorData> &sensorData, const QUuid &escapeSensor)
 {
-    Q_FOREACH(const SensorData& sensor, sensorData)
+    Q_FOREACH(const SerialSensorData& sensor, sensorData)
     {
         if(sensor.sensor_guid != escapeSensor && sensor.sensor_name == name)
         {
@@ -14,9 +15,9 @@ bool SensorUtility::checkUniqueName(const QString &name, const QVector<SensorDat
     return true;
 }
 
-bool SensorUtility::checkUniqueSerialPort(const QString &serialPort, const QVector<SensorData> &sensorData, const QUuid &escapeSensor)
+bool SensorUtility::checkUniqueSerialPort(const QString &serialPort, const QVector<SerialSensorData> &sensorData, const QUuid &escapeSensor)
 {
-    Q_FOREACH(const SensorData& sensor, sensorData)
+    Q_FOREACH(const SerialSensorData& sensor, sensorData)
     {
         if(sensor.sensor_guid != escapeSensor && sensor.sensor_portName == serialPort && serialPort != INVALID_SERIAL_PORT)
         {
@@ -27,21 +28,25 @@ bool SensorUtility::checkUniqueSerialPort(const QString &serialPort, const QVect
     return true;
 }
 
-bool SensorUtility::variantListToSensorDataList(const QVariantList &variantList, QVector<SensorData> &sensorData)
+bool SensorUtility::variantListToSensorDataList(const QVariantList &variantList, QVector<SerialSensorData> &sensorData)
 {
     sensorData.clear();
     sensorData.resize(variantList.size());
 
     for(int i = 0; i < variantList.size(); i++)
     {
-        if(!variantList[i].canConvert<SensorData>())
+        if(!variantList[i].canConvert<SerialSensorData>())
         {
             return false;
         }
 
-        // Q_ASSERT(variantList[i].canConvert<SensorData>());
-        sensorData[i] = variantList[i].value<SensorData>();
+        sensorData[i] = variantList[i].value<SerialSensorData>();
     }
 
     return true;
+}
+
+QString SensorUtility::randomSensorName()
+{
+    return QUuid::createUuid().toString(QUuid::StringFormat::WithoutBraces);
 }

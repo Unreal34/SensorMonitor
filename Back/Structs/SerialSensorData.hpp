@@ -1,5 +1,5 @@
-#ifndef SENSORDATA_H
-#define SENSORDATA_H
+#ifndef SERIALSENSORDATA_H
+#define SERIALSENSORDATA_H
 
 #include <QString>
 #include <quuid.h>
@@ -7,19 +7,17 @@
 /**
  * @brief Struct used to handle new sensor in the sensor editor widget fort example.
  */
-struct SensorData
+struct SerialSensorData
 {
-    SensorData()
+    SerialSensorData()
         : sensor_guid(QUuid::createUuid())
-    {
-    }
+    {}
 
-    SensorData(const QString& _sensor_name, const QString & _sensor_portName)
+    SerialSensorData(const QString& _sensor_name, const QString & _sensor_portName)
         : sensor_guid(QUuid::createUuid())
         , sensor_name(_sensor_name)
         , sensor_portName(_sensor_portName)
-    {
-    }
+    {}
 
     bool isValid()
     {
@@ -38,4 +36,4 @@ struct SensorData
     QString sensor_portName = {};
 };
 
-#endif // SENSORDATA_H
+#endif // SERIALSENSORDATA_H

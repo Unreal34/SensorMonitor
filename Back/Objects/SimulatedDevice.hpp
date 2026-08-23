@@ -1,16 +1,16 @@
-#ifndef SIMULATEDSERIALDEVICE_HPP
-#define SIMULATEDSERIALDEVICE_HPP
+#ifndef SIMULATEDDEVICE_H
+#define SIMULATEDDEVICE_H
 
 #include <QIODevice>
 #include <QObject>
 
-class SimulatedSerialDevice : public QIODevice
+class SimulatedDevice : public QIODevice
 {
     Q_OBJECT
 
 public:
-    explicit SimulatedSerialDevice(QObject* parent = nullptr);
-    ~SimulatedSerialDevice();
+    explicit SimulatedDevice(QObject* parent = nullptr);
+    ~SimulatedDevice();
 
 public:
     void simulateIncomingData(const QByteArray& data);
@@ -31,4 +31,4 @@ private:
     QByteArray mData;
 };
 
-#endif // SIMULATEDSERIALDEVICE_HPP
+#endif // SIMULATEDDEVICE_H

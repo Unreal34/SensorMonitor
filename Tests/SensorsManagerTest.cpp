@@ -1,7 +1,7 @@
 #include <QtTest>
 
 #include "SensorsManager.hpp"
-#include "SimulatedSerialDevice.hpp"
+#include "SimulatedDevice.hpp"
 
 class SensorsManagerTest : public QObject
 {
@@ -14,14 +14,14 @@ private slots:
     void sensorNameMustBeUnique();
     void clearSensors();
     void openSensor();
-    void testErrorHandled();
-    void testDataReceived();
+    void errorHandled();
+    void dataReceived();
 };
 
 void SensorsManagerTest::registerSensor()
 {
     SensorsManager manager;
-    bool bSuccess = manager.registerNewSensor("COM3", "TemperatureSensor");
+    bool bSuccess = manager.registerNewSerialSensor("COM3", "TemperatureSensor");
 
     QVERIFY(bSuccess == true);
 }
@@ -30,20 +30,23 @@ void SensorsManagerTest::findSensorByName()
 {
     SensorsManager manager;
 
-    manager.registerNewSensor("COM3", "Sensor1");
+    manager.registerNewSerialSensor("COM3", "Sensor1");
 
-    SerialSensor* sensor = manager.findSensorByName("Sensor1");
+    Sensor* sensor = manager.findSensorByName("Sensor1");
 
     QVERIFY(sensor != nullptr);
     QCOMPARE(sensor->name(), QString("Sensor1"));
-    QCOMPARE(sensor->serialPortName(), QString("COM3"));
+
+    SerialSensor* serialSensor = qobject_cast<SerialSensor*>(sensor);
+    QVERIFY(serialSensor != nullptr);
+    QCOMPARE(serialSensor->serialPortName(), QString("COM3"));
 }
 
 void SensorsManagerTest::deleteSensor()
 {
     SensorsManager manager;
 
-    manager.registerNewSensor("COM3", "Sensor1");
+    manager.registerNewSerialSensor("COM3", "Sensor1");
     QVERIFY(manager.exists("Sensor1"));
 
     const bool result = manager.deleteSensorByName("Sensor1");
@@ -56,8 +59,8 @@ void SensorsManagerTest::sensorNameMustBeUnique()
 {
     SensorsManager manager;
 
-    bool bCheckSensor1 = manager.registerNewSensor("COM3", "Sensor1");
-    bool bCheckSensor2 = manager.registerNewSensor("COM4", "Sensor1");
+    bool bCheckSensor1 = manager.registerNewSerialSensor("COM3", "Sensor1");
+    bool bCheckSensor2 = manager.registerNewSerialSensor("COM4", "Sensor1");
 
     QVERIFY(bCheckSensor1 == true);
     QVERIFY(bCheckSensor2 == false);
@@ -67,8 +70,8 @@ void SensorsManagerTest::clearSensors()
 {
     SensorsManager manager;
 
-    manager.registerNewSensor("COM3", "Sensor1");
-    manager.registerNewSensor("COM4", "Sensor2");
+    manager.registerNewSerialSensor("COM3", "Sensor1");
+    manager.registerNewSerialSensor("COM4", "Sensor2");
 
     manager.clear();
 
@@ -78,19 +81,19 @@ void SensorsManagerTest::clearSensors()
 
 void SensorsManagerTest::openSensor()
 {
-    SimulatedSerialDevice device;
+    SimulatedDevice device;
     SerialSensor sensor(&device);
     bool bCheck = sensor.open();
 
     QVERIFY(bCheck == true);
 }
 
-void SensorsManagerTest::testErrorHandled()
+void SensorsManagerTest::errorHandled()
 {
     SensorsManager manager;
 
     QSignalSpy spy(&manager, &SensorsManager::errorHandled);
-    manager.registerNewSensor("COM3", "Sensor1");
+    manager.registerNewSerialSensor("COM3", "Sensor1");
 
     QCOMPARE(spy.count(), 1);
 
@@ -100,7 +103,7 @@ void SensorsManagerTest::testErrorHandled()
     QCOMPARE(arguments.at(1).toByteArray(), QByteArray("COM3"));
     QCOMPARE(static_cast<SensorsManager::ESensorsManagerError>(arguments.at(2).toInt()), SensorsManager::ESensorsManagerError::Success);
 
-    manager.registerNewSensor("COM2", "Sensor1");
+    manager.registerNewSerialSensor("COM2", "Sensor1");
 
     QCOMPARE(spy.count(), 2);
 
@@ -111,11 +114,11 @@ void SensorsManagerTest::testErrorHandled()
     QCOMPARE(static_cast<SensorsManager::ESensorsManagerError>(arguments.at(2).toInt()), SensorsManager::ESensorsManagerError::InvalidSensorName);
 }
 
-void SensorsManagerTest::testDataReceived()
+void SensorsManagerTest::dataReceived()
 {
     SensorsManager manager;
-    SimulatedSerialDevice* device = new SimulatedSerialDevice(this);
-    manager.registerNewSensor("COM3", "Sensor1", device);
+    SimulatedDevice* device = new SimulatedDevice(this);
+    manager.registerNewSerialSensor("COM3", "Sensor1", device);
 
     bool bOpened = manager.openSensor("Sensor1");
 

@@ -1,6 +1,6 @@
 #include "MainWindow.hpp"
 #include "Application.hpp"
-#include "Sensors.hpp"
+#include "Utility.hpp"
 #include "SensorsEditorDialog.hpp"
 
 #include <QDockWidget>
@@ -118,9 +118,9 @@ void MainWindow::toggleDataAcquisition()
             return;
         }
 
-        Q_FOREACH(const SensorData& current, sensorsManager()->savedSensorData())
+        Q_FOREACH(const SerialSensorData& current, sensorsManager()->savedSensorData())
         {
-            sensorsManager()->registerNewSensor(current.sensor_portName, current.sensor_name);
+            sensorsManager()->registerNewSerialSensor(current.sensor_portName, current.sensor_name);
             sensorsManager()->openSensor(current.sensor_name);
         }
     }

@@ -1,9 +1,10 @@
 #include "SensorsManager.hpp"
+#include <qassert.h>
 
 SensorsManager::SensorsManager(QObject *parent) : QObject { parent }
 {}
 
-bool SensorsManager::registerNewSensor(const QString &serialPortName, const QString &name, QIODevice* simulatedDevice)
+bool SensorsManager::registerNewSerialSensor(const QString &serialPortName, const QString &name, QIODevice* simulatedDevice)
 {
     if(exists(name))
     {
@@ -32,9 +33,12 @@ bool SensorsManager::registerNewSensor(const QString &serialPortName, const QStr
     }
 
     sensor->setName(name);
-    mSensors.push_back(sensor);
 
-    connect(sensor, &SerialSensor::dataReceived, this, [sensor, this](const QByteArray& data)
+    // add the new sensor in the suitable arrays.
+    mSensors.push_back(sensor);
+    mSerialSensors.push_back(sensor);
+
+    connect(sensor, &Sensor::dataReceived, this, [sensor, this](const QByteArray& data)
     {
         emit dataReceived(sensor->name(), data);
     });
@@ -44,9 +48,9 @@ bool SensorsManager::registerNewSensor(const QString &serialPortName, const QStr
     return true;
 }
 
-SerialSensor* SensorsManager::findSensorByName(const QString &name)
+Sensor* SensorsManager::findSensorByName(const QString &name)
 {
-    Q_FOREACH(SerialSensor* sensor, mSensors)
+    Q_FOREACH(Sensor* sensor, mSensors)
     {
         if(sensor->name() == name)
         {
@@ -59,7 +63,7 @@ SerialSensor* SensorsManager::findSensorByName(const QString &name)
 
 bool SensorsManager::openSensor(const QString &name)
 {
-    Q_FOREACH(SerialSensor* sensor, mSensors)
+    Q_FOREACH(Sensor* sensor, mSensors)
     {
         if(sensor->name() == name)
         {
@@ -72,13 +76,11 @@ bool SensorsManager::openSensor(const QString &name)
 
 bool SensorsManager::deleteSensorByName(const QString &name)
 {
-    Q_FOREACH(SerialSensor* sensor, mSensors)
+    Q_FOREACH(Sensor* sensor, mSensors)
     {
         if(sensor->name() == name)
         {
-            bool bSuccess = mSensors.removeOne(sensor);
-            Q_ASSERT(bSuccess);
-            delete sensor;
+            deleteSensor(sensor);
             return true;
         }
     }
@@ -88,17 +90,18 @@ bool SensorsManager::deleteSensorByName(const QString &name)
 
 void SensorsManager::clear()
 {
-    Q_FOREACH(SerialSensor* sensor, mSensors)
+    Q_FOREACH(Sensor* sensor, mSensors)
     {
         delete sensor;
     }
 
+    mSerialSensors.clear();
     mSensors.clear();
 }
 
 bool SensorsManager::exists(const QString &name)
 {
-    Q_FOREACH(SerialSensor* sensor, mSensors)
+    Q_FOREACH(Sensor* sensor, mSensors)
     {
         if(sensor->name() == name)
         {
@@ -107,4 +110,24 @@ bool SensorsManager::exists(const QString &name)
     }
 
     return false;
+}
+
+void SensorsManager::deleteSensor(Sensor *target)
+{
+    bool bSuccess = false;
+
+    switch(target->type())
+    {
+        case Sensor::Serial:
+            bSuccess = mSerialSensors.removeOne(target);
+            Q_ASSERT(bSuccess);
+        break;
+
+        default:
+            Q_ASSERT_X(false, __FUNCTION__, "Sensor not handled yet!");
+        break;
+    }
+
+    bSuccess = mSensors.removeOne(target);
+    Q_ASSERT(bSuccess);
 }

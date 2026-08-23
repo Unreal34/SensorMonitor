@@ -1,7 +1,7 @@
 #include <QtTest>
 
 #include "SerialSensor.hpp"
-#include "SimulatedSerialDevice.hpp"
+#include "SimulatedDevice.hpp"
 
 class SerialSensorTest : public QObject
 {
@@ -31,7 +31,7 @@ void SerialSensorTest::testPortName()
 
 void SerialSensorTest::testDataReceived()
 {
-    SimulatedSerialDevice device;
+    SimulatedDevice device;
     SerialSensor sensor(&device);
     sensor.open();
 

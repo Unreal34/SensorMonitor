@@ -100,35 +100,64 @@ Plase configure at least one sensor in the sensor editor tool.</source>
 <context>
     <name>SensorsEditorWidget</name>
     <message>
-        <location filename="../Front/Widgets/SensorsEditorWidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulaire</translation>
+        <translation type="vanished">Formulaire</translation>
     </message>
 </context>
 <context>
     <name>SensorsItemDelegate</name>
     <message>
-        <location filename="../Front/Tables/Delegate/SensorsItemDelegate.cpp" line="97"/>
         <source>Name is already used by one of the sensor.</source>
-        <translation>Ce nom est déja utilisé par un autre capteur.</translation>
+        <translation type="vanished">Ce nom est déja utilisé par un autre capteur.</translation>
     </message>
     <message>
-        <location filename="../Front/Tables/Delegate/SensorsItemDelegate.cpp" line="114"/>
         <source>Serial port is already used by a sensor.</source>
-        <translation>Ce port série est déja utilisé par un autre capteur.</translation>
+        <translation type="vanished">Ce port série est déja utilisé par un autre capteur.</translation>
     </message>
 </context>
 <context>
     <name>SensorsTableModel</name>
     <message>
-        <location filename="../Front/Tables/Model/SensorsTableModel.cpp" line="90"/>
         <source>Sensor name</source>
-        <translation>Nom du capteur</translation>
+        <translation type="vanished">Nom du capteur</translation>
     </message>
     <message>
-        <location filename="../Front/Tables/Model/SensorsTableModel.cpp" line="95"/>
         <source>Serial port</source>
-        <translation>Port série</translation>
+        <translation type="vanished">Port série</translation>
+    </message>
+</context>
+<context>
+    <name>SerialSensorsEditorWidget</name>
+    <message>
+        <location filename="../Front/Widgets/SerialSensorsEditorWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulaire</translation>
+    </message>
+</context>
+<context>
+    <name>SerialSensorsItemDelegate</name>
+    <message>
+        <location filename="../Front/Tables/Delegate/SerialSensorsItemDelegate.cpp" line="97"/>
+        <source>Name is already used by one of the sensor.</source>
+        <translation type="unfinished">Ce nom est déja utilisé par un autre capteur.</translation>
+    </message>
+    <message>
+        <location filename="../Front/Tables/Delegate/SerialSensorsItemDelegate.cpp" line="114"/>
+        <source>Serial port is already used by a sensor.</source>
+        <translation type="unfinished">Ce port série est déja utilisé par un autre capteur.</translation>
+    </message>
+</context>
+<context>
+    <name>SerialSensorsTableModel</name>
+    <message>
+        <location filename="../Front/Tables/Model/SerialSensorsTableModel.cpp" line="90"/>
+        <source>Sensor name</source>
+        <translation type="unfinished">Nom du capteur</translation>
+    </message>
+    <message>
+        <location filename="../Front/Tables/Model/SerialSensorsTableModel.cpp" line="95"/>
+        <source>Serial port</source>
+        <translation type="unfinished">Port série</translation>
     </message>
 </context>
 </TS>

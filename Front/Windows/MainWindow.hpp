@@ -24,6 +24,7 @@ private:
 private slots:
     /**
      * @brief Handles all data forwarded by the sensors.
+     * @note This is the main router where all data are catched and can be processed.
      * @param sensor
      * @param data
      */

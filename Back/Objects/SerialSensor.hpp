@@ -1,77 +1,46 @@
 #ifndef SERIALSENSOR_H
 #define SERIALSENSOR_H
 
+#include "Sensor.hpp"
 #include <QObject>
 #include <QSerialPort>
 
-class SerialSensor : public QObject
+class SerialSensor : public Sensor
 {
     Q_OBJECT
 public:
     SerialSensor(const QString& portName, QObject *parent = nullptr);
 
     /**
-     * @brief For testing purpose only.
+     * @brief For simulating purpose only.
      * @param device
      * @param parent
      */
-    SerialSensor(QIODevice* device, QObject *parent = nullptr);
-    ~SerialSensor();
+    SerialSensor(QIODevice* simulatedDevice, QObject *parent = nullptr);
 
 public:
     /**
-     * @brief Check if the device is opened.
+     * @brief Return the serial port name associated to this sensor.
      * @return
      */
-    bool isOpened() const { return mSerialPort->isOpen(); }
-
-public:
-    void setName(const QString& newName) { mName = newName; };
-    const QString& name() const { return mName; };
-    QString serialPortName() const { return mSerialPort->portName(); };
+    QString serialPortName() const { return serialPort()->portName(); };
 
     /**
-     * @brief Open the device in read-only mode.
+     * @brief Return serial port object pointer associated with this sensor.
      * @return
      */
-    bool open();
-
-private slots:
-
-    /**
-     * @brief Data received from the connected serial port is forwarded through this signal.
-     */
-    void onSerialDataReceived();
-
-signals:
-    /**
-     * @brief Triggered when a new data is available on the serial port associated with this sensor.
-     * @param data
-     */
-    void dataReceived(const QByteArray& data);
+    QSerialPort* serialPort() const
+    {
+        QSerialPort* serialPort = qobject_cast<QSerialPort*>(mDevice);
+        Q_ASSERT(serialPort);
+        return serialPort;
+    }
 
 private:
-
-    /**
-     * @brief The serial object used to handle the hardware connection between the sensor and this application.
-     */
-    QSerialPort* mSerialPort = nullptr;
-
     /**
      * @brief The serial port used by this sensor.
      */
     QString mPortName = {};
-
-    /**
-     * @brief The unique name of the sensor. Used to link a sensor with a serial port for example.
-     */
-    QString mName = {};
-
-    /**
-     * @brief Hold the device
-     * @note Should be a real serial port or a simulated device.
-     */
-    QIODevice* mDevice = nullptr;
 };
 
 #endif // SERIALSENSOR_H

@@ -1,7 +1,7 @@
 #include "SensorsEditorDialog.hpp"
 #include "SerialSensorData.hpp"
 
-SensorsEditorDialog::SensorsEditorDialog(const QVector<SerialSensorData>& sensors, bool *ok, QWidget* parent) : BaseDialog(ok, tr("Validate"), tr("Cancel"), parent)
+SerialSensorsEditorDialog::SerialSensorsEditorDialog(const QVector<SerialSensorData>& sensors, bool *ok, QWidget* parent) : BaseDialog(ok, tr("Validate"), tr("Cancel"), parent)
 , mSensorsEditorWidget(new SerialSensorsEditorWidget(sensors, this))
 {
     setWindowTitle(tr("Sensors and ports"));
@@ -9,7 +9,7 @@ SensorsEditorDialog::SensorsEditorDialog(const QVector<SerialSensorData>& sensor
     containLayout()->addWidget(mSensorsEditorWidget);
 }
 
-QVector<SerialSensorData> SensorsEditorDialog::sensorDataList()
+QVector<SerialSensorData> SerialSensorsEditorDialog::sensorDataList()
 {
     return mSensorsEditorWidget->updatedSensorData();
 }

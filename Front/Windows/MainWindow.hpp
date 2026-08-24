@@ -24,28 +24,29 @@ private:
 private slots:
     /**
      * @brief Handles all data forwarded by the sensors.
-     * @note This is the main router where all data are catched and can be processed.
+     * @note This is the main router where all data are catched to be processed.
      * @param sensor
      * @param data
      */
     void onDataReceived(const QString& sensor, const QByteArray& data);
 
     /**
-     * @brief Called when the user wants to edit the sensors and their associated serial ports.
+     * @brief Called when the user wants to edit the serial sensors and their associated serial ports.
      */
-    void openSensorsEditorDialog();
+    void openSerialSensorsEditorDialog();
 
     /**
      * @brief Starts or stops data acquisition using the sensor data list saved in the main manager.
+     * @note Only serial sensor are supported yet.
      */
     void toggleDataAcquisition();
 
     /**
-     * @brief Handle error received by sensors manager.
+     * @brief Handle error received by the sensors manager.
      * @param sensor
      * @param error
      */
-    void onErrorReceived(const QString& sensor, const QString& port, SensorsManager::ESensorsManagerError error);
+    void onErrorReceived(const QString& sensor, const QString& message, SensorsManager::ESensorsManagerError error);
 
 private:
     /**
@@ -59,7 +60,7 @@ private:
     SensorsManager* mSensorsManager = nullptr;
 
     /**
-     * @brief Indicates whether a data acquisition is currently in progress.
+     * @brief Indicates whether a data acquisition is currently in progress or not.
      */
     bool mAcquisitionStarted = false;
 };

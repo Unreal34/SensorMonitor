@@ -14,13 +14,22 @@ public:
         Serial,
         Tcp,
         Udp,
-        MqttTopic,
+        MqttTopic
     };
     Q_ENUM(ESensorType)
 
+    enum ESensorError
+    {
+        Success,
+        Disconnected,
+        OpeningIssue,
+        UnhandledError
+    };
+    Q_ENUM(ESensorError)
+
 public:
-    explicit Sensor(QObject *parent = nullptr);
-    explicit Sensor(QIODevice* simulatedDevice, QObject *parent = nullptr);
+    Sensor(QObject *parent = nullptr);
+    Sensor(QIODevice* simulatedDevice, QObject *parent = nullptr);
     ~Sensor();
 
 public:
@@ -31,7 +40,7 @@ public:
     void setName(const QString& newName) { mName = newName; };
 
     /**
-     * @brief Return the name of sensor.
+     * @brief Return the name of the sensor.
      * @return
      */
     const QString& name() const { return mName; };
@@ -50,27 +59,34 @@ public:
 
 public:
     /**
-     * @brief Open the device in read-only mode.
+     * @brief Open the device in read-only mode by default.
      * @return
      */
     bool open(QIODeviceBase::OpenModeFlag flag = QIODeviceBase::ReadOnly);
 
 private slots:
     /**
-     * @brief Data received from the connected serial port is forwarded through this signal.
+     * @brief Data received from the device is handled by this slot.
      */
     void onDataReceived();
 
 signals:
     /**
-     * @brief Triggered when a new data is available on the serial port associated with this sensor.
+     * @brief Triggered when a new data is available on the device associated with this sensor.
      * @param data
      */
     void dataReceived(const QByteArray& data);
 
+    /**
+     * @brief Triggered when an error code is available for this sensor.
+     * @param data
+     */
+    void errorHandled(const QString& sensorName, Sensor::ESensorError error, const QString& message);
+
 protected:
     /**
      * @brief The unique name of the sensor. Used to link a sensor with a serial port for example.
+     * @warning By design sensor name must be unique whend dealing with managers.
      */
     QString mName = {};
 

@@ -36,6 +36,13 @@ public:
         return serialPort;
     }
 
+private slots:
+    /**
+     * @brief Handle errors received by the serial port.
+     * @param error
+     */
+    void onSerialErrorReceived(QSerialPort::SerialPortError error);
+
 private:
     /**
      * @brief The serial port used by this sensor.

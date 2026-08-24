@@ -5,7 +5,7 @@
 #include <quuid.h>
 
 /**
- * @brief Struct used to handle new sensor in the sensor editor widget fort example.
+ * @brief Struct used to handle serial sensor data in the serial sensor editor widget for example.
  */
 struct SerialSensorData
 {

@@ -5,10 +5,10 @@
 #include "BaseDialog.hpp"
 #include "SerialSensorsEditorWidget.hpp"
 
-class SensorsEditorDialog : public BaseDialog
+class SerialSensorsEditorDialog : public BaseDialog
 {
 public:
-    explicit SensorsEditorDialog(const QVector<SerialSensorData>& sensors, bool *ok, QWidget* parent = nullptr);
+    explicit SerialSensorsEditorDialog(const QVector<SerialSensorData>& sensors, bool *ok, QWidget* parent = nullptr);
 
 public:
     /**

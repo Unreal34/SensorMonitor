@@ -17,7 +17,13 @@ Sensor::Sensor(QIODevice *simulatedDevice, QObject *parent) : QObject { parent }
 Sensor::~Sensor()
 {
     Q_ASSERT(mDevice);
-    mDevice->close();
+
+    disconnect(mDevice, nullptr, this, nullptr);
+
+    if (mDevice->isOpen())
+    {
+        mDevice->close();
+    }
 }
 
 bool Sensor::open(QIODevice::OpenModeFlag flag)
@@ -47,5 +53,3 @@ void Sensor::onDataReceived()
         emit dataReceived(data);
     }
 }
-
-

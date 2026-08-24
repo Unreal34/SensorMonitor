@@ -32,12 +32,11 @@ void SensorsManagerTest::findSensorByName()
 
     manager.registerNewSerialSensor("COM3", "Sensor1");
 
-    Sensor* sensor = manager.findSensorByName("Sensor1");
+    SerialSensor* serialSensor = manager.findSensorByName<SerialSensor>("Sensor1");
 
-    QVERIFY(sensor != nullptr);
-    QCOMPARE(sensor->name(), QString("Sensor1"));
+    QVERIFY(serialSensor != nullptr);
+    QCOMPARE(serialSensor->name(), QString("Sensor1"));
 
-    SerialSensor* serialSensor = qobject_cast<SerialSensor*>(sensor);
     QVERIFY(serialSensor != nullptr);
     QCOMPARE(serialSensor->serialPortName(), QString("COM3"));
 }
@@ -91,16 +90,16 @@ void SensorsManagerTest::openSensor()
 void SensorsManagerTest::errorHandled()
 {
     SensorsManager manager;
+    SimulatedDevice* device = new SimulatedDevice(this);
 
     QSignalSpy spy(&manager, &SensorsManager::errorHandled);
-    manager.registerNewSerialSensor("COM3", "Sensor1");
+    manager.registerNewSerialSensor("COM3", "Sensor1", device);
 
     QCOMPARE(spy.count(), 1);
 
     QList<QVariant> arguments = spy.at(0);
 
-    QCOMPARE(arguments.at(0).toByteArray(), QByteArray("Sensor1"));
-    QCOMPARE(arguments.at(1).toByteArray(), QByteArray("COM3"));
+    QCOMPARE(arguments.at(0).toByteArray(), QByteArray("Sensor1"));;
     QCOMPARE(static_cast<SensorsManager::ESensorsManagerError>(arguments.at(2).toInt()), SensorsManager::ESensorsManagerError::Success);
 
     manager.registerNewSerialSensor("COM2", "Sensor1");
@@ -110,7 +109,6 @@ void SensorsManagerTest::errorHandled()
     arguments = spy.at(1);
 
     QCOMPARE(arguments.at(0).toByteArray(), QByteArray("Sensor1"));
-    QCOMPARE(arguments.at(1).toByteArray(), QByteArray("COM2"));
     QCOMPARE(static_cast<SensorsManager::ESensorsManagerError>(arguments.at(2).toInt()), SensorsManager::ESensorsManagerError::InvalidSensorName);
 }
 

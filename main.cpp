@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     // app will uses english as main language.
     const QString locale = QLocale::system().name();
     TranslationManager trManager;
-    trManager.setLanguage("en_US");
+    trManager.setLanguage("fr_FR");
 
     // used to set the application style.
     QFile styleFile("://Styles/Dark.qss");

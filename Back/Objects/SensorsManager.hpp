@@ -15,6 +15,9 @@ class SensorsManager : public QObject
 public:
     enum ESensorsManagerError
     {
+        /**
+         * @todo More error handling.
+         */
         Success,
         InvalidSensorName,
         SensorError,
@@ -29,7 +32,7 @@ public:
     /**
      * @brief Creates and registers a new serial sensor with a name and a serial port.
      * @note Data will be ready to receive after calling openSensor().
-     * @warning Each sensor name must be unique!
+     * @warning Each sensor name must be unique in this manager!
      * @param serialPortName
      * @param name
      * @return
@@ -56,9 +59,9 @@ public:
 
         return nullptr;
     }
-
     /**
      * @brief Open the sensor device in Read-only mode.
+     * @todo Handle more open mode.
      * @param name
      * @return
      */
@@ -90,6 +93,7 @@ public:
 
     /**
      * @brief Save a list of SerialSensorData.
+     * @note Used to save data available in the serial sensors editor UI.
      * @param newSavedSensorsData
      */
      void setSavedSerialSensorsData(const QVector<SerialSensorData>& newSavedSensorsData) { mSavedSerialSensorsData = newSavedSensorsData; }
@@ -101,6 +105,10 @@ public:
      const QVector<SerialSensorData>& savedSerialSensorData() const { return mSavedSerialSensorsData; }
 
 private:
+     /**
+      * @brief Delete the sensor and remove it from the suitable lists.
+      * @param target
+      */
      void deleteSensor(Sensor* target);
 
 signals:

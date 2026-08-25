@@ -23,7 +23,7 @@ public slots:
     void clearAndFill(const QVariantList& data, int selectedIndex = 0);
 
     /**
-     * @brief append
+     * @brief Append a new entry to the table.
      * @param data
      * @param selectedIndex
      */

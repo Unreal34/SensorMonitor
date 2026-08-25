@@ -1,5 +1,5 @@
 #include "SerialPortCombobox.hpp"
-#include "SensorUtility.hpp"
+#include "Utility.hpp"
 #include <QSerialPortInfo>
 
 SerialPortCombobox::SerialPortCombobox(QWidget *parent) : QComboBox{parent}

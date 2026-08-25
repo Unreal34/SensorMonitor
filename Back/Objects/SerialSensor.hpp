@@ -12,7 +12,7 @@ public:
     SerialSensor(const QString& portName, QObject *parent = nullptr);
 
     /**
-     * @brief For simulating purpose only.
+     * @brief For simulating and testing purposes only.
      * @param device
      * @param parent
      */
@@ -26,7 +26,7 @@ public:
     QString serialPortName() const { return serialPort()->portName(); };
 
     /**
-     * @brief Return serial port object pointer associated with this sensor.
+     * @brief Return the serial port object pointer associated with this sensor.
      * @return
      */
     QSerialPort* serialPort() const
@@ -45,7 +45,7 @@ private slots:
 
 private:
     /**
-     * @brief The serial port used by this sensor.
+     * @brief The serial port name used by this sensor.
      */
     QString mPortName = {};
 };

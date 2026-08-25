@@ -1,5 +1,6 @@
 #include "SerialSensorsEditorWidget.hpp"
 #include "SerialSensorData.hpp"
+#include "Utility.hpp"
 #include "ui_SerialSensorsEditorWidget.h"
 #include <quuid.h>
 
@@ -39,7 +40,7 @@ void SerialSensorsEditorWidget::addNewSensor()
 
     SerialSensorData s1;
     s1.sensor_name = s1.sensor_guid.toString(QUuid::WithoutBraces);
-    s1.sensor_portName = "NONE";
+    s1.sensor_portName = INVALID_SERIAL_PORT;
 
     data.push_back(QVariant::fromValue(s1));
 

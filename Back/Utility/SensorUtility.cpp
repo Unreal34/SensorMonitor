@@ -1,4 +1,5 @@
 #include "SensorUtility.hpp"
+#include "Utility.hpp"
 #include <QVariant>
 #include <QUuid>
 

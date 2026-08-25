@@ -4,8 +4,6 @@
 #include "SerialSensorData.hpp"
 #include <QObject>
 
-#define INVALID_SERIAL_PORT "NONE"
-
 class SensorUtility : public QObject
 {
     Q_OBJECT

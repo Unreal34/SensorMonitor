@@ -30,6 +30,10 @@ signals:
     void newSensorSelected(const SerialSensorData& sensor);
 
 private:
+    /**
+     * @brief Hold the selected sensor.
+     * @note Sensor guid is null and isValid() return false if none of the sensors are selected.
+     */
     SerialSensorData mSelectedSensor;
 };
 

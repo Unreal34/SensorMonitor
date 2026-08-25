@@ -8,5 +8,6 @@
         <file>Icons/Cancel.png</file>
         <file>Icons/Play.png</file>
         <file>Icons/Stop.png</file>
+        <file>Styles/Dark.qss</file>
     </qresource>
 </RCC>

@@ -1,10 +1,10 @@
-#ifndef SENSORSTABLEMODEL_HPP
-#define SENSORSTABLEMODEL_HPP
+#ifndef SERIALSENSORSTABLEMODEL_H
+#define SERIALSENSORSTABLEMODEL_H
 
 #include <QObject>
 #include "BaseDataTableModel.hpp"
 
-class SensorsTableModel : public BaseDataTableModel
+class SerialSensorsTableModel : public BaseDataTableModel
 {
     Q_OBJECT
 public :
@@ -16,7 +16,7 @@ public :
     };
 
 public:
-    explicit SensorsTableModel(QObject *parent = nullptr);
+    explicit SerialSensorsTableModel(QObject *parent = nullptr);
 
 public:
     virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -26,4 +26,4 @@ public:
     virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
 };
 
-#endif // SENSORSTABLEMODEL_HPP
+#endif // SERIALSENSORSTABLEMODEL_H

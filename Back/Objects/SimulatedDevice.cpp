@@ -1,22 +1,21 @@
-#include "SimulatedSerialDevice.hpp"
+#include "SimulatedDevice.hpp"
 #include <qdebug.h>
 
-SimulatedSerialDevice::SimulatedSerialDevice(QObject *parent)
-    : QIODevice{parent}
+SimulatedDevice::SimulatedDevice(QObject *parent) : QIODevice{parent}
 {}
 
-SimulatedSerialDevice::~SimulatedSerialDevice()
+SimulatedDevice::~SimulatedDevice()
 {
     qDebug() << "~SimulatedSerialDevice()";
 }
 
-void SimulatedSerialDevice::simulateIncomingData(const QByteArray& data)
+void SimulatedDevice::simulateIncomingData(const QByteArray& data)
 {
     mData.append(data);
     emit readyRead();
 }
 
-qint64 SimulatedSerialDevice::readData(char* data, qint64 maxSize)
+qint64 SimulatedDevice::readData(char* data, qint64 maxSize)
 {
     const qint64 size = qMin(maxSize, static_cast<qint64>(mData.size()));
 
@@ -26,13 +25,13 @@ qint64 SimulatedSerialDevice::readData(char* data, qint64 maxSize)
     return size;
 }
 
-qint64 SimulatedSerialDevice::writeData(const char* data, qint64 maxSize)
+qint64 SimulatedDevice::writeData(const char* data, qint64 maxSize)
 {
     Q_UNUSED(data);
     return maxSize;
 }
 
-bool SimulatedSerialDevice::canReadLine() const
+bool SimulatedDevice::canReadLine() const
 {
     return mData.contains('\n');
 }

@@ -1,33 +1,35 @@
 #include <QtTest>
 
 #include "SensorUtility.hpp"
+#include "Utility.hpp"
 
 class SensorUtilityTest : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void checkUniqueName();
-    void checkUniqueSerialPort();
-    void variantListToSensorDataList();
+    void testUniqueName();
+    void testUniqueSerialPort();
+    void testVariantListToSensorDataList();
+    void testRandomSensorName();
 };
 
-void SensorUtilityTest::checkUniqueName()
+void SensorUtilityTest::testUniqueName()
 {
-    QVector<SensorData> testDataList;
-    testDataList.push_back(SensorData("Sensor1", "COM1"));
-    testDataList.push_back(SensorData("Sensor2", "COM2"));
+    QVector<SerialSensorData> testDataList;
+    testDataList.push_back(SerialSensorData("Sensor1", "COM1"));
+    testDataList.push_back(SerialSensorData("Sensor2", "COM2"));
 
-    SensorData testSensorData1("Sensor2", "COM0");
-    SensorData testSensorData2("Sensor3", "COM2");
+    SerialSensorData testSensorData1("Sensor2", "COM0");
+    SerialSensorData testSensorData2("Sensor3", "COM2");
 
     QVERIFY(SensorUtility::checkUniqueName(testSensorData1.sensor_name, testDataList, testSensorData1.sensor_guid) == false);
     QVERIFY(SensorUtility::checkUniqueName(testSensorData2.sensor_name, testDataList, testSensorData2.sensor_guid) == true);
 
     testDataList.clear();
-    testDataList.push_back(SensorData("Sensor2", "COM2"));
+    testDataList.push_back(SerialSensorData("Sensor2", "COM2"));
 
-    SensorData testSensorData3("Sensor2", "COM0");
+    SerialSensorData testSensorData3("Sensor2", "COM0");
 
     QVERIFY(SensorUtility::checkUniqueName(testSensorData3.sensor_name, testDataList, testSensorData3.sensor_guid) == false);
 
@@ -37,26 +39,26 @@ void SensorUtilityTest::checkUniqueName()
     QVERIFY(SensorUtility::checkUniqueName(testSensorData3.sensor_name, testDataList, testSensorData3.sensor_guid) == true);
 }
 
-void SensorUtilityTest::checkUniqueSerialPort()
+void SensorUtilityTest::testUniqueSerialPort()
 {
-    QVector<SensorData> testDataList;
-    testDataList.push_back(SensorData("Sensor1", "COM1"));
-    testDataList.push_back(SensorData("Sensor2", "COM2"));
-    testDataList.push_back(SensorData("Sensor3", "COM3"));
-    testDataList.push_back(SensorData("Sensor4", INVALID_SERIAL_PORT));
+    QVector<SerialSensorData> testDataList;
+    testDataList.push_back(SerialSensorData("Sensor1", "COM1"));
+    testDataList.push_back(SerialSensorData("Sensor2", "COM2"));
+    testDataList.push_back(SerialSensorData("Sensor3", "COM3"));
+    testDataList.push_back(SerialSensorData("Sensor4", INVALID_SERIAL_PORT));
 
-    SensorData testSensorData1("Sensor5", "COM1");
-    SensorData testSensorData2("Sensor6", "COM4");
-    SensorData testSensorData3("Sensor7", INVALID_SERIAL_PORT);
+    SerialSensorData testSensorData1("Sensor5", "COM1");
+    SerialSensorData testSensorData2("Sensor6", "COM4");
+    SerialSensorData testSensorData3("Sensor7", INVALID_SERIAL_PORT);
 
     QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData1.sensor_portName, testDataList, testSensorData1.sensor_guid) == false);
     QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData2.sensor_portName, testDataList, testSensorData2.sensor_guid) == true);
     QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData3.sensor_portName, testDataList, testSensorData3.sensor_guid) == true);
 
     testDataList.clear();
-    testDataList.push_back(SensorData("Sensor2", "COM2"));
+    testDataList.push_back(SerialSensorData("Sensor2", "COM2"));
 
-    SensorData testSensorData4("Sensor3", "COM2");
+    SerialSensorData testSensorData4("Sensor3", "COM2");
 
     QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData4.sensor_portName, testDataList, testSensorData4.sensor_guid) == false);
 
@@ -66,20 +68,27 @@ void SensorUtilityTest::checkUniqueSerialPort()
     QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData4.sensor_portName, testDataList, testSensorData4.sensor_guid) == true);
 }
 
-void SensorUtilityTest::variantListToSensorDataList()
+void SensorUtilityTest::testVariantListToSensorDataList()
 {
     QVariantList variantList;
-    variantList.push_back(QVariant::fromValue(SensorData("Sensor1", "COM1")));
-    variantList.push_back(QVariant::fromValue(SensorData("Sensor2", "COM2")));
-    variantList.push_back(QVariant::fromValue(SensorData("Sensor3", "COM3")));
-    variantList.push_back(QVariant::fromValue(SensorData("Sensor4", "COM4")));
+    variantList.push_back(QVariant::fromValue(SerialSensorData("Sensor1", "COM1")));
+    variantList.push_back(QVariant::fromValue(SerialSensorData("Sensor2", "COM2")));
+    variantList.push_back(QVariant::fromValue(SerialSensorData("Sensor3", "COM3")));
+    variantList.push_back(QVariant::fromValue(SerialSensorData("Sensor4", "COM4")));
 
-    QVector<SensorData> dataList;
+    QVector<SerialSensorData> dataList;
     QVERIFY(SensorUtility::variantListToSensorDataList(variantList, dataList) == true);
     QVERIFY(dataList.size() == 4);
 
     variantList.push_back(QVariant::fromValue(QString("Test")));
     QVERIFY(SensorUtility::variantListToSensorDataList(variantList, dataList) == false);
+}
+
+void SensorUtilityTest::testRandomSensorName()
+{
+    QString name = SensorUtility::randomSensorName();
+
+    QVERIFY(!QUuid::fromString(name).isNull());
 }
 
 QTEST_MAIN(SensorUtilityTest)

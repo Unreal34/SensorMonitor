@@ -3,6 +3,9 @@
 
 #include <QCombobox>
 
+/**
+ * @brief Retrieve a list of serial port available on this machine then fill the combobox.
+ */
 class SerialPortCombobox : public QComboBox
 {
     Q_OBJECT

@@ -1,7 +1,8 @@
 #include "MainWindow.hpp"
 #include "Application.hpp"
-#include "Sensors.hpp"
+#include "Utility.hpp"
 #include "SensorsEditorDialog.hpp"
+#include "ApplicationLogger.hpp"
 
 #include <QDockWidget>
 #include <QSerialPortInfo>
@@ -10,6 +11,7 @@
 #include <QToolBar>
 #include <QMessageBox>
 #include <QApplication>
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 , mConsole(new ConsoleWidget(this))
@@ -29,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     connect(mSensorsManager, &SensorsManager::dataReceived, this, &MainWindow::onDataReceived);
     connect(mSensorsManager, &SensorsManager::errorHandled, this, &MainWindow::onErrorReceived);
+
+    setCentralWidget(new QWidget(this));
 }
 
 void MainWindow::initializeActions()
@@ -52,7 +56,7 @@ void MainWindow::initializeActions()
     mainToolBar->addAction(actionEditSensors);
 
     connect(actionPlayStopAcquisition, &QAction::triggered, this, &MainWindow::toggleDataAcquisition);
-    connect(actionEditSensors, &QAction::triggered, this, &MainWindow::openSensorsEditorDialog);
+    connect(actionEditSensors, &QAction::triggered, this, &MainWindow::openSerialSensorsEditorDialog);
     connect(actionExit, &QAction::triggered, qApp, &QApplication::quit);
 }
 
@@ -88,18 +92,18 @@ void MainWindow::onDataReceived(const QString &sensor, const QByteArray &data)
     }
 }
 
-void MainWindow::openSensorsEditorDialog()
+void MainWindow::openSerialSensorsEditorDialog()
 {
     Q_ASSERT(mSensorsManager);
 
     bool bOk;
-    SensorsEditorDialog dialog(mSensorsManager->savedSensorData(), &bOk, this);
+    SerialSensorsEditorDialog dialog(mSensorsManager->savedSerialSensorData(), &bOk, this);
     dialog.exec();
 
     if(bOk)
     {
         // Cache sensor data in the appropriate manager for later retrieval.
-        sensorsManager()->setSavedSensorsData(dialog.sensorDataList());
+        sensorsManager()->setSavedSerialSensorsData(dialog.sensorDataList());
     }
 }
 
@@ -112,15 +116,15 @@ void MainWindow::toggleDataAcquisition()
 
     if(bValue)
     {
-        if(sensorsManager()->savedSensorData().size() <= 0)
+        if(sensorsManager()->savedSerialSensorData().size() <= 0)
         {
             QMessageBox::critical(this, APPLICATION_NAME, tr("No sensor available!\nPlase configure at least one sensor in the sensor editor tool."), QMessageBox::Ok);
             return;
         }
 
-        Q_FOREACH(const SensorData& current, sensorsManager()->savedSensorData())
+        Q_FOREACH(const SerialSensorData& current, sensorsManager()->savedSerialSensorData())
         {
-            sensorsManager()->registerNewSensor(current.sensor_portName, current.sensor_name);
+            sensorsManager()->registerNewSerialSensor(current.sensor_portName, current.sensor_name);
             sensorsManager()->openSensor(current.sensor_name);
         }
     }
@@ -134,27 +138,10 @@ void MainWindow::toggleDataAcquisition()
     action->setText(mAcquisitionStarted ? tr("Stop data acquisition") : tr("Start data acquisition"));
 }
 
-void MainWindow::onErrorReceived(const QString &sensor, const QString& port, SensorsManager::ESensorsManagerError error)
+void MainWindow::onErrorReceived(const QString &sensor, const QString& message, SensorsManager::ESensorsManagerError error)
 {
-    QString message = {};
-    ConsoleWidget::ELogType logType = ConsoleWidget::ELogType::Error;
+    mConsole->appendLog(message, error == SensorsManager::Success ? ConsoleWidget::ELogType::Success : ConsoleWidget::ELogType::Error);
 
-    switch(error)
-    {
-        case SensorsManager::Success:
-            logType = ConsoleWidget::ELogType::Success;
-            message = QString(tr("Using serial port %1 for sensor %2.")).arg(port, sensor);
-            break;
-        case SensorsManager::SerialPortIssue:
-            message = QString(tr("Unable to open serial port %1 for sensor %2.")).arg(port, sensor);
-            break;
-        case SensorsManager::InvalidSensorName:
-            message = QString(tr("Invalid sensor name %1.")).arg(sensor);
-            break;
-        case SensorsManager::Error:
-            message = QString(tr("Error on serial port %1 and sensor %2.")).arg(port, sensor);
-            break;
-    }
-
-    mConsole->appendLog(message, logType);
+    // log message to Logs.txt file.
+    ApplicationLogger::log(message, error == SensorsManager::Success ? ApplicationLogger::ELogType::Success : ApplicationLogger::ELogType::Error);
 }

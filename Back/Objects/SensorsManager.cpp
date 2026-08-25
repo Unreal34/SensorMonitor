@@ -1,13 +1,14 @@
 #include "SensorsManager.hpp"
+#include <qassert.h>
 
 SensorsManager::SensorsManager(QObject *parent) : QObject { parent }
 {}
 
-bool SensorsManager::registerNewSensor(const QString &serialPortName, const QString &name, QIODevice* simulatedDevice)
+bool SensorsManager::registerNewSerialSensor(const QString &serialPortName, const QString &name, QIODevice* simulatedDevice)
 {
     if(exists(name))
     {
-        emit errorHandled(name, serialPortName, ESensorsManagerError::InvalidSensorName);
+        emit errorHandled(name, QString(tr("Sensor name %1 already exists.")).arg(name), ESensorsManagerError::InvalidSensorName);
         return false;
     }
 
@@ -26,40 +27,36 @@ bool SensorsManager::registerNewSensor(const QString &serialPortName, const QStr
 
     if(name.isNull() || name.isEmpty())
     {
+        emit errorHandled(name, QString(tr("Invalid sensor name %1.")).arg(name), ESensorsManagerError::InvalidSensorName);
         delete sensor;
-        emit errorHandled(name, serialPortName, ESensorsManagerError::InvalidSensorName);
         return false;
     }
 
     sensor->setName(name);
-    mSensors.push_back(sensor);
 
-    connect(sensor, &SerialSensor::dataReceived, this, [sensor, this](const QByteArray& data)
+    // add the new sensor in the suitable arrays.
+    mSensors.push_back(sensor);
+    mSerialSensors.push_back(sensor);
+
+    connect(sensor, &Sensor::dataReceived, this, [sensor, this](const QByteArray& data)
     {
         emit dataReceived(sensor->name(), data);
     });
 
-    emit errorHandled(name, serialPortName, ESensorsManagerError::Success);
+    // connect to sensor error handler.
+    connect(sensor, &Sensor::errorHandled, this, &SensorsManager::onSensorErrorReceived);
+
+    if(simulatedDevice)
+    {
+        emit errorHandled(name, QString(tr("Sensor %1 is ready!")).arg(name), ESensorsManagerError::Success);
+    }
 
     return true;
 }
 
-SerialSensor* SensorsManager::findSensorByName(const QString &name)
-{
-    Q_FOREACH(SerialSensor* sensor, mSensors)
-    {
-        if(sensor->name() == name)
-        {
-            return sensor;
-        }
-    }
-
-    return nullptr;
-}
-
 bool SensorsManager::openSensor(const QString &name)
 {
-    Q_FOREACH(SerialSensor* sensor, mSensors)
+    Q_FOREACH(Sensor* sensor, mSensors)
     {
         if(sensor->name() == name)
         {
@@ -72,13 +69,11 @@ bool SensorsManager::openSensor(const QString &name)
 
 bool SensorsManager::deleteSensorByName(const QString &name)
 {
-    Q_FOREACH(SerialSensor* sensor, mSensors)
+    Q_FOREACH(Sensor* sensor, mSensors)
     {
         if(sensor->name() == name)
         {
-            bool bSuccess = mSensors.removeOne(sensor);
-            Q_ASSERT(bSuccess);
-            delete sensor;
+            deleteSensor(sensor);
             return true;
         }
     }
@@ -88,17 +83,18 @@ bool SensorsManager::deleteSensorByName(const QString &name)
 
 void SensorsManager::clear()
 {
-    Q_FOREACH(SerialSensor* sensor, mSensors)
+    Q_FOREACH(Sensor* sensor, mSensors)
     {
         delete sensor;
     }
 
+    mSerialSensors.clear();
     mSensors.clear();
 }
 
 bool SensorsManager::exists(const QString &name)
 {
-    Q_FOREACH(SerialSensor* sensor, mSensors)
+    Q_FOREACH(Sensor* sensor, mSensors)
     {
         if(sensor->name() == name)
         {
@@ -107,4 +103,39 @@ bool SensorsManager::exists(const QString &name)
     }
 
     return false;
+}
+
+void SensorsManager::deleteSensor(Sensor *target)
+{
+    bool bSuccess = false;
+
+    switch(target->type())
+    {
+        case Sensor::Serial:
+            // remove the sensor from the serial sensors list first.
+            bSuccess = mSerialSensors.removeOne(target);
+            Q_ASSERT(bSuccess);
+        break;
+
+        default:
+            Q_ASSERT_X(false, __FUNCTION__, "Sensor not handled yet!");
+        break;
+    }
+
+    // remove from the generic sensor array too.
+    bSuccess = mSensors.removeOne(target);
+    Q_ASSERT(bSuccess);
+}
+
+void SensorsManager::onSensorErrorReceived(const QString& sensorName, Sensor::ESensorError error, const QString &message)
+{
+    switch (error)
+    {
+        case Sensor::Success:
+            emit errorHandled(sensorName, QString(tr("Sensor %1 is ready!")).arg(sensorName), ESensorsManagerError::Success);
+            break;
+        default:
+            emit errorHandled(sensorName, QString(tr("Error occured on sensor %1 - what: %2")).arg(sensorName, message), ESensorsManagerError::SensorError);
+            break;
+    }
 }

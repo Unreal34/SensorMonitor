@@ -1,13 +1,13 @@
-#include "SensorsTableModel.hpp"
-#include "SensorData.hpp"
+#include "SerialSensorsTableModel.hpp"
+#include "SerialSensorData.hpp"
 
 
 #include <QIcon>
 
-SensorsTableModel::SensorsTableModel(QObject *parent) : BaseDataTableModel{parent}
+SerialSensorsTableModel::SerialSensorsTableModel(QObject *parent) : BaseDataTableModel{parent}
 {}
 
-Qt::ItemFlags SensorsTableModel::flags(const QModelIndex &index) const
+Qt::ItemFlags SerialSensorsTableModel::flags(const QModelIndex &index) const
 {
     switch(index.column())
     {
@@ -29,12 +29,12 @@ Qt::ItemFlags SensorsTableModel::flags(const QModelIndex &index) const
     return Qt::ItemIsEnabled;
 }
 
-int SensorsTableModel::columnCount(const QModelIndex &parent) const
+int SerialSensorsTableModel::columnCount(const QModelIndex &parent) const
 {
     return parent.isValid() ? 0 : Count;
 }
 
-QVariant SensorsTableModel::data(const QModelIndex &index, int role) const
+QVariant SerialSensorsTableModel::data(const QModelIndex &index, int role) const
 {
     if(!index.isValid() || index.row() < 0 || index.row() >= mData.count())
     {
@@ -47,12 +47,12 @@ QVariant SensorsTableModel::data(const QModelIndex &index, int role) const
         {
             case Column::SensorName:
             {
-                return mData[index.row()].value<SensorData>().sensor_name;
+                return mData[index.row()].value<SerialSensorData>().sensor_name;
             }
 
             case Column::SerialPortName:
             {
-                return mData[index.row()].value<SensorData>().sensor_portName;
+                return mData[index.row()].value<SerialSensorData>().sensor_portName;
             }
         }
     }
@@ -79,7 +79,7 @@ QVariant SensorsTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant SensorsTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant SerialSensorsTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole)
     {
@@ -119,7 +119,7 @@ QVariant SensorsTableModel::headerData(int section, Qt::Orientation orientation,
     return QAbstractTableModel::headerData(section, orientation, role);
 }
 
-bool SensorsTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool SerialSensorsTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!index.isValid() || index.row() < 0 || index.row() >= mData.count())
     {
@@ -131,7 +131,7 @@ bool SensorsTableModel::setData(const QModelIndex &index, const QVariant &value,
         return false;
     }
 
-    SensorData data = mData[index.row()].value<SensorData>();
+    SerialSensorData data = mData[index.row()].value<SerialSensorData>();
 
     switch(index.column())
     {

@@ -3,22 +3,22 @@
 
 #include <QObject>
 #include "BaseDialog.hpp"
-#include "SensorsEditorWidget.hpp"
+#include "SerialSensorsEditorWidget.hpp"
 
-class SensorsEditorDialog : public BaseDialog
+class SerialSensorsEditorDialog : public BaseDialog
 {
 public:
-    explicit SensorsEditorDialog(const QVector<SensorData>& sensors, bool *ok, QWidget* parent = nullptr);
+    explicit SerialSensorsEditorDialog(const QVector<SerialSensorData>& sensors, bool *ok, QWidget* parent = nullptr);
 
 public:
     /**
-     * @brief Return the list of SensorData available.
+     * @brief Return the list of SerialSensorData available.
      * @return
      */
-    QVector<SensorData> sensorDataList();
+    QVector<SerialSensorData> sensorDataList();
 
 private:
-    SensorsEditorWidget* mSensorsEditorWidget = nullptr;
+    SerialSensorsEditorWidget* mSensorsEditorWidget = nullptr;
 };
 
 #endif // SENSORSEDITORDIALOG_H

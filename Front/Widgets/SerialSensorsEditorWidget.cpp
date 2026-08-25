@@ -1,11 +1,12 @@
-#include "SensorsEditorWidget.hpp"
-#include "SensorData.hpp"
-#include "ui_SensorsEditorWidget.h"
+#include "SerialSensorsEditorWidget.hpp"
+#include "SerialSensorData.hpp"
+#include "Utility.hpp"
+#include "ui_SerialSensorsEditorWidget.h"
 #include <quuid.h>
 
-SensorsEditorWidget::SensorsEditorWidget(const QVector<SensorData>& sensors, QWidget *parent) : QWidget(parent)
-, ui(new Ui::SensorsEditorWidget)
-, mSensorsTableView(new SensorsTableView(this))
+SerialSensorsEditorWidget::SerialSensorsEditorWidget(const QVector<SerialSensorData>& sensors, QWidget *parent) : QWidget(parent)
+, ui(new Ui::SerialSensorsEditorWidget)
+, mSensorsTableView(new SerialSensorsTableView(this))
 {
     ui->setupUi(this);
     ui->mMainLayout->insertWidget(0, mSensorsTableView);
@@ -15,7 +16,7 @@ SensorsEditorWidget::SensorsEditorWidget(const QVector<SensorData>& sensors, QWi
 
     QVariantList datalist;
 
-    Q_FOREACH(const SensorData& data, sensors)
+    Q_FOREACH(const SerialSensorData& data, sensors)
     {
         datalist.push_back(QVariant::fromValue(data));
     }
@@ -23,30 +24,30 @@ SensorsEditorWidget::SensorsEditorWidget(const QVector<SensorData>& sensors, QWi
     mSensorsTableView->clearAndFill(datalist, 0);
 }
 
-SensorsEditorWidget::~SensorsEditorWidget()
+SerialSensorsEditorWidget::~SerialSensorsEditorWidget()
 {
     delete ui;
 }
 
-QVector<SensorData> SensorsEditorWidget::updatedSensorData()
+QVector<SerialSensorData> SerialSensorsEditorWidget::updatedSensorData()
 {
     return mSensorsTableView->sensorDataList();
 }
 
-void SensorsEditorWidget::addNewSensor()
+void SerialSensorsEditorWidget::addNewSensor()
 {
     QVariantList data;
 
-    SensorData s1;
+    SerialSensorData s1;
     s1.sensor_name = s1.sensor_guid.toString(QUuid::WithoutBraces);
-    s1.sensor_portName = "NONE";
+    s1.sensor_portName = INVALID_SERIAL_PORT;
 
     data.push_back(QVariant::fromValue(s1));
 
     mSensorsTableView->append(data, 0);
 }
 
-void SensorsEditorWidget::deleteCurrentSelectedSensor()
+void SerialSensorsEditorWidget::deleteCurrentSelectedSensor()
 {
     mSensorsTableView->deleteSelectedSensor();
 }

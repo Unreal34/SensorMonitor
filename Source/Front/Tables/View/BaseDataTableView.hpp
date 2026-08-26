@@ -2,7 +2,7 @@
 #define BASEDATATABLEVIEW_HPP
 
 #include <QTableView>
-#include "BaseDataTableModel.hpp"
+#include "Front/Tables/Model/BaseDataTableModel.hpp"
 
 class BaseDataTableView : public QTableView
 {

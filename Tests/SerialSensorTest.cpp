@@ -1,7 +1,7 @@
 #include <QtTest>
 
-#include "SerialSensor.hpp"
-#include "SimulatedDevice.hpp"
+#include "Back/Objects/SerialSensor.hpp"
+#include "Back/Objects/SimulatedDevice.hpp"
 
 class SerialSensorTest : public QObject
 {

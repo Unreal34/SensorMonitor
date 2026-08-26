@@ -1,12 +1,12 @@
 #include "SerialSensorsItemDelegate.hpp"
-#include "Application.hpp"
-#include "SerialSensorData.hpp"
-#include "SerialSensorsTableModel.hpp"
-#include "SerialPortCombobox.hpp"
+#include "Back/Utility/Application.hpp"
+#include "Back/Structs/SerialSensorData.hpp"
+#include "Front/Tables/Model/SerialSensorsTableModel.hpp"
+#include "Front/Tables/Widgets/SerialPortCombobox.hpp"
 #include <QTextOption>
 #include <QPainter>
 #include <qserialportinfo.h>
-#include <SensorUtility.hpp>
+#include "Back/Utility/SensorUtility.hpp"
 #include <QMessageBox>
 #include <QLineEdit>
 

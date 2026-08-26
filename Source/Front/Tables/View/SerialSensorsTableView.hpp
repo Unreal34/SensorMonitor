@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "BaseDataTableView.hpp"
-#include "SerialSensorData.hpp"
+#include "Back/Structs/SerialSensorData.hpp"
 
 class SerialSensorsTableView : public BaseDataTableView
 {

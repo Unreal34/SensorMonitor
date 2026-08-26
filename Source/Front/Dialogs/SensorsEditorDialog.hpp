@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "BaseDialog.hpp"
-#include "SerialSensorsEditorWidget.hpp"
+#include "Front/Widgets/SerialSensorsEditorWidget.hpp"
 
 class SerialSensorsEditorDialog : public BaseDialog
 {

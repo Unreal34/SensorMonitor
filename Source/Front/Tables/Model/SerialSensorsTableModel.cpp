@@ -1,6 +1,5 @@
 #include "SerialSensorsTableModel.hpp"
-#include "SerialSensorData.hpp"
-
+#include "Back/Structs/SerialSensorData.hpp"
 
 #include <QIcon>
 

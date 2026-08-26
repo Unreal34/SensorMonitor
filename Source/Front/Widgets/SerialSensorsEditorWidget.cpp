@@ -1,6 +1,6 @@
 #include "SerialSensorsEditorWidget.hpp"
-#include "SerialSensorData.hpp"
-#include "Utility.hpp"
+#include "Back/Structs/SerialSensorData.hpp"
+#include "Back/Utility/Utility.hpp"
 #include "ui_SerialSensorsEditorWidget.h"
 #include <quuid.h>
 

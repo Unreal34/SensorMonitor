@@ -1,7 +1,7 @@
 #include "SerialSensorsTableView.hpp"
-#include "SensorUtility.hpp"
-#include "SerialSensorsItemDelegate.hpp"
-#include "SerialSensorsTableModel.hpp"
+#include "Back/Utility/SensorUtility.hpp"
+#include "Front/Tables/Delegate/SerialSensorsItemDelegate.hpp"
+#include "Front/Tables/Model/SerialSensorsTableModel.hpp"
 
 #include <QHeaderView>
 

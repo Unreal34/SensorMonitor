@@ -1,5 +1,6 @@
-#include "MainWindow.hpp"
-#include "TranslationManager.hpp"
+
+#include "Back/Objects/TranslationManager.hpp"
+#include "Front/Windows/MainWindow.hpp"
 
 #include <QApplication>
 #include <QFile>

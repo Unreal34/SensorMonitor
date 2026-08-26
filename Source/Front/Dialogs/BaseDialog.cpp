@@ -1,5 +1,5 @@
 #include "BaseDialog.hpp"
-#include "Application.hpp"
+#include "Back/Utility/Application.hpp"
 
 BaseDialog::BaseDialog(bool *ok, const QString& validateLabel, const QString& cancelLabel, QWidget* parent) : QDialog(parent)
 , mValidate(new QPushButton(QIcon("://Icons/Checked.png"), validateLabel, this))

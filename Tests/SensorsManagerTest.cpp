@@ -1,7 +1,7 @@
 #include <QtTest>
 
-#include "SensorsManager.hpp"
-#include "SimulatedDevice.hpp"
+#include "Back/Objects/SensorsManager.hpp"
+#include "Back/Objects/SimulatedDevice.hpp"
 
 class SensorsManagerTest : public QObject
 {

@@ -1,7 +1,7 @@
 #ifndef SENSORUTILITY_HPP
 #define SENSORUTILITY_HPP
 
-#include "SerialSensorData.hpp"
+#include "Back/Structs/SerialSensorData.hpp"
 #include <QObject>
 
 class SensorUtility : public QObject

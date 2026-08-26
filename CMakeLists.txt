@@ -31,69 +31,56 @@ qt_add_translations(SensorMonitor
 )
 
 set(PROJECT_SOURCES
-    main.cpp
-
-    Back/Objects/Sensor.hpp
-    Back/Objects/Sensor.cpp
-    Back/Objects/SerialSensor.hpp
-    Back/Objects/SerialSensor.cpp
-    Back/Objects/SensorsManager.hpp
-    Back/Objects/SensorsManager.cpp
-    Back/Structs/SerialSensorData.hpp
-    Back/Utility/Utility.hpp
-    Back/Utility/Application.hpp
-    Back/Utility/ApplicationLogger.hpp
-    Back/Utility/ApplicationLogger.cpp
-
-    Back/Utility/SensorUtility.hpp
-    Back/Utility/SensorUtility.cpp
-    Front/Tables/Model/BaseDataTableModel.hpp
-    Front/Tables/Model/BaseDataTableModel.cpp
-    Front/Tables/Model/SerialSensorsTableModel.hpp
-    Front/Tables/Model/SerialSensorsTableModel.cpp
-    Front/Tables/View/BaseDataTableView.hpp
-    Front/Tables/View/BaseDataTableView.cpp
-    Front/Tables/View/SerialSensorsTableView.hpp
-    Front/Tables/View/SerialSensorsTableView.cpp
-    Front/Tables/Delegate/SerialSensorsItemDelegate.hpp
-    Front/Tables/Delegate/SerialSensorsItemDelegate.cpp
-    Front/Tables/Widgets/SerialPortCombobox.hpp
-    Front/Tables/Widgets/SerialPortCombobox.cpp
-    Front/Dialogs/BaseDialog.hpp
-    Front/Dialogs/BaseDialog.cpp
-    Front/Dialogs/SensorsEditorDialog.hpp
-    Front/Dialogs/SensorsEditorDialog.cpp
-    Front/Widgets/ConsoleWidget.hpp
-    Front/Widgets/ConsoleWidget.cpp
-    Front/Widgets/SerialSensorsEditorWidget.hpp
-    Front/Widgets/SerialSensorsEditorWidget.cpp
-    Front/Widgets/SerialSensorsEditorWidget.ui
-    Front/Windows/MainWindow.hpp
-    Front/Windows/MainWindow.cpp
-    Back/Objects/TranslationManager.hpp Back/Objects/TranslationManager.cpp
+    Source/main.cpp
+    Source/Back/Objects/Sensor.hpp
+    Source/Back/Objects/Sensor.cpp
+    Source/Back/Objects/SerialSensor.hpp
+    Source/Back/Objects/SerialSensor.cpp
+    Source/Back/Objects/SensorsManager.hpp
+    Source/Back/Objects/SensorsManager.cpp
+    Source/Back/Structs/SerialSensorData.hpp
+    Source/Back/Utility/Utility.hpp
+    Source/Back/Utility/Application.hpp
+    Source/Back/Utility/ApplicationLogger.hpp
+    Source/Back/Utility/ApplicationLogger.cpp
+    Source/Back/Utility/SensorUtility.hpp
+    Source/Back/Utility/SensorUtility.cpp
+    Source/Front/Tables/Model/BaseDataTableModel.hpp
+    Source/Front/Tables/Model/BaseDataTableModel.cpp
+    Source/Front/Tables/Model/SerialSensorsTableModel.hpp
+    Source/Front/Tables/Model/SerialSensorsTableModel.cpp
+    Source/Front/Tables/View/BaseDataTableView.hpp
+    Source/Front/Tables/View/BaseDataTableView.cpp
+    Source/Front/Tables/View/SerialSensorsTableView.hpp
+    Source/Front/Tables/View/SerialSensorsTableView.cpp
+    Source/Front/Tables/Delegate/SerialSensorsItemDelegate.hpp
+    Source/Front/Tables/Delegate/SerialSensorsItemDelegate.cpp
+    Source/Front/Tables/Widgets/SerialPortCombobox.hpp
+    Source/Front/Tables/Widgets/SerialPortCombobox.cpp
+    Source/Front/Dialogs/BaseDialog.hpp
+    Source/Front/Dialogs/BaseDialog.cpp
+    Source/Front/Dialogs/SensorsEditorDialog.hpp
+    Source/Front/Dialogs/SensorsEditorDialog.cpp
+    Source/Front/Widgets/ConsoleWidget.hpp
+    Source/Front/Widgets/ConsoleWidget.cpp
+    Source/Front/Widgets/SerialSensorsEditorWidget.hpp
+    Source/Front/Widgets/SerialSensorsEditorWidget.cpp
+    Source/Front/Widgets/SerialSensorsEditorWidget.ui
+    Source/Front/Windows/MainWindow.hpp
+    Source/Front/Windows/MainWindow.cpp
+    Source/Back/Objects/TranslationManager.hpp Source/Back/Objects/TranslationManager.cpp
     Resource.qrc
 )
 
 qt_add_executable(SensorMonitor
     MANUAL_FINALIZATION
     ${PROJECT_SOURCES}
-    Back/Objects/SimulatedDevice.hpp Back/Objects/SimulatedDevice.cpp
-    Back/Objects/Sensor.hpp Back/Objects/Sensor.cpp
+    Source/Back/Objects/SimulatedDevice.hpp Source/Back/Objects/SimulatedDevice.cpp
+    Source/Back/Objects/Sensor.hpp Source/Back/Objects/Sensor.cpp
 )
 
 target_include_directories(SensorMonitor PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Tables/View
-    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Tables/Model
-    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Tables/Delegate
-    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Tables/Widgets
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Dialogs
-    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Widgets
-    ${CMAKE_CURRENT_SOURCE_DIR}/Front/Windows
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Back/Structs
-    ${CMAKE_CURRENT_SOURCE_DIR}/Back/Objects
-    ${CMAKE_CURRENT_SOURCE_DIR}/Back/Utility
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 
 target_link_libraries(SensorMonitor PRIVATE
@@ -147,46 +134,43 @@ function(add_qt_test TEST_NAME)
     )
 
     target_include_directories(${TEST_NAME} PRIVATE
-            ${CMAKE_CURRENT_SOURCE_DIR}/Back/Structs
-            ${CMAKE_CURRENT_SOURCE_DIR}/Back/Objects
-            ${CMAKE_CURRENT_SOURCE_DIR}/Back/Utility
-            ${CMAKE_CURRENT_SOURCE_DIR}/Tests
+            ${CMAKE_CURRENT_SOURCE_DIR}/Source
         )
 endfunction()
 
 # Handle tests
 add_qt_test(SensorsManagerTest
-    Back/Objects/Sensor.hpp
-    Back/Objects/Sensor.cpp
+    Source/Back/Objects/Sensor.hpp
+    Source/Back/Objects/Sensor.cpp
     Tests/SensorsManagerTest.cpp
-    Back/Objects/SensorsManager.cpp
-    Back/Objects/SensorsManager.hpp
-    Back/Objects/SerialSensor.cpp
-    Back/Objects/SerialSensor.hpp
-    Back/Structs/SerialSensorData.hpp
-    Back/Objects/SimulatedDevice.hpp
-    Back/Objects/SimulatedDevice.cpp
-    Back/Utility/SensorUtility.hpp
-    Back/Utility/SensorUtility.cpp
+    Source/Back/Objects/SensorsManager.cpp
+    Source/Back/Objects/SensorsManager.hpp
+    Source/Back/Objects/SerialSensor.cpp
+    Source/Back/Objects/SerialSensor.hpp
+    Source/Back/Structs/SerialSensorData.hpp
+    Source/Back/Objects/SimulatedDevice.hpp
+    Source/Back/Objects/SimulatedDevice.cpp
+    Source/Back/Utility/SensorUtility.hpp
+    Source/Back/Utility/SensorUtility.cpp
 )
 
 add_qt_test(SensorUtilityTest
     Tests/SensorUtilityTest.cpp
-    Back/Utility/SensorUtility.hpp
-    Back/Utility/SensorUtility.cpp
-    Back/Structs/SerialSensorData.hpp
+    Source/Back/Utility/SensorUtility.hpp
+    Source/Back/Utility/SensorUtility.cpp
+    Source/Back/Structs/SerialSensorData.hpp
 )
 
 add_qt_test(SerialSensorTest
     Tests/SerialSensorTest.cpp
-    Back/Objects/SimulatedDevice.hpp
-    Back/Objects/SimulatedDevice.cpp
-    Back/Objects/Sensor.hpp
-    Back/Objects/Sensor.cpp
-    Back/Objects/SerialSensor.hpp
-    Back/Objects/SerialSensor.cpp
-    Back/Utility/SensorUtility.hpp
-    Back/Utility/SensorUtility.cpp
+    Source/Back/Objects/SimulatedDevice.hpp
+    Source/Back/Objects/SimulatedDevice.cpp
+    Source/Back/Objects/Sensor.hpp
+    Source/Back/Objects/Sensor.cpp
+    Source/Back/Objects/SerialSensor.hpp
+    Source/Back/Objects/SerialSensor.cpp
+    Source/Back/Utility/SensorUtility.hpp
+    Source/Back/Utility/SensorUtility.cpp
 )
 
 qt_finalize_executable(SensorMonitor)

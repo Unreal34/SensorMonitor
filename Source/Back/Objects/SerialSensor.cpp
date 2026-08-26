@@ -1,5 +1,5 @@
 #include "SerialSensor.hpp"
-#include "Utility.hpp"
+#include "Back/Utility/Utility.hpp"
 #include <QUuid>
 
 SerialSensor::SerialSensor(const QString &portName, QObject *parent) : Sensor { parent }

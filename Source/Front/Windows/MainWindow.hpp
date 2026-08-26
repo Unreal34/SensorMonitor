@@ -3,8 +3,8 @@
 
 #include <QMainWindow>
 
-#include "ConsoleWidget.hpp"
-#include "SensorsManager.hpp"
+#include "Back/Objects/SensorsManager.hpp"
+#include "Front/Widgets/ConsoleWidget.hpp"
 
 class MainWindow : public QMainWindow
 {
@@ -24,7 +24,8 @@ private:
 private slots:
     /**
      * @brief Handles all data forwarded by the sensors.
-     * @note This is the main router where all data are catched to be processed.
+     * @note This is the main router where all incoming data is received and processed.
+     * @note Sensor name is used to handle processing for each sensor.
      * @param sensor
      * @param data
      */

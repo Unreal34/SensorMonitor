@@ -1,8 +1,8 @@
 #include "MainWindow.hpp"
-#include "Application.hpp"
-#include "Utility.hpp"
-#include "SensorsEditorDialog.hpp"
-#include "ApplicationLogger.hpp"
+#include "Back/Utility/Application.hpp"
+#include "Back/Utility/Utility.hpp"
+#include "Front/Dialogs/SensorsEditorDialog.hpp"
+#include "Back/Utility/ApplicationLogger.hpp"
 
 #include <QDockWidget>
 #include <QSerialPortInfo>
@@ -11,7 +11,6 @@
 #include <QToolBar>
 #include <QMessageBox>
 #include <QApplication>
-
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 , mConsole(new ConsoleWidget(this))
@@ -118,7 +117,7 @@ void MainWindow::toggleDataAcquisition()
     {
         if(sensorsManager()->savedSerialSensorData().size() <= 0)
         {
-            QMessageBox::critical(this, APPLICATION_NAME, tr("No sensor available!\nPlase configure at least one sensor in the sensor editor tool."), QMessageBox::Ok);
+            QMessageBox::critical(this, APPLICATION_NAME, tr("No sensor available!\nPlease configure at least one sensor in the sensor editor tool."), QMessageBox::Ok);
             return;
         }
 

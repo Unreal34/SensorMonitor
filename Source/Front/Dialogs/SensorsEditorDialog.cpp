@@ -1,5 +1,5 @@
 #include "SensorsEditorDialog.hpp"
-#include "SerialSensorData.hpp"
+#include "Back/Structs/SerialSensorData.hpp"
 
 SerialSensorsEditorDialog::SerialSensorsEditorDialog(const QVector<SerialSensorData>& sensors, bool *ok, QWidget* parent) : BaseDialog(ok, tr("Validate"), tr("Cancel"), parent)
 , mSensorsEditorWidget(new SerialSensorsEditorWidget(sensors, this))

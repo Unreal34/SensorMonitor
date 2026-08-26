@@ -1,7 +1,8 @@
 #ifndef SERIALSENSORSEDITORWIDGET_H
 #define SERIALSENSORSEDITORWIDGET_H
 
-#include "SerialSensorsTableView.hpp"
+#include "Back/Structs/SerialSensorData.hpp"
+#include "Front/Tables/View/SerialSensorsTableView.hpp"
 #include <QWidget>
 
 namespace Ui {

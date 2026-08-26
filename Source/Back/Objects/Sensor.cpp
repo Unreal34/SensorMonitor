@@ -1,7 +1,7 @@
 #include "Sensor.hpp"
 
 #include <QUuid>
-#include "SensorUtility.hpp"
+#include "Back/Utility/SensorUtility.hpp"
 
 Sensor::Sensor(QObject *parent) : QObject { parent }
 , mName(SensorUtility::randomSensorName())

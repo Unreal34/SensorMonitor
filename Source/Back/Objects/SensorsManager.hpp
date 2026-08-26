@@ -5,7 +5,7 @@
 #include <QUuid>
 #include <qassert.h>
 
-#include "SerialSensorData.hpp"
+#include "Back/Structs/SerialSensorData.hpp"
 #include "SerialSensor.hpp"
 #include "Sensor.hpp"
 
@@ -89,7 +89,7 @@ public:
     /**
      * @brief Clear the saved sensor data buffer.
      */
-     void resetSavedSerialSensorData() { mSavedSerialSensorsData.clear(); }
+    void resetSavedSerialSensorData() { mSavedSerialSensorsData.clear(); }
 
     /**
      * @brief Save a list of SerialSensorData.

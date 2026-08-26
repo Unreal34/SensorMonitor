@@ -1,7 +1,7 @@
 #include <QtTest>
 
-#include "SensorUtility.hpp"
-#include "Utility.hpp"
+#include "Back/Utility/SensorUtility.hpp"
+#include "Back/Utility/Utility.hpp"
 
 class SensorUtilityTest : public QObject
 {

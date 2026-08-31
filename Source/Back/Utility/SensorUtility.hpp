@@ -44,7 +44,7 @@ public:
     static QImage createImageFromRGB565(const QByteArray& data, int width, int height);
 
     /**
-     * @brief createGrayscaleImage
+     * @brief Function used with OV7670 to convert the streamed data to a grayscale image.
      * @param data
      * @param width
      * @param height

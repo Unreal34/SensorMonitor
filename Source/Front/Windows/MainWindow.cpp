@@ -16,11 +16,14 @@
 #include <QLabel>
 #include <QImage>
 #include <QDesktopServices>
+#include <qtextedit.h>
+#include <QMdiSubWindow>
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 , mConsole(new ConsoleWidget(this))
 , mSensorsManager(new SensorsManager(this))
+, mMdiArea(new QMdiArea(this))
 {
     setWindowIcon(QIcon(APPLICATION_ICON));
     setWindowTitle(APPLICATION_NAME_VERSION);
@@ -37,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(mSensorsManager, &SensorsManager::dataReceived, this, &MainWindow::onDataReceived);
     connect(mSensorsManager, &SensorsManager::errorHandled, this, &MainWindow::onErrorReceived);
 
-    setCentralWidget(new QWidget(this));
+    setCentralWidget(mMdiArea);
 }
 
 void MainWindow::initializeActions()
@@ -97,19 +100,23 @@ void MainWindow::onDataReceived(const QString &sensor, const QByteArray &data)
     }
     else if(sensor == OV7670_CAMERA)
     {
-        QImage image = SensorUtility::createImageFromRGB565(data, 40, 30);
+        QImage frame = SensorUtility::createGrayscaleImage(data, 80, 60);
 
-        QString filePath = QCoreApplication::applicationDirPath() + "/test.png";
+        if(!mImageViewer)
+        {
+            mImageViewer = new ImageViewerSubWindow(this);
+            mMdiArea->addSubWindow(mImageViewer);
+            mImageViewer->show();
 
-        if(image.save(filePath))
-        {
-            mConsole->appendLog(tr("Image saved!"), ConsoleWidget::ELogType::Success);
-            QDesktopServices::openUrl(QUrl::fromLocalFile(filePath));
+            // reset the pointer to nullptr if the sub window is deleted during closing.
+            connect(mImageViewer, &QObject::destroyed, this, [this]()
+            {
+                mImageViewer = nullptr;
+            });
         }
-        else
-        {
-            mConsole->appendLog(tr("Unable to save image."), ConsoleWidget::ELogType::Error);
-        }
+
+        mConsole->appendLog(tr("New frame received from camera."), ConsoleWidget::ELogType::Information);
+        mImageViewer->setImage(frame);
     }
 }
 
@@ -160,6 +167,12 @@ void MainWindow::toggleDataAcquisition()
     else
     {
         sensorsManager()->clear();
+
+        if(mImageViewer)
+        {
+            delete mImageViewer;
+            mImageViewer = nullptr;
+        }
     }
 
     mAcquisitionStarted = !mAcquisitionStarted;

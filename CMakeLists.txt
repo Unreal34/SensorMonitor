@@ -78,6 +78,7 @@ qt_add_executable(SensorMonitor
     Source/Back/Objects/SimulatedDevice.hpp Source/Back/Objects/SimulatedDevice.cpp
     Source/Back/Objects/Sensor.hpp Source/Back/Objects/Sensor.cpp
     Source/Back/Objects/OV7670Camera.hpp Source/Back/Objects/OV7670Camera.cpp
+    Source/Front/Windows/ImageViewerSubWindow.hpp Source/Front/Windows/ImageViewerSubWindow.cpp
 )
 
 target_include_directories(SensorMonitor PRIVATE

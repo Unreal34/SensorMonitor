@@ -204,7 +204,7 @@ private:
     /**
      * @brief Holds serial sensor information (name and port) updated from the SensorsEditorDialog.
      */
-    QVector<SerialSensorData> mSavedSerialSensorsData = { SerialSensorData("HTU21D", "COM3") };
+    QVector<SerialSensorData> mSavedSerialSensorsData = { SerialSensorData("HTU21D", "COM3"), SerialSensorData("OV7670", "COM6") };
 };
 
 #endif // SENSORSMANAGER_HPP

@@ -53,7 +53,7 @@ void OV7670Camera::processBuffer()
 
         const uint16_t width = static_cast<uint8_t>(mBuffer[4]) | (static_cast<uint16_t>(static_cast<uint8_t>(mBuffer[5])) << 8);
         const uint16_t height = static_cast<uint8_t>(mBuffer[6]) | (static_cast<uint16_t>(static_cast<uint8_t>(mBuffer[7])) << 8);
-        const qsizetype imageSize = static_cast<qsizetype>(width) * static_cast<qsizetype>(height) * 2;
+        const qsizetype imageSize = static_cast<qsizetype>(width) * static_cast<qsizetype>(height);
         const qsizetype packetSize = headerSize + imageSize;
 
         // Wait for the rest of the frame.
@@ -62,7 +62,7 @@ void OV7670Camera::processBuffer()
             return;
         }
 
-        // Extract RGB565 bytes.
+        // Extract GrayScale bytes.
         QByteArray imageData = mBuffer.mid(headerSize, imageSize);
 
         // Remove the complete packet.

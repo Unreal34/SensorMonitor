@@ -33,6 +33,24 @@ public:
      * @return
      */
     static QString randomSensorName();
+
+    /**
+     * @brief createImageFromRGB565
+     * @param data
+     * @param width
+     * @param height
+     * @return
+     */
+    static QImage createImageFromRGB565(const QByteArray& data, int width, int height);
+
+    /**
+     * @brief createGrayscaleImage
+     * @param data
+     * @param width
+     * @param height
+     * @return
+     */
+    static QImage createGrayscaleImage(const QByteArray& data, int width, int height);
 };
 
 #endif // SENSORUTILITY_HPP

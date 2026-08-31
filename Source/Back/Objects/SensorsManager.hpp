@@ -28,16 +28,69 @@ public:
 public:
     explicit SensorsManager(QObject *parent = nullptr);
 
-public:
     /**
      * @brief Creates and registers a new serial sensor with a name and a serial port.
      * @note Data will be ready to receive after calling openSensor().
      * @warning Each sensor name must be unique in this manager!
+     * @tparam T Serial sensor type. Must inherit from SerialSensor.
      * @param serialPortName
      * @param name
-     * @return
+     * @param simulatedDevice
+     * @return true if successfully registered or false otherwise.
      */
-    bool registerNewSerialSensor(const QString& serialPortName, const QString& name, QIODevice* simulatedDevice = nullptr);
+    template<typename T = SerialSensor>
+    bool registerNewSerialSensor(const QString &serialPortName, const QString &name, QIODevice* simulatedDevice = nullptr)
+    {
+        Q_STATIC_ASSERT_X((std::is_base_of_v<SerialSensor, T>), "T must inherit from SerialSensor.");
+        Q_STATIC_ASSERT_X((std::is_constructible_v<T, const QString&, QObject*>), "T must provide a constructor taking const QString& and QObject*.");
+        Q_STATIC_ASSERT_X((std::is_constructible_v<T, QIODevice*, QObject*>), "T must provide a constructor taking QIODevice* and QObject*.");
+
+        if(name.isNull() || name.isEmpty())
+        {
+            emit errorHandled(name, tr("Invalid sensor name %1.").arg(name), ESensorsManagerError::InvalidSensorName);
+            return false;
+        }
+
+        if(exists(name))
+        {
+            emit errorHandled(name, tr("Sensor name %1 already exists.").arg(name), ESensorsManagerError::InvalidSensorName);
+            return false;
+        }
+
+        SerialSensor* sensor = nullptr;
+
+        if(simulatedDevice)
+        {
+            sensor = new T(simulatedDevice, this);
+        }
+        else
+        {
+            sensor = new T(serialPortName, this);
+        }
+
+        Q_ASSERT(sensor);
+
+        sensor->setName(name);
+
+        // add the new sensor in the suitable arrays.
+        mSensors.push_back(sensor);
+        mSerialSensors.push_back(sensor);
+
+        connect(sensor, &Sensor::dataReceived, this, [sensor, this](const QByteArray& data)
+        {
+            emit dataReceived(sensor->name(), data);
+        });
+
+        // connect to sensor error handler.
+        connect(sensor, &Sensor::errorHandled, this, &SensorsManager::onSensorErrorReceived);
+
+        if(simulatedDevice)
+        {
+            emit errorHandled(name, tr("Sensor %1 is ready!").arg(name), ESensorsManagerError::Success);
+        }
+
+        return true;
+    }
 
     /**
      * @brief Used to find a sensor by its unique name.
@@ -151,7 +204,7 @@ private:
     /**
      * @brief Holds serial sensor information (name and port) updated from the SensorsEditorDialog.
      */
-    QVector<SerialSensorData> mSavedSerialSensorsData = {};
+    QVector<SerialSensorData> mSavedSerialSensorsData = { SerialSensorData("HTU21D", "COM3") };
 };
 
 #endif // SENSORSMANAGER_HPP

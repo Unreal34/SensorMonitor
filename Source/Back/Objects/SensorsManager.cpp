@@ -4,56 +4,6 @@
 SensorsManager::SensorsManager(QObject *parent) : QObject { parent }
 {}
 
-bool SensorsManager::registerNewSerialSensor(const QString &serialPortName, const QString &name, QIODevice* simulatedDevice)
-{
-    if(exists(name))
-    {
-        emit errorHandled(name, QString(tr("Sensor name %1 already exists.")).arg(name), ESensorsManagerError::InvalidSensorName);
-        return false;
-    }
-
-    SerialSensor* sensor = nullptr;
-
-    if(simulatedDevice)
-    {
-        sensor = new SerialSensor(simulatedDevice, this);
-    }
-    else
-    {
-        sensor = new SerialSensor(serialPortName, this);
-    }
-
-    Q_ASSERT(sensor);
-
-    if(name.isNull() || name.isEmpty())
-    {
-        emit errorHandled(name, QString(tr("Invalid sensor name %1.")).arg(name), ESensorsManagerError::InvalidSensorName);
-        delete sensor;
-        return false;
-    }
-
-    sensor->setName(name);
-
-    // add the new sensor in the suitable arrays.
-    mSensors.push_back(sensor);
-    mSerialSensors.push_back(sensor);
-
-    connect(sensor, &Sensor::dataReceived, this, [sensor, this](const QByteArray& data)
-    {
-        emit dataReceived(sensor->name(), data);
-    });
-
-    // connect to sensor error handler.
-    connect(sensor, &Sensor::errorHandled, this, &SensorsManager::onSensorErrorReceived);
-
-    if(simulatedDevice)
-    {
-        emit errorHandled(name, QString(tr("Sensor %1 is ready!")).arg(name), ESensorsManagerError::Success);
-    }
-
-    return true;
-}
-
 bool SensorsManager::openSensor(const QString &name)
 {
     Q_FOREACH(Sensor* sensor, mSensors)

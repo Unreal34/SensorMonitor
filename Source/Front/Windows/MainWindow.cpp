@@ -1,8 +1,10 @@
 #include "MainWindow.hpp"
+#include "Back/Objects/OV7670Camera.hpp"
 #include "Back/Utility/Application.hpp"
 #include "Back/Utility/Utility.hpp"
 #include "Front/Dialogs/SensorsEditorDialog.hpp"
 #include "Back/Utility/ApplicationLogger.hpp"
+#include <Back/Utility/SensorUtility.hpp>
 
 #include <QDockWidget>
 #include <QSerialPortInfo>
@@ -11,6 +13,10 @@
 #include <QToolBar>
 #include <QMessageBox>
 #include <QApplication>
+#include <QLabel>
+#include <QImage>
+#include <QDesktopServices>
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 , mConsole(new ConsoleWidget(this))
@@ -89,6 +95,22 @@ void MainWindow::onDataReceived(const QString &sensor, const QByteArray &data)
             mConsole->appendLog(message, ConsoleWidget::ELogType::Information);
         }
     }
+    else if(sensor == OV7670_CAMERA)
+    {
+        QImage image = SensorUtility::createImageFromRGB565(data, 40, 30);
+
+        QString filePath = QCoreApplication::applicationDirPath() + "/test.png";
+
+        if(image.save(filePath))
+        {
+            mConsole->appendLog(tr("Image saved!"), ConsoleWidget::ELogType::Success);
+            QDesktopServices::openUrl(QUrl::fromLocalFile(filePath));
+        }
+        else
+        {
+            mConsole->appendLog(tr("Unable to save image."), ConsoleWidget::ELogType::Error);
+        }
+    }
 }
 
 void MainWindow::openSerialSensorsEditorDialog()
@@ -123,7 +145,15 @@ void MainWindow::toggleDataAcquisition()
 
         Q_FOREACH(const SerialSensorData& current, sensorsManager()->savedSerialSensorData())
         {
-            sensorsManager()->registerNewSerialSensor(current.sensor_portName, current.sensor_name);
+            if(current.sensor_name == OV7670_CAMERA)
+            {
+                sensorsManager()->registerNewSerialSensor<OV7670Camera>(current.sensor_portName, current.sensor_name);
+            }
+            else
+            {
+                sensorsManager()->registerNewSerialSensor(current.sensor_portName, current.sensor_name);
+            }
+
             sensorsManager()->openSensor(current.sensor_name);
         }
     }

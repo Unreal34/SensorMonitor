@@ -77,6 +77,7 @@ qt_add_executable(SensorMonitor
     ${PROJECT_SOURCES}
     Source/Back/Objects/SimulatedDevice.hpp Source/Back/Objects/SimulatedDevice.cpp
     Source/Back/Objects/Sensor.hpp Source/Back/Objects/Sensor.cpp
+    Source/Back/Objects/OV7670Camera.hpp Source/Back/Objects/OV7670Camera.cpp
 )
 
 target_include_directories(SensorMonitor PRIVATE
@@ -86,6 +87,7 @@ target_include_directories(SensorMonitor PRIVATE
 target_link_libraries(SensorMonitor PRIVATE
     Qt6::Widgets
     Qt6::SerialPort
+    Qt6::Gui
 )
 
 qt_add_translations(SensorMonitor
@@ -126,6 +128,7 @@ function(add_qt_test TEST_NAME)
         Qt6::Core
         Qt6::Test
         Qt6::SerialPort
+        Qt6::Gui
     )
 
     add_test(

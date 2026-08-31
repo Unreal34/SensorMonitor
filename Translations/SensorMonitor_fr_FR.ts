@@ -58,7 +58,7 @@
     <message>
         <location filename="../Source/Front/Windows/MainWindow.cpp" line="118"/>
         <source>New frame received from camera.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouvelle image reçue de la caméra.</translation>
     </message>
     <message>
         <source>New frame received.</source>

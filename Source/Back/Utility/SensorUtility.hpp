@@ -33,6 +33,24 @@ public:
      * @return
      */
     static QString randomSensorName();
+
+    /**
+     * @brief createImageFromRGB565
+     * @param data
+     * @param width
+     * @param height
+     * @return
+     */
+    static QImage createImageFromRGB565(const QByteArray& data, int width, int height);
+
+    /**
+     * @brief Function used with OV7670 to convert the streamed data to a grayscale image.
+     * @param data
+     * @param width
+     * @param height
+     * @return
+     */
+    static QImage createGrayscaleImage(const QByteArray& data, int width, int height);
 };
 
 #endif // SENSORUTILITY_HPP

@@ -1,8 +1,10 @@
 #include "MainWindow.hpp"
+#include "Back/Objects/OV7670Camera.hpp"
 #include "Back/Utility/Application.hpp"
 #include "Back/Utility/Utility.hpp"
 #include "Front/Dialogs/SensorsEditorDialog.hpp"
 #include "Back/Utility/ApplicationLogger.hpp"
+#include <Back/Utility/SensorUtility.hpp>
 
 #include <QDockWidget>
 #include <QSerialPortInfo>
@@ -11,10 +13,17 @@
 #include <QToolBar>
 #include <QMessageBox>
 #include <QApplication>
+#include <QLabel>
+#include <QImage>
+#include <QDesktopServices>
+#include <qtextedit.h>
+#include <QMdiSubWindow>
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 , mConsole(new ConsoleWidget(this))
 , mSensorsManager(new SensorsManager(this))
+, mMdiArea(new QMdiArea(this))
 {
     setWindowIcon(QIcon(APPLICATION_ICON));
     setWindowTitle(APPLICATION_NAME_VERSION);
@@ -31,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(mSensorsManager, &SensorsManager::dataReceived, this, &MainWindow::onDataReceived);
     connect(mSensorsManager, &SensorsManager::errorHandled, this, &MainWindow::onErrorReceived);
 
-    setCentralWidget(new QWidget(this));
+    setCentralWidget(mMdiArea);
 }
 
 void MainWindow::initializeActions()
@@ -89,6 +98,26 @@ void MainWindow::onDataReceived(const QString &sensor, const QByteArray &data)
             mConsole->appendLog(message, ConsoleWidget::ELogType::Information);
         }
     }
+    else if(sensor == OV7670_CAMERA)
+    {
+        QImage frame = SensorUtility::createGrayscaleImage(data, 80, 60);
+
+        if(!mImageViewer)
+        {
+            mImageViewer = new ImageViewerSubWindow(this);
+            mMdiArea->addSubWindow(mImageViewer);
+            mImageViewer->show();
+
+            // reset the pointer to nullptr if the sub window is deleted during closing.
+            connect(mImageViewer, &QObject::destroyed, this, [this]()
+            {
+                mImageViewer = nullptr;
+            });
+        }
+
+        mConsole->appendLog(tr("New frame received from camera."), ConsoleWidget::ELogType::Information);
+        mImageViewer->setImage(frame);
+    }
 }
 
 void MainWindow::openSerialSensorsEditorDialog()
@@ -123,13 +152,27 @@ void MainWindow::toggleDataAcquisition()
 
         Q_FOREACH(const SerialSensorData& current, sensorsManager()->savedSerialSensorData())
         {
-            sensorsManager()->registerNewSerialSensor(current.sensor_portName, current.sensor_name);
+            if(current.sensor_name == OV7670_CAMERA)
+            {
+                sensorsManager()->registerNewSerialSensor<OV7670Camera>(current.sensor_portName, current.sensor_name);
+            }
+            else
+            {
+                sensorsManager()->registerNewSerialSensor(current.sensor_portName, current.sensor_name);
+            }
+
             sensorsManager()->openSensor(current.sensor_name);
         }
     }
     else
     {
         sensorsManager()->clear();
+
+        if(mImageViewer)
+        {
+            delete mImageViewer;
+            mImageViewer = nullptr;
+        }
     }
 
     mAcquisitionStarted = !mAcquisitionStarted;

@@ -3,6 +3,8 @@
 #include <QUuid>
 #include "Back/Utility/SensorUtility.hpp"
 
+#include <QDebug>
+
 Sensor::Sensor(QObject *parent) : QObject { parent }
 , mName(SensorUtility::randomSensorName())
 {}

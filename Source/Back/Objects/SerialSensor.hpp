@@ -36,6 +36,13 @@ public:
         return serialPort;
     }
 
+    /**
+     * @brief setBaudRate
+     * @param baudRate
+     * @param directions
+     */
+    void setBaudRate(qint32 baudRate, QSerialPort::Directions directions = QSerialPort::AllDirections);
+
 private slots:
     /**
      * @brief Handle errors received by the serial port.

@@ -2,9 +2,11 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
+#include <QMdiArea>
 
 #include "Back/Objects/SensorsManager.hpp"
 #include "Front/Widgets/ConsoleWidget.hpp"
+#include "Front/Windows/ImageViewerSubWindow.hpp"
 
 class MainWindow : public QMainWindow
 {
@@ -64,5 +66,15 @@ private:
      * @brief Indicates whether a data acquisition is currently in progress or not.
      */
     bool mAcquisitionStarted = false;
+
+    /**
+     * @brief The centrala area where sub windows will be displayed.
+     */
+    QMdiArea* mMdiArea = nullptr;
+
+    /**
+     * @brief Sub window used to display frames from camera streaming for example.
+     */
+    ImageViewerSubWindow* mImageViewer = nullptr;
 };
 #endif // MAINWINDOW_HPP

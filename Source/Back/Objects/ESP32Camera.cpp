@@ -1,4 +1,5 @@
 #include "ESP32Camera.hpp"
+#include <qtimer.h>
 
 ESP32Camera::ESP32Camera(const QString &portName, QObject *parent) : SerialCamera { portName, parent }
 {
@@ -7,6 +8,26 @@ ESP32Camera::ESP32Camera(const QString &portName, QObject *parent) : SerialCamer
 
 ESP32Camera::ESP32Camera(QIODevice *simulatedDevice, QObject *parent) : SerialCamera { simulatedDevice, parent }
 {
+}
+
+bool ESP32Camera::open(QIODeviceBase::OpenModeFlag flag)
+{
+    bool bSuccess = SerialCamera::open(flag);
+
+    if(!bSuccess)
+    {
+        return false;
+    }
+
+    QSerialPort* port = serialPort();
+    Q_ASSERT(port);
+
+    // used to reset the ESP32-CAM hardware.
+    port->setDataTerminalReady(false);
+    port->setRequestToSend(true);
+    port->setRequestToSend(false);
+
+    return true;
 }
 
 void ESP32Camera::processBuffer()

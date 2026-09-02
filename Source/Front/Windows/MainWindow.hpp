@@ -73,7 +73,7 @@ private:
     QMdiArea* mMdiArea = nullptr;
 
     /**
-     * @brief Sub window used to display frames from camera streaming for example.
+     * @brief Sub window used to display frames from camera streaming.
      */
     ImageViewerSubWindow* mImageViewer = nullptr;
 

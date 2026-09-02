@@ -10,6 +10,9 @@ public:
     explicit ESP32Camera(const QString& portName, QObject *parent = nullptr);
     explicit ESP32Camera(QIODevice* simulatedDevice, QObject *parent = nullptr);
 
+public:
+    virtual bool open(QIODeviceBase::OpenModeFlag flag = QIODeviceBase::ReadOnly) override;
+
 protected:
     virtual void processBuffer() override;
 };

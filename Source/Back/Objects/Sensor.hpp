@@ -62,7 +62,7 @@ public:
      * @brief Open the device in read-only mode by default.
      * @return
      */
-    bool open(QIODeviceBase::OpenModeFlag flag = QIODeviceBase::ReadOnly);
+    virtual bool open(QIODeviceBase::OpenModeFlag flag = QIODeviceBase::ReadOnly);
 
 protected slots:
     /**

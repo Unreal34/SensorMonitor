@@ -184,7 +184,13 @@ void MainWindow::toggleDataAcquisition()
             sensorsManager()->openSensor(current.sensor_name);
         }
     }
-    else
+
+    mAcquisitionStarted = !mAcquisitionStarted;
+    action->setIcon(mAcquisitionStarted ? QIcon("://Icons/Stop.png") : QIcon("://Icons/Play.png"));
+    action->setText(mAcquisitionStarted ? tr("Stop data acquisition") : tr("Start data acquisition"));
+
+    // mAcquisitionStarted must be updated before mImageViewer destruction.
+    if(!mAcquisitionStarted)
     {
         sensorsManager()->clear();
 
@@ -194,10 +200,6 @@ void MainWindow::toggleDataAcquisition()
             mImageViewer = nullptr;
         }
     }
-
-    mAcquisitionStarted = !mAcquisitionStarted;
-    action->setIcon(mAcquisitionStarted ? QIcon("://Icons/Stop.png") : QIcon("://Icons/Play.png"));
-    action->setText(mAcquisitionStarted ? tr("Stop data acquisition") : tr("Start data acquisition"));
 }
 
 void MainWindow::onErrorReceived(const QString &sensor, const QString& message, SensorsManager::ESensorsManagerError error)

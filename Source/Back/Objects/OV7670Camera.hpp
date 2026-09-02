@@ -9,7 +9,7 @@ public:
     explicit OV7670Camera(const QString& portName, QObject *parent = nullptr);
     explicit OV7670Camera(QIODevice* simulatedDevice, QObject *parent = nullptr);
 
-private:
+protected:
     virtual void processBuffer() override;
 };
 

@@ -46,7 +46,7 @@
     </message>
     <message>
         <location filename="../Source/Front/Windows/MainWindow.cpp" line="57"/>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="200"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="190"/>
         <source>Start data acquisition</source>
         <translation>Démarrer l&apos;acquisition</translation>
     </message>
@@ -76,7 +76,7 @@ Plase configure at least one sensor in the sensor editor tool.</source>
         <translation type="vanished">Aucun capteur disponible ! Merci de configurer au moins un capteur dans l&apos;outil d&apos;édition des capteurs.</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="200"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="190"/>
         <source>Stop data acquisition</source>
         <translation>Terminer l&apos;acquisition</translation>
     </message>

@@ -11,7 +11,7 @@ ESP32Camera::ESP32Camera(QIODevice *simulatedDevice, QObject *parent) : SerialCa
 
 void ESP32Camera::processBuffer()
 {
-    static const QByteArray frameHeader = "FRAME";
+    const QByteArray frameHeader = "FRAME";
 
     while(true)
     {

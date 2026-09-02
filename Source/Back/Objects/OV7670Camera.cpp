@@ -1,21 +1,12 @@
 #include "OV7670Camera.hpp"
 
-OV7670Camera::OV7670Camera(const QString& portName, QObject *parent ) : SerialSensor{ portName, parent }
+OV7670Camera::OV7670Camera(const QString& portName, QObject *parent ) : SerialCamera { portName, parent }
 {
     serialPort()->setBaudRate(1'000'000);
 }
 
-OV7670Camera::OV7670Camera(QIODevice *simulatedDevice, QObject *parent) : SerialSensor{ simulatedDevice, parent }
+OV7670Camera::OV7670Camera(QIODevice *simulatedDevice, QObject *parent) : SerialCamera { simulatedDevice, parent }
 {}
-
-void OV7670Camera::onDataReceived()
-{
-    Q_ASSERT(mDevice);
-
-    mBuffer.append(mDevice->readAll());
-
-    processBuffer();
-}
 
 void OV7670Camera::processBuffer()
 {

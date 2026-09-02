@@ -1,4 +1,5 @@
 #include "MainWindow.hpp"
+#include "Back/Objects/ESP32Camera.hpp"
 #include "Back/Objects/OV7670Camera.hpp"
 #include "Back/Utility/Application.hpp"
 #include "Back/Utility/Utility.hpp"
@@ -53,17 +54,17 @@ void MainWindow::initializeActions()
     QMenu* toolsMenu = menuBar()->addMenu(tr("&Tools"));
 
     QAction* actionEditSensors = new QAction(QIcon("://Icons/RS232.png"), tr("Manage sensors and ports"), this);
-    QAction* actionPlayStopAcquisition = new QAction(QIcon("://Icons/Play.png"), tr("Start data acquisition"), this);
+    mActionPlayStopAcquisition = new QAction(QIcon("://Icons/Play.png"), tr("Start data acquisition"), this);
     QAction* actionExit = new QAction(QIcon::fromTheme("application-exit"), tr("Exit"), this);
 
-    toolsMenu->addAction(actionPlayStopAcquisition);
+    toolsMenu->addAction(mActionPlayStopAcquisition);
     toolsMenu->addAction(actionEditSensors);
-    mainToolBar->addAction(actionPlayStopAcquisition);
+    mainToolBar->addAction(mActionPlayStopAcquisition);
     fileMenu->addAction(actionExit);
 
     mainToolBar->addAction(actionEditSensors);
 
-    connect(actionPlayStopAcquisition, &QAction::triggered, this, &MainWindow::toggleDataAcquisition);
+    connect(mActionPlayStopAcquisition, &QAction::triggered, this, &MainWindow::toggleDataAcquisition);
     connect(actionEditSensors, &QAction::triggered, this, &MainWindow::openSerialSensorsEditorDialog);
     connect(actionExit, &QAction::triggered, qApp, &QApplication::quit);
 }
@@ -98,9 +99,19 @@ void MainWindow::onDataReceived(const QString &sensor, const QByteArray &data)
             mConsole->appendLog(message, ConsoleWidget::ELogType::Information);
         }
     }
-    else if(sensor == OV7670_CAMERA)
+    else if(sensor == OV7670_CAMERA || sensor == ESP32_CAMERA)
     {
-        QImage frame = SensorUtility::createGrayscaleImage(data, 80, 60);
+        QImage frame;
+
+        if(sensor == OV7670_CAMERA)
+        {
+            frame = SensorUtility::createGrayscaleImage(data, 80, 60);
+        }
+        else if(sensor == ESP32_CAMERA)
+        {
+            bool bSuccess = frame.loadFromData(data, "JPG");
+            Q_ASSERT(bSuccess);
+        }
 
         if(!mImageViewer)
         {
@@ -112,6 +123,11 @@ void MainWindow::onDataReceived(const QString &sensor, const QByteArray &data)
             connect(mImageViewer, &QObject::destroyed, this, [this]()
             {
                 mImageViewer = nullptr;
+
+                if(mAcquisitionStarted)
+                {
+                    toggleDataAcquisition();
+                }
             });
         }
 
@@ -137,7 +153,7 @@ void MainWindow::openSerialSensorsEditorDialog()
 
 void MainWindow::toggleDataAcquisition()
 {
-    QAction* action = qobject_cast<QAction*>(sender());
+    QAction* action = mActionPlayStopAcquisition;
     Q_ASSERT(action);
 
     bool bValue = !mAcquisitionStarted;
@@ -155,6 +171,10 @@ void MainWindow::toggleDataAcquisition()
             if(current.sensor_name == OV7670_CAMERA)
             {
                 sensorsManager()->registerNewSerialSensor<OV7670Camera>(current.sensor_portName, current.sensor_name);
+            }
+            else if(current.sensor_name == ESP32_CAMERA)
+            {
+                sensorsManager()->registerNewSerialSensor<ESP32Camera>(current.sensor_portName, current.sensor_name);
             }
             else
             {

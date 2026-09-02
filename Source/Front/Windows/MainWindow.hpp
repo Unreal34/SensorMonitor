@@ -76,5 +76,10 @@ private:
      * @brief Sub window used to display frames from camera streaming for example.
      */
     ImageViewerSubWindow* mImageViewer = nullptr;
+
+    /**
+     * @brief Action visible in the toolbar to start and stop sensor acquisition.
+     */
+    QAction* mActionPlayStopAcquisition = nullptr;
 };
 #endif // MAINWINDOW_HPP

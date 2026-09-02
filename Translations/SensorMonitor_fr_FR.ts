@@ -25,38 +25,38 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="32"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="33"/>
         <source>Console</source>
         <translation>Console</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="52"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="53"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="53"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="54"/>
         <source>&amp;Tools</source>
         <translation>&amp;Outils</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="55"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="56"/>
         <source>Manage sensors and ports</source>
         <translation>Gérer les capteurs et les ports</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="56"/>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="180"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="57"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="200"/>
         <source>Start data acquisition</source>
         <translation>Démarrer l&apos;acquisition</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="57"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="58"/>
         <source>Exit</source>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="118"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="134"/>
         <source>New frame received from camera.</source>
         <translation>Nouvelle image reçue de la caméra.</translation>
     </message>
@@ -65,7 +65,7 @@
         <translation type="vanished">Nouvelle trame reçue.</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="149"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="165"/>
         <source>No sensor available!
 Please configure at least one sensor in the sensor editor tool.</source>
         <translation>Aucun capteur disponible ! Merci de configurer au moins un capteur dans l&apos;outil d&apos;édition des capteurs.</translation>
@@ -76,7 +76,7 @@ Plase configure at least one sensor in the sensor editor tool.</source>
         <translation type="vanished">Aucun capteur disponible ! Merci de configurer au moins un capteur dans l&apos;outil d&apos;édition des capteurs.</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="180"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="200"/>
         <source>Stop data acquisition</source>
         <translation>Terminer l&apos;acquisition</translation>
     </message>

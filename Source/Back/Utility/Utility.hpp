@@ -7,6 +7,7 @@
 #define GEIGER_SENSOR           "Geiger"
 #define HTU21D_SENSOR           "HTU21D"
 #define OV7670_CAMERA           "OV7670"
+#define ESP32_CAMERA            "ESP32-Camera"
 /* Add new sensor here then handle data parsing in MainWindow */
 
 #endif // UTILITY_HPP

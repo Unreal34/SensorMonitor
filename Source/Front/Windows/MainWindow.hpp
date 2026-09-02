@@ -76,5 +76,10 @@ private:
      * @brief Sub window used to display frames from camera streaming for example.
      */
     ImageViewerSubWindow* mImageViewer = nullptr;
+
+    /**
+     * @brief mActionPlayStopAcquisition
+     */
+    QAction* mActionPlayStopAcquisition = nullptr;
 };
 #endif // MAINWINDOW_HPP

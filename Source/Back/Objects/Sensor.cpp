@@ -18,6 +18,8 @@ Sensor::Sensor(QIODevice *simulatedDevice, QObject *parent) : QObject { parent }
 
 Sensor::~Sensor()
 {
+    qDebug() << "~Sensor()" << name();
+
     Q_ASSERT(mDevice);
 
     disconnect(mDevice, nullptr, this, nullptr);

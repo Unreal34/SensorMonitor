@@ -1,6 +1,6 @@
 #include "MainWindow.hpp"
-#include "Back/Objects/ESP32Camera.hpp"
-#include "Back/Objects/OV7670Camera.hpp"
+#include "Back/Objects/Serial_ESP32Camera.hpp"
+#include "Back/Objects/Serial_OV7670Camera.hpp"
 #include "Back/Utility/Application.hpp"
 #include "Back/Utility/Utility.hpp"
 #include "Front/Dialogs/SensorsEditorDialog.hpp"
@@ -19,6 +19,8 @@
 #include <QDesktopServices>
 #include <qtextedit.h>
 #include <QMdiSubWindow>
+
+#include <Back/Objects/Udp_ESP32Camera.hpp>
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -71,7 +73,7 @@ void MainWindow::initializeActions()
 
 void MainWindow::onDataReceived(const QString &sensor, const QByteArray &data)
 {
-    if(sensor == GEIGER_SENSOR)
+    if(sensor.contains(GEIGER_SENSOR))
     {
         bool bSuccess = false;
         uint cpm = data.toUInt(&bSuccess);
@@ -82,7 +84,7 @@ void MainWindow::onDataReceived(const QString &sensor, const QByteArray &data)
             mConsole->appendLog(message, ConsoleWidget::ELogType::Information);
         }
     }
-    else if(sensor == HTU21D_SENSOR)
+    else if(sensor.contains(HTU21D_SENSOR))
     {
         QList<QByteArray> split = data.split(';');
 
@@ -99,15 +101,15 @@ void MainWindow::onDataReceived(const QString &sensor, const QByteArray &data)
             mConsole->appendLog(message, ConsoleWidget::ELogType::Information);
         }
     }
-    else if(sensor == OV7670_CAMERA || sensor == ESP32_CAMERA)
+    else if(sensor.contains(OV7670_CAMERA) || sensor.contains(ESP32_CAMERA))
     {
         QImage frame;
 
-        if(sensor == OV7670_CAMERA)
+        if(sensor.contains(OV7670_CAMERA))
         {
             frame = SensorUtility::createGrayscaleImage(data, 80, 60);
         }
-        else if(sensor == ESP32_CAMERA)
+        else if(sensor.contains(ESP32_CAMERA))
         {
             bool bSuccess = frame.loadFromData(data, "JPG");
             Q_ASSERT(bSuccess);
@@ -116,11 +118,13 @@ void MainWindow::onDataReceived(const QString &sensor, const QByteArray &data)
         if(!mImageViewer)
         {
             mImageViewer = new ImageViewerSubWindow(this);
+            mImageViewer->setWindowTitle(sensor);
             mMdiArea->addSubWindow(mImageViewer);
             mImageViewer->show();
 
             // reset the pointer to nullptr if the sub window is deleted during closing.
-            connect(mImageViewer, &QObject::destroyed, this, [this]()
+            // end the acquisition too.
+            connect(mImageViewer, &ImageViewerSubWindow::imageViewerCloseRequest, this, [this]()
             {
                 mImageViewer = nullptr;
 
@@ -168,13 +172,13 @@ void MainWindow::toggleDataAcquisition()
 
         Q_FOREACH(const SerialSensorData& current, sensorsManager()->savedSerialSensorData())
         {
-            if(current.sensor_name == OV7670_CAMERA)
+            if(current.sensor_name.contains(OV7670_CAMERA))
             {
-                sensorsManager()->registerNewSerialSensor<OV7670Camera>(current.sensor_portName, current.sensor_name);
+                sensorsManager()->registerNewSerialSensor<Serial_OV7670Camera>(current.sensor_portName, current.sensor_name);
             }
-            else if(current.sensor_name == ESP32_CAMERA)
+            else if(current.sensor_name.contains(ESP32_CAMERA))
             {
-                sensorsManager()->registerNewSerialSensor<ESP32Camera>(current.sensor_portName, current.sensor_name);
+                sensorsManager()->registerNewSerialSensor<Serial_ESP32Camera>(current.sensor_portName, current.sensor_name);
             }
             else
             {
@@ -183,6 +187,14 @@ void MainWindow::toggleDataAcquisition()
 
             sensorsManager()->openSensor(current.sensor_name);
         }
+
+        /**
+         * @todo handle udp sensor with editor.
+         * @note sender is the IP address of the came itself.
+         */
+        QString camera1 = QString(ESP32_CAMERA) + "_#1";
+        sensorsManager()->registerNewUdpSensor<Udp_ESP32Camera>(5555, QHostAddress("192.168.1.62"), camera1);
+        sensorsManager()->openSensor(camera1);
     }
 
     mAcquisitionStarted = !mAcquisitionStarted;

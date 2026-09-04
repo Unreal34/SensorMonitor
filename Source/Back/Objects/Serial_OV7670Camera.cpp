@@ -1,14 +1,14 @@
-#include "OV7670Camera.hpp"
+#include "Serial_OV7670Camera.hpp"
 
-OV7670Camera::OV7670Camera(const QString& portName, QObject *parent ) : SerialCamera { portName, parent }
+Serial_OV7670Camera::Serial_OV7670Camera(const QString& portName, QObject *parent ) : SerialCamera { portName, parent }
 {
     serialPort()->setBaudRate(1'000'000);
 }
 
-OV7670Camera::OV7670Camera(QIODevice *simulatedDevice, QObject *parent) : SerialCamera { simulatedDevice, parent }
+Serial_OV7670Camera::Serial_OV7670Camera(QIODevice *simulatedDevice, QObject *parent) : SerialCamera { simulatedDevice, parent }
 {}
 
-void OV7670Camera::processBuffer()
+void Serial_OV7670Camera::processBuffer()
 {
     static const QByteArray magic = QByteArray::fromHex("AA55AA55");
     constexpr qsizetype headerSize = 8;

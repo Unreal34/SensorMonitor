@@ -17,6 +17,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     LinguistTools
     Test
 )
+find_package(Qt6 REQUIRED COMPONENTS Network)
 
 # Handle translation files here.
 set(TS_FILES
@@ -77,10 +78,13 @@ qt_add_executable(SensorMonitor
     ${PROJECT_SOURCES}
     Source/Back/Objects/SimulatedDevice.hpp Source/Back/Objects/SimulatedDevice.cpp
     Source/Back/Objects/Sensor.hpp Source/Back/Objects/Sensor.cpp
-    Source/Back/Objects/OV7670Camera.hpp Source/Back/Objects/OV7670Camera.cpp
+    Source/Back/Objects/Serial_OV7670Camera.hpp Source/Back/Objects/Serial_OV7670Camera.cpp
     Source/Front/Windows/ImageViewerSubWindow.hpp Source/Front/Windows/ImageViewerSubWindow.cpp
-    Source/Back/Objects/ESP32Camera.hpp Source/Back/Objects/ESP32Camera.cpp
+    Source/Back/Objects/Serial_ESP32Camera.hpp Source/Back/Objects/Serial_ESP32Camera.cpp
     Source/Back/Objects/SerialCamera.hpp Source/Back/Objects/SerialCamera.cpp
+    Source/Back/Objects/UdpSensor.hpp Source/Back/Objects/UdpSensor.cpp
+    Source/Back/Objects/Udp_ESP32Camera.hpp Source/Back/Objects/Udp_ESP32Camera.cpp
+    Source/Back/Structs/PacketHeader.hpp
 )
 
 target_include_directories(SensorMonitor PRIVATE
@@ -91,6 +95,7 @@ target_link_libraries(SensorMonitor PRIVATE
     Qt6::Widgets
     Qt6::SerialPort
     Qt6::Gui
+    Qt6::Network
 )
 
 qt_add_translations(SensorMonitor
@@ -131,6 +136,7 @@ function(add_qt_test TEST_NAME)
         Qt6::Core
         Qt6::Test
         Qt6::SerialPort
+        Qt6::Network
         Qt6::Gui
     )
 

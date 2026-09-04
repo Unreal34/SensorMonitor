@@ -35,11 +35,8 @@ void SensorsManager::clear()
 {
     Q_FOREACH(Sensor* sensor, mSensors)
     {
-        delete sensor;
+        deleteSensor(sensor);
     }
-
-    mSerialSensors.clear();
-    mSensors.clear();
 }
 
 bool SensorsManager::exists(const QString &name)
@@ -67,6 +64,12 @@ void SensorsManager::deleteSensor(Sensor *target)
             Q_ASSERT(bSuccess);
         break;
 
+        case Sensor::Udp:
+            // remove the sensor from the udp sensors list first.
+            bSuccess = mUdpSensors.removeOne(target);
+            Q_ASSERT(bSuccess);
+            break;
+
         default:
             Q_ASSERT_X(false, __FUNCTION__, "Sensor not handled yet!");
         break;
@@ -75,6 +78,9 @@ void SensorsManager::deleteSensor(Sensor *target)
     // remove from the generic sensor array too.
     bSuccess = mSensors.removeOne(target);
     Q_ASSERT(bSuccess);
+
+    // delete the sensor from memory.
+    delete target;
 }
 
 void SensorsManager::onSensorErrorReceived(const QString& sensorName, Sensor::ESensorError error, const QString &message)

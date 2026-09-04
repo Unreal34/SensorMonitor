@@ -1,16 +1,16 @@
-#include "ESP32Camera.hpp"
+#include "Serial_ESP32Camera.hpp"
 #include <qtimer.h>
 
-ESP32Camera::ESP32Camera(const QString &portName, QObject *parent) : SerialCamera { portName, parent }
+Serial_ESP32Camera::Serial_ESP32Camera(const QString &portName, QObject *parent) : SerialCamera { portName, parent }
 {
     setBaudRate(921600);
 }
 
-ESP32Camera::ESP32Camera(QIODevice *simulatedDevice, QObject *parent) : SerialCamera { simulatedDevice, parent }
+Serial_ESP32Camera::Serial_ESP32Camera(QIODevice *simulatedDevice, QObject *parent) : SerialCamera { simulatedDevice, parent }
 {
 }
 
-bool ESP32Camera::open(QIODeviceBase::OpenModeFlag flag)
+bool Serial_ESP32Camera::open(QIODeviceBase::OpenModeFlag flag)
 {
     bool bSuccess = SerialCamera::open(flag);
 
@@ -30,7 +30,7 @@ bool ESP32Camera::open(QIODeviceBase::OpenModeFlag flag)
     return true;
 }
 
-void ESP32Camera::processBuffer()
+void Serial_ESP32Camera::processBuffer()
 {
     const QByteArray frameHeader = "FRAME";
 

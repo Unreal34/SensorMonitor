@@ -1,21 +1,17 @@
-#ifndef SERIALSENSORSEDITORWIDGET_H
-#define SERIALSENSORSEDITORWIDGET_H
+#ifndef SENSORSEDITORWIDGET_H
+#define SENSORSEDITORWIDGET_H
 
 #include "Back/Structs/SerialSensorData.hpp"
 #include "Front/Tables/View/SerialSensorsTableView.hpp"
+#include "BaseSensorsEditorWidget.hpp"
 #include <QWidget>
 
-namespace Ui {
-class SerialSensorsEditorWidget;
-}
-
-class SerialSensorsEditorWidget : public QWidget
+class SerialSensorsEditorWidget : public BaseSensorsEditorWidget
 {
     Q_OBJECT
 
 public:
     explicit SerialSensorsEditorWidget(const QVector<SerialSensorData>& sensors, QWidget *parent = nullptr);
-    ~SerialSensorsEditorWidget();
 
 public:
     /**
@@ -24,21 +20,12 @@ public:
      */
     QVector<SerialSensorData> updatedSensorData();
 
-private slots:
-
-    /**
-     * @brief Adds a new sensor entry to the table with a default name and no serial port selected.
-     */
-    void addNewSensor();
-
-    /**
-     * @brief Deletes the currently selected sensor entry if it is valid.
-     */
-    void deleteCurrentSelectedSensor();
+protected slots:
+    virtual void addNewSensor() override;
+    virtual void deleteCurrentSelectedSensor() override;
 
 private:
-    Ui::SerialSensorsEditorWidget *ui;
     SerialSensorsTableView* mSensorsTableView = nullptr;
 };
 
-#endif // SERIALSENSORSEDITORWIDGET_H
+#endif // SENSORSEDITORWIDGET_H

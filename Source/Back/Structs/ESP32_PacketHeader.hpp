@@ -1,5 +1,5 @@
-#ifndef PACKETHEADER_HPP
-#define PACKETHEADER_HPP
+#ifndef ESP32_PACKETHEADER_H
+#define ESP32_PACKETHEADER_H
 
 #include <cstdint>
 
@@ -12,4 +12,4 @@ struct ESP32_PacketHeader
     uint16_t payloadSize;
 };
 
-#endif // PACKETHEADER_HPP
+#endif // ESP32_PACKETHEADER_H

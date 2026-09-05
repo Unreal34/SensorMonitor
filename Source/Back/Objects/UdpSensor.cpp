@@ -171,3 +171,5 @@ void UdpSensor::onUdpSocketErrorReceived(QAbstractSocket::SocketError error)
 
     emit errorHandled(name(), sensorError, errorString);
 }
+
+

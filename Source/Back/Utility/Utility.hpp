@@ -2,6 +2,7 @@
 #define UTILITY_HPP
 
 #define INVALID_SERIAL_PORT     "NONE"
+#define ANY_IP_ADDRESS          "0.0.0.0"
 
 /* Sensor names list */
 #define GEIGER_SENSOR           "Geiger"

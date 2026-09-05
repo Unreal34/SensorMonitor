@@ -2,8 +2,8 @@
 #define SERIALSENSORSTABLEVIEW_H
 
 #include <QObject>
-#include "BaseDataTableView.hpp"
 #include "Back/Structs/SerialSensorData.hpp"
+#include "Front/Tables/View/BaseDataTableView.hpp"
 
 class SerialSensorsTableView : public BaseDataTableView
 {

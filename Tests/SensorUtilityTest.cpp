@@ -51,21 +51,21 @@ void SensorUtilityTest::testUniqueSerialPort()
     SerialSensorData testSensorData2("Sensor6", "COM4");
     SerialSensorData testSensorData3("Sensor7", INVALID_SERIAL_PORT);
 
-    QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData1.sensor_portName, testDataList, testSensorData1.sensor_guid) == false);
-    QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData2.sensor_portName, testDataList, testSensorData2.sensor_guid) == true);
-    QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData3.sensor_portName, testDataList, testSensorData3.sensor_guid) == true);
+    QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData1.sensor_serialPortName, testDataList, testSensorData1.sensor_guid) == false);
+    QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData2.sensor_serialPortName, testDataList, testSensorData2.sensor_guid) == true);
+    QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData3.sensor_serialPortName, testDataList, testSensorData3.sensor_guid) == true);
 
     testDataList.clear();
     testDataList.push_back(SerialSensorData("Sensor2", "COM2"));
 
     SerialSensorData testSensorData4("Sensor3", "COM2");
 
-    QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData4.sensor_portName, testDataList, testSensorData4.sensor_guid) == false);
+    QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData4.sensor_serialPortName, testDataList, testSensorData4.sensor_guid) == false);
 
     testDataList.clear();
     testDataList.push_back(testSensorData4);
 
-    QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData4.sensor_portName, testDataList, testSensorData4.sensor_guid) == true);
+    QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData4.sensor_serialPortName, testDataList, testSensorData4.sensor_guid) == true);
 }
 
 void SensorUtilityTest::testVariantListToSensorDataList()

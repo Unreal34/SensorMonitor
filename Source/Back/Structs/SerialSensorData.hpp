@@ -1,22 +1,20 @@
 #ifndef SERIALSENSORDATA_H
 #define SERIALSENSORDATA_H
 
+#include "Back/Structs/SensorData.hpp"
 #include <QString>
 #include <quuid.h>
 
 /**
  * @brief Struct used to handle serial sensor data in the serial sensor editor widget for example.
  */
-struct SerialSensorData
+struct SerialSensorData : public SensorData
 {
-    SerialSensorData()
-        : sensor_guid(QUuid::createUuid())
+    SerialSensorData() : SensorData()
     {}
 
-    SerialSensorData(const QString& _sensor_name, const QString & _sensor_portName)
-        : sensor_guid(QUuid::createUuid())
-        , sensor_name(_sensor_name)
-        , sensor_portName(_sensor_portName)
+    SerialSensorData(const QString& _sensor_name, const QString & _sensor_portName) : SensorData(_sensor_name)
+        , sensor_serialPortName(_sensor_portName)
     {}
 
     bool isValid()
@@ -24,16 +22,13 @@ struct SerialSensorData
         return sensor_guid != QUuid();
     }
 
-    void reset()
+    virtual void reset() override
     {
-        sensor_guid = QUuid();
-        sensor_name = {};
-        sensor_portName = {};
+        SensorData::reset();
+        sensor_serialPortName = {};
     }
 
-    QUuid sensor_guid = {};
-    QString sensor_name = {};
-    QString sensor_portName = {};
+    QString sensor_serialPortName = {};
 };
 
 #endif // SERIALSENSORDATA_H

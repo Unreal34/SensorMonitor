@@ -1,10 +1,9 @@
 #include "MainWindow.hpp"
-#include "Back/Objects/Serial_ESP32Camera.hpp"
-#include "Back/Objects/Serial_OV7670Camera.hpp"
 #include "Back/Utility/Application.hpp"
 #include "Back/Utility/Utility.hpp"
-#include "Front/Dialogs/SensorsEditorDialog.hpp"
+#include "Front/Dialogs/SerialSensorsEditorDialog.hpp"
 #include "Back/Utility/ApplicationLogger.hpp"
+#include "Front/Dialogs/UdpSensorsEditorDialog.hpp"
 #include <Back/Utility/SensorUtility.hpp>
 
 #include <QDockWidget>
@@ -55,19 +54,23 @@ void MainWindow::initializeActions()
     QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
     QMenu* toolsMenu = menuBar()->addMenu(tr("&Tools"));
 
-    QAction* actionEditSensors = new QAction(QIcon("://Icons/RS232.png"), tr("Manage sensors and ports"), this);
+    QAction* actionEditSerialSensors = new QAction(QIcon("://Icons/RS232.png"), tr("Manage serial sensors"), this);
+    QAction* actionEditUdpSensors = new QAction(QIcon("://Icons/Ethernet.png"), tr("Manage udp sensors"), this);
     mActionPlayStopAcquisition = new QAction(QIcon("://Icons/Play.png"), tr("Start data acquisition"), this);
     QAction* actionExit = new QAction(QIcon::fromTheme("application-exit"), tr("Exit"), this);
 
     toolsMenu->addAction(mActionPlayStopAcquisition);
-    toolsMenu->addAction(actionEditSensors);
+    toolsMenu->addAction(actionEditSerialSensors);
+    toolsMenu->addAction(actionEditUdpSensors);
     mainToolBar->addAction(mActionPlayStopAcquisition);
     fileMenu->addAction(actionExit);
 
-    mainToolBar->addAction(actionEditSensors);
+    mainToolBar->addAction(actionEditSerialSensors);
+    mainToolBar->addAction(actionEditUdpSensors);
 
     connect(mActionPlayStopAcquisition, &QAction::triggered, this, &MainWindow::toggleDataAcquisition);
-    connect(actionEditSensors, &QAction::triggered, this, &MainWindow::openSerialSensorsEditorDialog);
+    connect(actionEditSerialSensors, &QAction::triggered, this, &MainWindow::openSerialSensorsEditorDialog);
+    connect(actionEditUdpSensors, &QAction::triggered, this, &MainWindow::openUdpSensorsEditorDialog);
     connect(actionExit, &QAction::triggered, qApp, &QApplication::quit);
 }
 
@@ -155,6 +158,21 @@ void MainWindow::openSerialSensorsEditorDialog()
     }
 }
 
+void MainWindow::openUdpSensorsEditorDialog()
+{
+    Q_ASSERT(mSensorsManager);
+
+    bool bOk;
+    UdpSensorsEditorDialog dialog(mSensorsManager->savedUdpSensorData(), &bOk, this);
+    dialog.exec();
+
+    if(bOk)
+    {
+        // Cache sensor data in the appropriate manager for later retrieval.
+        sensorsManager()->setSavedUdpSensorsData(dialog.sensorDataList());
+    }
+}
+
 void MainWindow::toggleDataAcquisition()
 {
     QAction* action = mActionPlayStopAcquisition;
@@ -164,37 +182,21 @@ void MainWindow::toggleDataAcquisition()
 
     if(bValue)
     {
-        if(sensorsManager()->savedSerialSensorData().size() <= 0)
+        bool bSuccess = sensorsManager()->registerSensorsFromSavedData();
+
+        if(!bSuccess)
         {
-            QMessageBox::critical(this, APPLICATION_NAME, tr("No sensor available!\nPlease configure at least one sensor in the sensor editor tool."), QMessageBox::Ok);
+            QMessageBox::critical(this, APPLICATION_NAME, tr("No sensor available!\nPlease configure at least one sensor in one of the sensor editor tool."), QMessageBox::Ok);
             return;
-        }
-
-        Q_FOREACH(const SerialSensorData& current, sensorsManager()->savedSerialSensorData())
-        {
-            if(current.sensor_name.contains(OV7670_CAMERA))
-            {
-                sensorsManager()->registerNewSerialSensor<Serial_OV7670Camera>(current.sensor_portName, current.sensor_name);
-            }
-            else if(current.sensor_name.contains(ESP32_CAMERA))
-            {
-                sensorsManager()->registerNewSerialSensor<Serial_ESP32Camera>(current.sensor_portName, current.sensor_name);
-            }
-            else
-            {
-                sensorsManager()->registerNewSerialSensor(current.sensor_portName, current.sensor_name);
-            }
-
-            sensorsManager()->openSensor(current.sensor_name);
         }
 
         /**
          * @todo handle udp sensor with editor.
          * @note sender is the IP address of the came itself.
          */
-        QString camera1 = QString(ESP32_CAMERA) + "_#1";
+        /*QString camera1 = QString(ESP32_CAMERA) + "_#1";
         sensorsManager()->registerNewUdpSensor<Udp_ESP32Camera>(5555, QHostAddress("192.168.1.62"), camera1);
-        sensorsManager()->openSensor(camera1);
+        sensorsManager()->openSensor(camera1);*/
     }
 
     mAcquisitionStarted = !mAcquisitionStarted;

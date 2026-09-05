@@ -31,7 +31,15 @@ private slots:
     void onUdpSocketErrorReceived(QUdpSocket::SocketError error);
 
 private:
-    quint16 mPort = 5000;
+
+    /**
+     * @brief mPort
+     */
+    quint16 mPort = 0;
+
+    /**
+     * @brief The address of the udp sensor itself.
+     */
     QHostAddress mSenderAddress = {};
 };
 

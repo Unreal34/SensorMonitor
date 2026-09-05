@@ -51,7 +51,7 @@ QVariant SerialSensorsTableModel::data(const QModelIndex &index, int role) const
 
             case Column::SerialPortName:
             {
-                return mData[index.row()].value<SerialSensorData>().sensor_portName;
+                return mData[index.row()].value<SerialSensorData>().sensor_serialPortName;
             }
         }
     }
@@ -142,7 +142,7 @@ bool SerialSensorsTableModel::setData(const QModelIndex &index, const QVariant &
 
         case Column::SerialPortName:
         {
-            data.sensor_portName = value.toString();
+            data.sensor_serialPortName = value.toString();
             break;
         }
 

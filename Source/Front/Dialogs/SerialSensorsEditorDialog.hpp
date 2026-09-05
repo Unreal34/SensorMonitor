@@ -1,5 +1,5 @@
-#ifndef SENSORSEDITORDIALOG_H
-#define SENSORSEDITORDIALOG_H
+#ifndef SERIALSENSORSEDITORDIALOG_H
+#define SERIALSENSORSEDITORDIALOG_H
 
 #include <QObject>
 #include "BaseDialog.hpp"
@@ -21,4 +21,4 @@ private:
     SerialSensorsEditorWidget* mSensorsEditorWidget = nullptr;
 };
 
-#endif // SENSORSEDITORDIALOG_H
+#endif // SERIALSENSORSEDITORDIALOG_H

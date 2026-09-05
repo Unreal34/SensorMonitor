@@ -5,7 +5,7 @@
 
 #include <QHeaderView>
 
-SerialSensorsTableView::SerialSensorsTableView(QWidget *parent) : BaseDataTableView(parent)
+SerialSensorsTableView::SerialSensorsTableView(QWidget *parent) : BaseDataTableView { parent }
 {
     setModel(new SerialSensorsTableModel(this));
     setItemDelegate(new SerialSensorsItemDelegate(this));
@@ -61,7 +61,7 @@ void SerialSensorsTableView::selectionChanged(const QItemSelection &selected, co
 
     if(indexes.size() > 0 && mClearing == false)
     {
-        mSelectedSensor = indexes.first().data(SerialSensorsTableModel::PersonnalDataRole::ValueType).value<SerialSensorData>();
+        mSelectedSensor = indexes.first().data(BaseDataTableModel::PersonnalDataRole::ValueType).value<SerialSensorData>();
         emit newSensorSelected(mSelectedSensor);
     }
     else

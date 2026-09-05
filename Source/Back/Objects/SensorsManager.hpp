@@ -7,6 +7,7 @@
 
 #include "Back/Objects/UdpSensor.hpp"
 #include "Back/Structs/SerialSensorData.hpp"
+#include "Back/Structs/UdpSensorData.hpp"
 #include "SerialSensor.hpp"
 #include "Sensor.hpp"
 
@@ -28,6 +29,12 @@ public:
 
 public:
     explicit SensorsManager(QObject *parent = nullptr);
+
+    /**
+     * @brief registerSensorsFromSavedData
+     * @return
+     */
+    bool registerSensorsFromSavedData();
 
     /**
      * @brief Creates and registers a new serial sensor with a name and a serial port.
@@ -205,11 +212,6 @@ public:
     bool exists(const QString& sensorTag);
 
     /**
-     * @brief Clear the saved sensor data buffer.
-     */
-    void resetSavedSerialSensorData() { mSavedSerialSensorsData.clear(); }
-
-    /**
      * @brief Save a list of SerialSensorData.
      * @note Used to save data available in the serial sensors editor UI.
      * @param newSavedSensorsData
@@ -221,6 +223,19 @@ public:
      * @return
      */
      const QVector<SerialSensorData>& savedSerialSensorData() const { return mSavedSerialSensorsData; }
+
+     /**
+     * @brief Save a list of UdpSensorData.
+     * @note Used to save data available in the udp sensors editor UI.
+     * @param newSavedSensorsData
+     */
+     void setSavedUdpSensorsData(const QVector<UdpSensorData>& newSavedSensorsData) { mSavedUdpSensorsData = newSavedSensorsData; }
+
+     /**
+     * @brief Get access to the saved udp sensor data buffer.
+     * @return
+     */
+     const QVector<UdpSensorData>& savedUdpSensorData() const { return mSavedUdpSensorsData; }
 
 private:
      /**
@@ -272,9 +287,14 @@ private:
     QVector<UdpSensor*> mUdpSensors = {};
 
     /**
-     * @brief Holds serial sensor information (name and port) updated from the SensorsEditorDialog.
+     * @brief Holds serial sensor information (name and port) updated from the editor.
      */
     QVector<SerialSensorData> mSavedSerialSensorsData = { SerialSensorData("HTU21D", "COM3") };
+
+    /**
+     * @brief Holds udp sensor information (name, port and sender) updated from the editor.
+     */
+    QVector<UdpSensorData> mSavedUdpSensorsData = {};
 };
 
 #endif // SENSORSMANAGER_HPP

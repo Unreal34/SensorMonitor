@@ -6,7 +6,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 enable_testing()
@@ -60,31 +60,55 @@ set(PROJECT_SOURCES
     Source/Front/Tables/Widgets/SerialPortCombobox.cpp
     Source/Front/Dialogs/BaseDialog.hpp
     Source/Front/Dialogs/BaseDialog.cpp
-    Source/Front/Dialogs/SensorsEditorDialog.hpp
-    Source/Front/Dialogs/SensorsEditorDialog.cpp
+    Source/Front/Dialogs/SerialSensorsEditorDialog.hpp
+    Source/Front/Dialogs/SerialSensorsEditorDialog.cpp
     Source/Front/Widgets/ConsoleWidget.hpp
     Source/Front/Widgets/ConsoleWidget.cpp
     Source/Front/Widgets/SerialSensorsEditorWidget.hpp
     Source/Front/Widgets/SerialSensorsEditorWidget.cpp
-    Source/Front/Widgets/SerialSensorsEditorWidget.ui
+    Source/Front/Widgets/BaseSensorsEditorWidget.ui
     Source/Front/Windows/MainWindow.hpp
     Source/Front/Windows/MainWindow.cpp
-    Source/Back/Objects/TranslationManager.hpp Source/Back/Objects/TranslationManager.cpp
+    Source/Back/Objects/TranslationManager.hpp
+    Source/Back/Objects/TranslationManager.cpp
     Resource.qrc
 )
 
 qt_add_executable(SensorMonitor
     MANUAL_FINALIZATION
     ${PROJECT_SOURCES}
-    Source/Back/Objects/SimulatedDevice.hpp Source/Back/Objects/SimulatedDevice.cpp
-    Source/Back/Objects/Sensor.hpp Source/Back/Objects/Sensor.cpp
-    Source/Back/Objects/Serial_OV7670Camera.hpp Source/Back/Objects/Serial_OV7670Camera.cpp
-    Source/Front/Windows/ImageViewerSubWindow.hpp Source/Front/Windows/ImageViewerSubWindow.cpp
-    Source/Back/Objects/Serial_ESP32Camera.hpp Source/Back/Objects/Serial_ESP32Camera.cpp
-    Source/Back/Objects/SerialCamera.hpp Source/Back/Objects/SerialCamera.cpp
-    Source/Back/Objects/UdpSensor.hpp Source/Back/Objects/UdpSensor.cpp
-    Source/Back/Objects/Udp_ESP32Camera.hpp Source/Back/Objects/Udp_ESP32Camera.cpp
-    Source/Back/Structs/PacketHeader.hpp
+    Source/Back/Objects/SimulatedDevice.hpp
+    Source/Back/Objects/SimulatedDevice.cpp
+    Source/Back/Objects/Sensor.hpp
+    Source/Back/Objects/Sensor.cpp
+    Source/Back/Objects/Serial_OV7670Camera.hpp
+    Source/Back/Objects/Serial_OV7670Camera.cpp
+    Source/Front/Windows/ImageViewerSubWindow.hpp
+    Source/Front/Windows/ImageViewerSubWindow.cpp
+    Source/Back/Objects/Serial_ESP32Camera.hpp
+    Source/Back/Objects/Serial_ESP32Camera.cpp
+    Source/Back/Objects/SerialCamera.hpp
+    Source/Back/Objects/SerialCamera.cpp
+    Source/Back/Objects/UdpSensor.hpp
+    Source/Back/Objects/UdpSensor.cpp
+    Source/Back/Objects/Udp_ESP32Camera.hpp
+    Source/Back/Objects/Udp_ESP32Camera.cpp
+    Source/Back/Structs/ESP32_PacketHeader.hpp
+    Source/Front/Widgets/UdpSensorsEditorWidget.hpp
+    Source/Front/Widgets/UdpSensorsEditorWidget.cpp
+    Source/Front/Tables/Model/UdpSensorsTableModel.hpp
+    Source/Front/Tables/Model/UdpSensorsTableModel.cpp
+    Source/Front/Tables/View/UdpSensorsTableView.hpp
+    Source/Front/Tables/View/UdpSensorsTableView.cpp
+    Source/Front/Tables/Delegate/UdpSensorsItemDelegate.hpp
+    Source/Front/Tables/Delegate/UdpSensorsItemDelegate.cpp
+    Source/Back/Structs/UdpSensorData.hpp
+    Source/Back/Structs/SensorData.hpp
+    Source/Front/Widgets/BaseSensorsEditorWidget.hpp
+    Source/Front/Widgets/BaseSensorsEditorWidget.cpp
+    Source/Front/Dialogs/UdpSensorsEditorDialog.hpp
+    Source/Front/Dialogs/UdpSensorsEditorDialog.cpp
+    Source/Back/Utility/Localization.hpp
 )
 
 target_include_directories(SensorMonitor PRIVATE
@@ -164,6 +188,16 @@ add_qt_test(SensorsManagerTest
     Source/Back/Objects/SimulatedDevice.cpp
     Source/Back/Utility/SensorUtility.hpp
     Source/Back/Utility/SensorUtility.cpp
+    Source/Back/Objects/Serial_ESP32Camera.hpp
+    Source/Back/Objects/Serial_ESP32Camera.cpp
+    Source/Back/Objects/Serial_OV7670Camera.hpp
+    Source/Back/Objects/Serial_OV7670Camera.cpp
+    Source/Back/Objects/SerialCamera.hpp
+    Source/Back/Objects/SerialCamera.cpp
+    Source/Back/Objects/UdpSensor.hpp
+    Source/Back/Objects/UdpSensor.cpp
+    Source/Back/Objects/Udp_ESP32Camera.hpp
+    Source/Back/Objects/Udp_ESP32Camera.cpp
 )
 
 add_qt_test(SensorUtilityTest

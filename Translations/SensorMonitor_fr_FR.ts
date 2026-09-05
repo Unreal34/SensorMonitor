@@ -15,6 +15,14 @@
     </message>
 </context>
 <context>
+    <name>BaseSensorsEditorWidget</name>
+    <message>
+        <location filename="../Source/Front/Widgets/BaseSensorsEditorWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulaire</translation>
+    </message>
+</context>
+<context>
     <name>ImageViewerSubWindow</name>
     <message>
         <location filename="../Source/Front/Windows/ImageViewerSubWindow.cpp" line="19"/>
@@ -25,28 +33,43 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="35"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="34"/>
         <source>Console</source>
         <translation>Console</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="55"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="54"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="56"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="55"/>
         <source>&amp;Tools</source>
         <translation>&amp;Outils</translation>
     </message>
     <message>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="57"/>
+        <source>Manage serial sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../Source/Front/Windows/MainWindow.cpp" line="58"/>
+        <source>Manage udp sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="189"/>
+        <source>No sensor available!
+Please configure at least one sensor in one of the sensor editor tool.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Manage sensors and ports</source>
-        <translation>Gérer les capteurs et les ports</translation>
+        <translation type="vanished">Gérer les capteurs et les ports</translation>
     </message>
     <message>
         <location filename="../Source/Front/Windows/MainWindow.cpp" line="59"/>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="202"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="204"/>
         <source>Start data acquisition</source>
         <translation>Démarrer l&apos;acquisition</translation>
     </message>
@@ -56,7 +79,7 @@
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="138"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="141"/>
         <source>New frame received from camera.</source>
         <translation>Nouvelle image reçue de la caméra.</translation>
     </message>
@@ -65,10 +88,9 @@
         <translation type="vanished">Nouvelle trame reçue.</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="169"/>
         <source>No sensor available!
 Please configure at least one sensor in the sensor editor tool.</source>
-        <translation>Aucun capteur disponible ! Merci de configurer au moins un capteur dans l&apos;outil d&apos;édition des capteurs.</translation>
+        <translation type="vanished">Aucun capteur disponible ! Merci de configurer au moins un capteur dans l&apos;outil d&apos;édition des capteurs.</translation>
     </message>
     <message>
         <source>No sensor available!
@@ -76,7 +98,7 @@ Plase configure at least one sensor in the sensor editor tool.</source>
         <translation type="vanished">Aucun capteur disponible ! Merci de configurer au moins un capteur dans l&apos;outil d&apos;édition des capteurs.</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="202"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="204"/>
         <source>Stop data acquisition</source>
         <translation>Terminer l&apos;acquisition</translation>
     </message>
@@ -133,26 +155,26 @@ Plase configure at least one sensor in the sensor editor tool.</source>
 <context>
     <name>SensorsManager</name>
     <message>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="57"/>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="119"/>
+        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="64"/>
+        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="126"/>
         <source>Sensor name %1 already exists.</source>
         <translation>Le Nom de capteur %1est déja utilisé.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="51"/>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="113"/>
+        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="58"/>
+        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="120"/>
         <source>Invalid sensor name %1.</source>
         <translation>Nom de capteur invalide %1.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="90"/>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="153"/>
-        <location filename="../Source/Back/Objects/SensorsManager.cpp" line="91"/>
+        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="97"/>
+        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="160"/>
+        <location filename="../Source/Back/Objects/SensorsManager.cpp" line="133"/>
         <source>Sensor %1 is ready!</source>
         <translation>Capteur %1 est prêt !</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SensorsManager.cpp" line="94"/>
+        <location filename="../Source/Back/Objects/SensorsManager.cpp" line="136"/>
         <source>Error occured on sensor %1 - what: %2</source>
         <translation>Erreur sur le capteur %1 - message : %2</translation>
     </message>
@@ -233,38 +255,41 @@ Plase configure at least one sensor in the sensor editor tool.</source>
 <context>
     <name>SerialSensorsEditorDialog</name>
     <message>
-        <location filename="../Source/Front/Dialogs/SensorsEditorDialog.cpp" line="4"/>
+        <location filename="../Source/Front/Dialogs/SerialSensorsEditorDialog.cpp" line="4"/>
         <source>Validate</source>
         <translation>Valider</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Dialogs/SensorsEditorDialog.cpp" line="4"/>
+        <location filename="../Source/Front/Dialogs/SerialSensorsEditorDialog.cpp" line="4"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Dialogs/SensorsEditorDialog.cpp" line="7"/>
+        <location filename="../Source/Front/Dialogs/SerialSensorsEditorDialog.cpp" line="7"/>
+        <source>Serial sensors and ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Sensors and ports</source>
-        <translation>Capteurs et ports</translation>
+        <translation type="vanished">Capteurs et ports</translation>
     </message>
 </context>
 <context>
     <name>SerialSensorsEditorWidget</name>
     <message>
-        <location filename="../Source/Front/Widgets/SerialSensorsEditorWidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulaire</translation>
+        <translation type="vanished">Formulaire</translation>
     </message>
 </context>
 <context>
     <name>SerialSensorsItemDelegate</name>
     <message>
-        <location filename="../Source/Front/Tables/Delegate/SerialSensorsItemDelegate.cpp" line="97"/>
+        <location filename="../Source/Front/Tables/Delegate/SerialSensorsItemDelegate.cpp" line="93"/>
         <source>Name is already used by one of the sensor.</source>
         <translation>Ce nom est déja utilisé par un autre capteur.</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Tables/Delegate/SerialSensorsItemDelegate.cpp" line="114"/>
+        <location filename="../Source/Front/Tables/Delegate/SerialSensorsItemDelegate.cpp" line="110"/>
         <source>Serial port is already used by a sensor.</source>
         <translation>Ce port série est déja utilisé par un autre capteur.</translation>
     </message>
@@ -403,6 +428,59 @@ Plase configure at least one sensor in the sensor editor tool.</source>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="168"/>
         <source>An unknown UDP socket error occurred.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UdpSensorsEditorDialog</name>
+    <message>
+        <location filename="../Source/Front/Dialogs/UdpSensorsEditorDialog.cpp" line="4"/>
+        <source>Validate</source>
+        <translation type="unfinished">Valider</translation>
+    </message>
+    <message>
+        <location filename="../Source/Front/Dialogs/UdpSensorsEditorDialog.cpp" line="4"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <location filename="../Source/Front/Dialogs/UdpSensorsEditorDialog.cpp" line="7"/>
+        <source>Udp sensors and ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UdpSensorsItemDelegate</name>
+    <message>
+        <location filename="../Source/Front/Tables/Delegate/UdpSensorsItemDelegate.cpp" line="115"/>
+        <source>Name is already used by one of the sensor.</source>
+        <translation type="unfinished">Ce nom est déja utilisé par un autre capteur.</translation>
+    </message>
+    <message>
+        <location filename="../Source/Front/Tables/Delegate/UdpSensorsItemDelegate.cpp" line="156"/>
+        <source>IP address already used by a sensor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UdpSensorsTableModel</name>
+    <message>
+        <location filename="../Source/Front/Tables/Model/UdpSensorsTableModel.cpp" line="91"/>
+        <source>Sensor name</source>
+        <translation type="unfinished">Nom du capteur</translation>
+    </message>
+    <message>
+        <location filename="../Source/Front/Tables/Model/UdpSensorsTableModel.cpp" line="96"/>
+        <source>Udp port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Source/Front/Tables/Model/UdpSensorsTableModel.cpp" line="101"/>
+        <source>IP address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Serial port</source>
+        <translation type="obsolete">Port série</translation>
     </message>
 </context>
 </TS>

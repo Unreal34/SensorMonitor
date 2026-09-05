@@ -1,8 +1,50 @@
 #include "SensorsManager.hpp"
+#include "Back/Objects/Udp_ESP32Camera.hpp"
+#include "Serial_ESP32Camera.hpp"
+#include "Serial_OV7670Camera.hpp"
+#include "Back/Utility/Utility.hpp"
 #include <qassert.h>
 
 SensorsManager::SensorsManager(QObject *parent) : QObject { parent }
 {}
+
+bool SensorsManager::registerSensorsFromSavedData()
+{
+    if(savedSerialSensorData().size() <= 0 && savedUdpSensorData().size() <= 0)
+    {
+        return false;
+    }
+
+    Q_FOREACH(const SerialSensorData& current, savedSerialSensorData())
+    {
+        if(current.sensor_name.contains(OV7670_CAMERA))
+        {
+            registerNewSerialSensor<Serial_OV7670Camera>(current.sensor_serialPortName, current.sensor_name);
+        }
+        else if(current.sensor_name.contains(ESP32_CAMERA))
+        {
+            registerNewSerialSensor<Serial_ESP32Camera>(current.sensor_serialPortName, current.sensor_name);
+        }
+        else
+        {
+            registerNewSerialSensor(current.sensor_serialPortName, current.sensor_name);
+        }
+
+        openSensor(current.sensor_name);
+    }
+
+    Q_FOREACH(const UdpSensorData& current, savedUdpSensorData())
+    {
+        if(current.sensor_name.contains(ESP32_CAMERA))
+        {
+            registerNewUdpSensor<Udp_ESP32Camera>(current.sensor_udpPort, current.sensor_sender_ipAddress, current.sensor_name);
+        }
+
+        openSensor(current.sensor_name);
+    }
+
+    return true;
+}
 
 bool SensorsManager::openSensor(const QString &name)
 {

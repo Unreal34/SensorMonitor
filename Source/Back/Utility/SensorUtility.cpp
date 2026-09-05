@@ -1,14 +1,15 @@
 #include "SensorUtility.hpp"
+#include "Back/Structs/UdpSensorData.hpp"
 #include "Utility.hpp"
 #include <QVariant>
 #include <QUuid>
 #include <QImage>
 
-bool SensorUtility::checkUniqueName(const QString &name, const QVector<SerialSensorData> &sensorData, const QUuid &escapeSensor)
+bool SensorUtility::checkUniqueSerialPort(const QString &serialPort, const QVector<SerialSensorData> &sensorData, const QUuid &escapeSensor)
 {
     Q_FOREACH(const SerialSensorData& sensor, sensorData)
     {
-        if(sensor.sensor_guid != escapeSensor && sensor.sensor_name == name)
+        if(sensor.sensor_guid != escapeSensor && sensor.sensor_serialPortName == serialPort && serialPort != INVALID_SERIAL_PORT)
         {
             return false;
         }
@@ -17,11 +18,11 @@ bool SensorUtility::checkUniqueName(const QString &name, const QVector<SerialSen
     return true;
 }
 
-bool SensorUtility::checkUniqueSerialPort(const QString &serialPort, const QVector<SerialSensorData> &sensorData, const QUuid &escapeSensor)
+bool SensorUtility::checkUniqueSenderIpAddress(const QHostAddress &sender, const QVector<UdpSensorData> &sensorData, const QUuid &escapeSensor)
 {
-    Q_FOREACH(const SerialSensorData& sensor, sensorData)
+    Q_FOREACH(const UdpSensorData& sensor, sensorData)
     {
-        if(sensor.sensor_guid != escapeSensor && sensor.sensor_portName == serialPort && serialPort != INVALID_SERIAL_PORT)
+        if(sensor.sensor_guid != escapeSensor && sensor.sensor_sender_ipAddress == sender && sensor.sensor_sender_ipAddress != QHostAddress(ANY_IP_ADDRESS))
         {
             return false;
         }
@@ -43,6 +44,24 @@ bool SensorUtility::variantListToSensorDataList(const QVariantList &variantList,
         }
 
         sensorData[i] = variantList[i].value<SerialSensorData>();
+    }
+
+    return true;
+}
+
+bool SensorUtility::variantListToUdpDataList(const QVariantList &variantList, QVector<UdpSensorData> &udpData)
+{
+    udpData.clear();
+    udpData.resize(variantList.size());
+
+    for(int i = 0; i < variantList.size(); i++)
+    {
+        if(!variantList[i].canConvert<UdpSensorData>())
+        {
+            return false;
+        }
+
+        udpData[i] = variantList[i].value<UdpSensorData>();
     }
 
     return true;

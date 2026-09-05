@@ -10,7 +10,7 @@
 #include <QMessageBox>
 #include <QLineEdit>
 
-SerialSensorsItemDelegate::SerialSensorsItemDelegate(QObject *parent) : QItemDelegate{parent}
+SerialSensorsItemDelegate::SerialSensorsItemDelegate(QObject *parent) : QItemDelegate { parent }
 {}
 
 QWidget *SerialSensorsItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -19,19 +19,15 @@ QWidget *SerialSensorsItemDelegate::createEditor(QWidget *parent, const QStyleOp
 
     if(index.column() == SerialSensorsTableModel::Column::SensorName)
     {
-        QWidget* editor = new QLineEdit(parent);
+        editor = new QLineEdit(parent);
         editor->setAutoFillBackground(true);
-        return editor;
     }
     else if(index.column() == SerialSensorsTableModel::Column::SerialPortName)
     {
-        QWidget* editor = new SerialPortCombobox(parent);
-
+        editor = new SerialPortCombobox(parent);
         SerialPortCombobox* combobox = qobject_cast<SerialPortCombobox*>(editor);
         Q_ASSERT(combobox);
-
         editor->setAutoFillBackground(true);
-        return editor;
     }
     else
     {

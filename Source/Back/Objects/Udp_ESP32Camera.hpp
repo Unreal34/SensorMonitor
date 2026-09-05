@@ -11,14 +11,11 @@ public:
     explicit Udp_ESP32Camera(QIODevice* simulatedDevice, QObject *parent = nullptr);
 
 protected slots:
-    /**
-     * @brief Data received from the device is handled by this slot.
-     */
     virtual void onDataReceived();
 
 private:
     uint32_t mCurrentFrameId = 0;
-    QByteArray mFrameBuffer;
+    QByteArray mFrameBuffer = {};
     uint16_t mPacketCount = 0;
     uint16_t mReceivedPacketCount = 0;
     QVector<bool> mReceivedPackets = {};

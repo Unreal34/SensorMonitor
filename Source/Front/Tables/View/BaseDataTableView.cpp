@@ -1,6 +1,6 @@
 #include "BaseDataTableView.hpp"
 
-BaseDataTableView::BaseDataTableView(QWidget *parent) : QTableView(parent)
+BaseDataTableView::BaseDataTableView(QWidget *parent) : QTableView { parent }
 {
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows);

@@ -47,7 +47,7 @@ QVector<SerialSensorData> SerialSensorsTableView::sensorDataList()
 {
     QVariantList currentDataList = dataList();
     QVector<SerialSensorData> sensorDataList;
-    bool bSuccess = SensorUtility::variantListToSensorDataList(currentDataList, sensorDataList);
+    bool bSuccess = SensorUtility::variantListToSensorDataList<SerialSensorData>(currentDataList, sensorDataList);
     Q_ASSERT(bSuccess);
 
     return sensorDataList;

@@ -19,7 +19,7 @@
     <message>
         <location filename="../Source/Front/Widgets/BaseSensorsEditorWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulaire</translation>
+        <translation>Formulaire</translation>
     </message>
 </context>
 <context>
@@ -33,53 +33,65 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="34"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="32"/>
         <source>Console</source>
         <translation>Console</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="54"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="52"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="55"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="53"/>
         <source>&amp;Tools</source>
         <translation>&amp;Outils</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="57"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="55"/>
         <source>Manage serial sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Gérer les capteurs avec connexion série</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="58"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="56"/>
         <source>Manage udp sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Gérer les capteurs de type UDP</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="189"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="186"/>
         <source>No sensor available!
 Please configure at least one sensor in one of the sensor editor tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun capteur disponible ! Merci de configurer au moins un capteur dans un des outils d&apos;édition.</translation>
+    </message>
+    <message>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="191"/>
+        <source>At least one sensor triggered an error during sensor registration step.
+Aborting...</source>
+        <translation>Au moins un capteur a déclenché une erreur pendant l&apos;étape d&apos;initialisation. Interruption de l’opération...</translation>
+    </message>
+    <message>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="196"/>
+        <source>At least one sensor triggered an error during sensor opening step.
+Aborting...</source>
+        <translation>Au moins un capteur a déclenché une erreur pendant l&apos;étape d&apos;ouverture. Interruption de l’opération...</translation>
     </message>
     <message>
         <source>Manage sensors and ports</source>
         <translation type="vanished">Gérer les capteurs et les ports</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="59"/>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="204"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="57"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="207"/>
         <source>Start data acquisition</source>
         <translation>Démarrer l&apos;acquisition</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="60"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="58"/>
         <source>Exit</source>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="141"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="139"/>
         <source>New frame received from camera.</source>
         <translation>Nouvelle image reçue de la caméra.</translation>
     </message>
@@ -98,7 +110,7 @@ Plase configure at least one sensor in the sensor editor tool.</source>
         <translation type="vanished">Aucun capteur disponible ! Merci de configurer au moins un capteur dans l&apos;outil d&apos;édition des capteurs.</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="204"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="207"/>
         <source>Stop data acquisition</source>
         <translation>Terminer l&apos;acquisition</translation>
     </message>
@@ -155,26 +167,23 @@ Plase configure at least one sensor in the sensor editor tool.</source>
 <context>
     <name>SensorsManager</name>
     <message>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="64"/>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="126"/>
+        <location filename="../Source/Back/Objects/SensorsManager.cpp" line="151"/>
         <source>Sensor name %1 already exists.</source>
         <translation>Le Nom de capteur %1est déja utilisé.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="58"/>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="120"/>
+        <location filename="../Source/Back/Objects/SensorsManager.cpp" line="145"/>
         <source>Invalid sensor name %1.</source>
         <translation>Nom de capteur invalide %1.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="97"/>
-        <location filename="../Source/Back/Objects/SensorsManager.hpp" line="160"/>
-        <location filename="../Source/Back/Objects/SensorsManager.cpp" line="133"/>
+        <location filename="../Source/Back/Objects/SensorsManager.cpp" line="179"/>
+        <location filename="../Source/Back/Objects/SensorsManager.cpp" line="188"/>
         <source>Sensor %1 is ready!</source>
         <translation>Capteur %1 est prêt !</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SensorsManager.cpp" line="136"/>
+        <location filename="../Source/Back/Objects/SensorsManager.cpp" line="191"/>
         <source>Error occured on sensor %1 - what: %2</source>
         <translation>Erreur sur le capteur %1 - message : %2</translation>
     </message>
@@ -267,7 +276,7 @@ Plase configure at least one sensor in the sensor editor tool.</source>
     <message>
         <location filename="../Source/Front/Dialogs/SerialSensorsEditorDialog.cpp" line="7"/>
         <source>Serial sensors and ports</source>
-        <translation type="unfinished"></translation>
+        <translation>Capteurs et ports série</translation>
     </message>
     <message>
         <source>Sensors and ports</source>
@@ -312,122 +321,122 @@ Plase configure at least one sensor in the sensor editor tool.</source>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="53"/>
         <source>The connection was refused by the remote host.</source>
-        <translation type="unfinished"></translation>
+        <translation>La connexion a été refusé par l&apos;hôte distant.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="58"/>
         <source>The remote host closed the connection.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;hôte distant a fermé la connexion.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="63"/>
         <source>The remote host was not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;hôte distant n&apos;a pas été trouvé.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="68"/>
         <source>Permission denied while accessing the UDP socket.</source>
-        <translation type="unfinished"></translation>
+        <translation>Permission refusée pendant l&apos;ouverture du socket UDP.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="73"/>
         <source>The system does not have enough resources to create or use the UDP socket.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le système n&apos;a pas assez de ressources pour créer un socket UDP.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="78"/>
         <source>The UDP socket operation timed out.</source>
-        <translation type="unfinished"></translation>
+        <translation>Delais d&apos;attente dépassé sur le socket UDP.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="83"/>
         <source>The UDP datagram is too large to be sent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le datagramme UDP est trop grand pour être envoyé.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="88"/>
         <source>A network error occurred.</source>
-        <translation type="unfinished"></translation>
+        <translation>Une erreur réseau s&apos;est produite.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="93"/>
         <source>The UDP port is already in use by another application.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le port UDP est déja utilisé par une autre application.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="98"/>
         <source>The requested local address is not available.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;addresse locale n&apos;est pas disponible.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="103"/>
         <source>The requested UDP socket operation is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opération non supportée sur le socket UDP.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="108"/>
         <source>The proxy requires authentication.</source>
-        <translation type="unfinished"></translation>
+        <translation>Authentification nécessaire sur le proxy.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="113"/>
         <source>The SSL handshake failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur SSL.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="118"/>
         <source>The socket operation could not be completed.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;opération sur le socket ne peut aboutir.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="123"/>
         <source>The connection to the proxy server was refused.</source>
-        <translation type="unfinished"></translation>
+        <translation>La connexion avec le serveur proxy a été refusée.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="128"/>
         <source>The proxy server closed the connection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le serveur proxy a fermé la connexion.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="133"/>
         <source>The connection to the proxy server timed out.</source>
-        <translation type="unfinished"></translation>
+        <translation>Delais d&apos;attente dépassé sur la connexion au serveur proxy.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="138"/>
         <source>The proxy server was not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le serveur proxy n&apos;a pas pu être trouvé.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="143"/>
         <source>A proxy protocol error occurred.</source>
-        <translation type="unfinished"></translation>
+        <translation>Une erreur de protocole de proxy est survenue.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="148"/>
         <source>The UDP socket operation is not permitted in its current state.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;opération de socket n&apos;est pas permise dans l&apos;état actuel.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="153"/>
         <source>An internal SSL error occurred.</source>
-        <translation type="unfinished"></translation>
+        <translation>Une erreur SSL interne est survenue.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="158"/>
         <source>Invalid SSL user data was provided.</source>
-        <translation type="unfinished"></translation>
+        <translation>Des données SSL sont invalides.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="163"/>
         <source>A temporary UDP socket error occurred.</source>
-        <translation type="unfinished"></translation>
+        <translation>Une erreur temporaire sur le socket UDP est survenue.</translation>
     </message>
     <message>
         <location filename="../Source/Back/Objects/UdpSensor.cpp" line="168"/>
         <source>An unknown UDP socket error occurred.</source>
-        <translation type="unfinished"></translation>
+        <translation>Une erreur inconnue est survenue sur le socket UDP.</translation>
     </message>
 </context>
 <context>
@@ -435,17 +444,17 @@ Plase configure at least one sensor in the sensor editor tool.</source>
     <message>
         <location filename="../Source/Front/Dialogs/UdpSensorsEditorDialog.cpp" line="4"/>
         <source>Validate</source>
-        <translation type="unfinished">Valider</translation>
+        <translation>Valider</translation>
     </message>
     <message>
         <location filename="../Source/Front/Dialogs/UdpSensorsEditorDialog.cpp" line="4"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../Source/Front/Dialogs/UdpSensorsEditorDialog.cpp" line="7"/>
         <source>Udp sensors and ports</source>
-        <translation type="unfinished"></translation>
+        <translation>Capteurs et ports UDP</translation>
     </message>
 </context>
 <context>
@@ -453,12 +462,12 @@ Plase configure at least one sensor in the sensor editor tool.</source>
     <message>
         <location filename="../Source/Front/Tables/Delegate/UdpSensorsItemDelegate.cpp" line="115"/>
         <source>Name is already used by one of the sensor.</source>
-        <translation type="unfinished">Ce nom est déja utilisé par un autre capteur.</translation>
+        <translation>Ce nom est déja utilisé par un autre capteur.</translation>
     </message>
     <message>
         <location filename="../Source/Front/Tables/Delegate/UdpSensorsItemDelegate.cpp" line="156"/>
         <source>IP address already used by a sensor.</source>
-        <translation type="unfinished"></translation>
+        <translation>Addresse IP déja utilisée par un capteur.</translation>
     </message>
 </context>
 <context>
@@ -466,17 +475,17 @@ Plase configure at least one sensor in the sensor editor tool.</source>
     <message>
         <location filename="../Source/Front/Tables/Model/UdpSensorsTableModel.cpp" line="91"/>
         <source>Sensor name</source>
-        <translation type="unfinished">Nom du capteur</translation>
+        <translation>Nom du capteur</translation>
     </message>
     <message>
         <location filename="../Source/Front/Tables/Model/UdpSensorsTableModel.cpp" line="96"/>
         <source>Udp port</source>
-        <translation type="unfinished"></translation>
+        <translation>Port UDP</translation>
     </message>
     <message>
         <location filename="../Source/Front/Tables/Model/UdpSensorsTableModel.cpp" line="101"/>
         <source>IP address</source>
-        <translation type="unfinished"></translation>
+        <translation>Addresse IP</translation>
     </message>
     <message>
         <source>Serial port</source>

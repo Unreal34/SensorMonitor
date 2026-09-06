@@ -83,7 +83,7 @@ private:
     ImageViewerSubWindow* mImageViewer = nullptr;
 
     /**
-     * @brief Action visible in the toolbar to start and stop sensor acquisition.
+     * @brief Action available in the toolbar to start and stop sensor acquisition.
      */
     QAction* mActionPlayStopAcquisition = nullptr;
 };

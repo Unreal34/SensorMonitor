@@ -8,42 +8,55 @@
 SensorsManager::SensorsManager(QObject *parent) : QObject { parent }
 {}
 
-bool SensorsManager::registerSensorsFromSavedData()
+SensorsManager::ESensorsManagerError SensorsManager::registerAndOpenSensorsFromSavedData()
 {
     if(savedSerialSensorData().size() <= 0 && savedUdpSensorData().size() <= 0)
     {
-        return false;
+        return ESensorsManagerError::EmptySavedBuffer;
     }
+
+    QVector<bool> registrationStates = {};
+    QVector<bool> openingStates = {};
 
     Q_FOREACH(const SerialSensorData& current, savedSerialSensorData())
     {
         if(current.sensor_name.contains(OV7670_CAMERA))
         {
-            registerNewSerialSensor<Serial_OV7670Camera>(current.sensor_serialPortName, current.sensor_name);
+            registrationStates += registerNewSerialSensor<Serial_OV7670Camera>(current.sensor_serialPortName, current.sensor_name);
         }
         else if(current.sensor_name.contains(ESP32_CAMERA))
         {
-            registerNewSerialSensor<Serial_ESP32Camera>(current.sensor_serialPortName, current.sensor_name);
+            registrationStates += registerNewSerialSensor<Serial_ESP32Camera>(current.sensor_serialPortName, current.sensor_name);
         }
         else
         {
-            registerNewSerialSensor(current.sensor_serialPortName, current.sensor_name);
+            registrationStates += registerNewSerialSensor(current.sensor_serialPortName, current.sensor_name);
         }
 
-        openSensor(current.sensor_name);
+        openingStates += openSensor(current.sensor_name);
     }
 
     Q_FOREACH(const UdpSensorData& current, savedUdpSensorData())
     {
         if(current.sensor_name.contains(ESP32_CAMERA))
         {
-            registerNewUdpSensor<Udp_ESP32Camera>(current.sensor_udpPort, current.sensor_sender_ipAddress, current.sensor_name);
+            registrationStates += registerNewUdpSensor<Udp_ESP32Camera>(current.sensor_udpPort, current.sensor_sender_ipAddress, current.sensor_name);
         }
 
-        openSensor(current.sensor_name);
+        openingStates += openSensor(current.sensor_name);
     }
 
-    return true;
+    if(std::count(registrationStates.cbegin(), registrationStates.cend(), true) != registrationStates.size())
+    {
+        return ESensorsManagerError::SensorRegistrationError;
+    }
+
+    if(std::count(openingStates.cbegin(), openingStates.cend(), true) != openingStates.size())
+    {
+        return ESensorsManagerError::SensorOpeningError;
+    }
+
+    return ESensorsManagerError::Success;
 }
 
 bool SensorsManager::openSensor(const QString &name)
@@ -123,6 +136,48 @@ void SensorsManager::deleteSensor(Sensor *target)
 
     // delete the sensor from memory.
     delete target;
+}
+
+bool SensorsManager::checkSensorName(const QString &name)
+{
+    if(name.isNull() || name.isEmpty())
+    {
+        emit errorHandled(name, tr("Invalid sensor name %1.").arg(name), ESensorsManagerError::InvalidSensorName);
+        return false;
+    }
+
+    if(exists(name))
+    {
+        emit errorHandled(name, tr("Sensor name %1 already exists.").arg(name), ESensorsManagerError::InvalidSensorName);
+        return false;
+    }
+
+    return true;
+}
+
+void SensorsManager::initializeSensor(Sensor *sensor, const QString &name, QIODevice *simulatedDevice)
+{
+    Q_ASSERT(sensor);
+
+    // initialize name
+    sensor->setName(name);
+
+    // add the new sensor in the generic array.
+    mSensors.push_back(sensor);
+
+    // connect to sensor data handler.
+    connect(sensor, &Sensor::dataReceived, this, [sensor, this](const QByteArray& data)
+    {
+        emit dataReceived(sensor->name(), data);
+    });
+
+    // connect to sensor error handler.
+    connect(sensor, &Sensor::errorHandled, this, &SensorsManager::onSensorErrorReceived);
+
+    if(simulatedDevice)
+    {
+        emit errorHandled(name, tr("Sensor %1 is ready!").arg(name), ESensorsManagerError::Success);
+    }
 }
 
 void SensorsManager::onSensorErrorReceived(const QString& sensorName, Sensor::ESensorError error, const QString &message)

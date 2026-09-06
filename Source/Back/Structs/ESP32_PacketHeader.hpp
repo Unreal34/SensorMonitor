@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-struct ESP32_PacketHeader
+struct UDP_ESP32_PacketHeader
 {
     uint32_t frameId;
     uint32_t frameSize;

@@ -69,7 +69,7 @@ void SerialSensorsItemDelegate::setModelData(QWidget *editor, QAbstractItemModel
 
     // Retrieve all available sensor data.
     QVector<SerialSensorData> sensorData;
-    bool bSuccess = SensorUtility::variantListToSensorDataList(sensorsTableModel->dataList(), sensorData);
+    bool bSuccess = SensorUtility::variantListToSensorDataList<SerialSensorData>(sensorsTableModel->dataList(), sensorData);
     Q_ASSERT(bSuccess);
 
     // Retrieve the current sensor data linked to the current table entry (index).

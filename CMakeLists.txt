@@ -219,4 +219,16 @@ add_qt_test(SerialSensorTest
     Source/Back/Utility/SensorUtility.cpp
 )
 
+add_qt_test(Udp_ESP32CameraTest
+    Source/Back/Objects/Sensor.hpp
+    Source/Back/Objects/Sensor.cpp
+    Tests/Udp_ESP32CameraTest.cpp
+    Source/Back/Objects/UdpSensor.hpp
+    Source/Back/Objects/UdpSensor.cpp
+    Source/Back/Objects/Udp_ESP32Camera.hpp
+    Source/Back/Objects/Udp_ESP32Camera.cpp
+    Source/Back/Utility/SensorUtility.hpp
+    Source/Back/Utility/SensorUtility.cpp
+)
+
 qt_finalize_executable(SensorMonitor)

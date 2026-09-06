@@ -5,6 +5,7 @@
 #include "Back/Utility/ApplicationLogger.hpp"
 #include "Front/Dialogs/UdpSensorsEditorDialog.hpp"
 #include <Back/Utility/SensorUtility.hpp>
+#include <Back/Objects/Udp_ESP32Camera.hpp>
 
 #include <QDockWidget>
 #include <QSerialPortInfo>
@@ -18,9 +19,6 @@
 #include <QDesktopServices>
 #include <qtextedit.h>
 #include <QMdiSubWindow>
-
-#include <Back/Objects/Udp_ESP32Camera.hpp>
-
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 , mConsole(new ConsoleWidget(this))
@@ -153,7 +151,7 @@ void MainWindow::openSerialSensorsEditorDialog()
 
     if(bOk)
     {
-        // Cache sensor data in the appropriate manager for later retrieval.
+        // Cache serial sensor data in the appropriate manager for later retrieval.
         sensorsManager()->setSavedSerialSensorsData(dialog.sensorDataList());
     }
 }
@@ -168,42 +166,47 @@ void MainWindow::openUdpSensorsEditorDialog()
 
     if(bOk)
     {
-        // Cache sensor data in the appropriate manager for later retrieval.
+        // Cache udp sensor data in the appropriate manager for later retrieval.
         sensorsManager()->setSavedUdpSensorsData(dialog.sensorDataList());
     }
 }
 
 void MainWindow::toggleDataAcquisition()
 {
-    QAction* action = mActionPlayStopAcquisition;
-    Q_ASSERT(action);
+    Q_ASSERT(mActionPlayStopAcquisition);
 
     bool bValue = !mAcquisitionStarted;
 
     if(bValue)
     {
-        bool bSuccess = sensorsManager()->registerSensorsFromSavedData();
+        SensorsManager::ESensorsManagerError error = sensorsManager()->registerAndOpenSensorsFromSavedData();
 
-        if(!bSuccess)
+        if(error == SensorsManager::ESensorsManagerError::EmptySavedBuffer)
         {
             QMessageBox::critical(this, APPLICATION_NAME, tr("No sensor available!\nPlease configure at least one sensor in one of the sensor editor tool."), QMessageBox::Ok);
-            return;
         }
 
-        /**
-         * @todo handle udp sensor with editor.
-         * @note sender is the IP address of the came itself.
-         */
-        /*QString camera1 = QString(ESP32_CAMERA) + "_#1";
-        sensorsManager()->registerNewUdpSensor<Udp_ESP32Camera>(5555, QHostAddress("192.168.1.62"), camera1);
-        sensorsManager()->openSensor(camera1);*/
+        if(error == SensorsManager::ESensorsManagerError::SensorRegistrationError)
+        {
+            QMessageBox::critical(this, APPLICATION_NAME, tr("At least one sensor triggered an error during sensor registration step.\nAborting..."), QMessageBox::Ok);
+        }
+
+        if(error == SensorsManager::ESensorsManagerError::SensorOpeningError)
+        {
+            QMessageBox::critical(this, APPLICATION_NAME, tr("At least one sensor triggered an error during sensor opening step.\nAborting..."), QMessageBox::Ok);
+        }
+
+        if(error != SensorsManager::ESensorsManagerError::Success)
+        {
+            return;
+        }
     }
 
     mAcquisitionStarted = !mAcquisitionStarted;
-    action->setIcon(mAcquisitionStarted ? QIcon("://Icons/Stop.png") : QIcon("://Icons/Play.png"));
-    action->setText(mAcquisitionStarted ? tr("Stop data acquisition") : tr("Start data acquisition"));
+    mActionPlayStopAcquisition->setIcon(mAcquisitionStarted ? QIcon("://Icons/Stop.png") : QIcon("://Icons/Play.png"));
+    mActionPlayStopAcquisition->setText(mAcquisitionStarted ? tr("Stop data acquisition") : tr("Start data acquisition"));
 
-    // mAcquisitionStarted must be updated before mImageViewer destruction.
+    // mAcquisitionStarted state must be updated before mImageViewer destruction.
     if(!mAcquisitionStarted)
     {
         sensorsManager()->clear();

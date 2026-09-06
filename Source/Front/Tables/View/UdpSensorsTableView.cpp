@@ -19,7 +19,7 @@ QVector<UdpSensorData> UdpSensorsTableView::udpDataList()
 {
     QVariantList currentDataList = dataList();
     QVector<UdpSensorData> sensorDataList;
-    bool bSuccess = SensorUtility::variantListToUdpDataList(currentDataList, sensorDataList);
+    bool bSuccess = SensorUtility::variantListToSensorDataList<UdpSensorData>(currentDataList, sensorDataList);
     Q_ASSERT(bSuccess);
 
     return sensorDataList;

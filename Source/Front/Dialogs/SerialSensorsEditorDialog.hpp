@@ -7,6 +7,7 @@
 
 class SerialSensorsEditorDialog : public BaseDialog
 {
+    Q_OBJECT
 public:
     explicit SerialSensorsEditorDialog(const QVector<SerialSensorData>& sensors, bool *ok, QWidget* parent = nullptr);
 

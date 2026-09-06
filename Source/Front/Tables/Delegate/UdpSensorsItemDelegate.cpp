@@ -91,7 +91,7 @@ void UdpSensorsItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *m
 
     // Retrieve all available sensor data.
     QVector<UdpSensorData> sensorData;
-    bool bSuccess = SensorUtility::variantListToUdpDataList(udpSensorsTableModel->dataList(), sensorData);
+    bool bSuccess = SensorUtility::variantListToSensorDataList<UdpSensorData>(udpSensorsTableModel->dataList(), sensorData);
     Q_ASSERT(bSuccess);
 
     // Retrieve the current sensor data linked to the current table entry (index).

@@ -10,8 +10,7 @@ struct UdpSensorData : public SensorData
         : SensorData()
     {}
 
-    UdpSensorData(const QString& _sensor_name, quint16 _sensor_udpPort, const QHostAddress& _sensor_sender_ipAddress)
-        : SensorData()
+    UdpSensorData(const QString& _sensor_name, quint16 _sensor_udpPort, const QHostAddress& _sensor_sender_ipAddress) : SensorData(_sensor_name)
         , sensor_udpPort(_sensor_udpPort)
         , sensor_sender_ipAddress(_sensor_sender_ipAddress)
     {}
@@ -23,12 +22,13 @@ struct UdpSensorData : public SensorData
 
     virtual void reset() override
     {
+        SensorData::reset();
         sensor_udpPort = 0;
         sensor_sender_ipAddress = QHostAddress();
     }
 
-    quint16 sensor_udpPort = {};
-    QHostAddress sensor_sender_ipAddress = {};
+    quint16 sensor_udpPort = 0;
+    QHostAddress sensor_sender_ipAddress = QHostAddress::AnyIPv4;
 };
 
 #endif // UDPSENSORDATA_HPP

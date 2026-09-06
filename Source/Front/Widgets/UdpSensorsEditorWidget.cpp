@@ -1,6 +1,7 @@
 #include "UdpSensorsEditorWidget.hpp"
 #include "Front/Tables/View/UdpSensorsTableView.hpp"
 #include "Source/Front/Widgets/ui_BaseSensorsEditorWidget.h"
+#include "Back/Utility/Utility.hpp"
 
 UdpSensorsEditorWidget::UdpSensorsEditorWidget(const QVector<UdpSensorData>& sensors, QWidget *parent) : BaseSensorsEditorWidget { parent }
 , mSensorsTableView(new UdpSensorsTableView(parent))
@@ -29,7 +30,7 @@ void UdpSensorsEditorWidget::addNewSensor()
     UdpSensorData s1;
     s1.sensor_name = s1.sensor_guid.toString(QUuid::WithoutBraces);
     s1.sensor_udpPort = 5000;
-    s1.sensor_sender_ipAddress = QHostAddress("192.168.1.63");
+    s1.sensor_sender_ipAddress = QHostAddress(ANY_IP_ADDRESS);
     data.push_back(QVariant::fromValue(s1));
 
     mSensorsTableView->append(data, 0);

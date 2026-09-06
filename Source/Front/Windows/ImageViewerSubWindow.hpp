@@ -12,6 +12,12 @@ public:
 public:
     void setImage(const QImage& newImage);
 
+protected:
+    virtual void closeEvent(QCloseEvent *event) override;
+
+signals:
+    void imageViewerCloseRequest();
+
 private:
     QLabel* mImageLabel = nullptr;
 };

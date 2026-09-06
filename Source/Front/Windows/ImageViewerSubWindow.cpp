@@ -1,6 +1,7 @@
 #include "ImageViewerSubWindow.hpp"
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QCloseEvent>
 
 ImageViewerSubWindow::ImageViewerSubWindow(QWidget *parent) : QMdiSubWindow { parent }
 , mImageLabel(new QLabel(this))
@@ -22,4 +23,10 @@ void ImageViewerSubWindow::setImage(const QImage &newImage)
 {
     Q_ASSERT(mImageLabel);
     mImageLabel->setPixmap(QPixmap::fromImage(newImage).scaled(mImageLabel->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+}
+
+void ImageViewerSubWindow::closeEvent(QCloseEvent *event)
+{
+    emit imageViewerCloseRequest();
+    QMdiSubWindow::closeEvent(event);
 }

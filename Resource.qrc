@@ -9,5 +9,7 @@
         <file>Icons/Play.png</file>
         <file>Icons/Stop.png</file>
         <file>Styles/Dark.qss</file>
+        <file>Icons/Ethernet.png</file>
+        <file>Icons/Network.png</file>
     </qresource>
 </RCC>

@@ -1,5 +1,5 @@
-#ifndef SENSORSEDITORDIALOG_H
-#define SENSORSEDITORDIALOG_H
+#ifndef SERIALSENSORSEDITORDIALOG_H
+#define SERIALSENSORSEDITORDIALOG_H
 
 #include <QObject>
 #include "BaseDialog.hpp"
@@ -7,6 +7,7 @@
 
 class SerialSensorsEditorDialog : public BaseDialog
 {
+    Q_OBJECT
 public:
     explicit SerialSensorsEditorDialog(const QVector<SerialSensorData>& sensors, bool *ok, QWidget* parent = nullptr);
 
@@ -21,4 +22,4 @@ private:
     SerialSensorsEditorWidget* mSensorsEditorWidget = nullptr;
 };
 
-#endif // SENSORSEDITORDIALOG_H
+#endif // SERIALSENSORSEDITORDIALOG_H

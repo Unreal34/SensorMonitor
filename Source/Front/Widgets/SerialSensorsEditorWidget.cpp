@@ -1,18 +1,12 @@
 #include "SerialSensorsEditorWidget.hpp"
-#include "Back/Structs/SerialSensorData.hpp"
 #include "Back/Utility/Utility.hpp"
-#include "ui_SerialSensorsEditorWidget.h"
 #include <quuid.h>
+#include <Source/Front/Widgets/ui_BaseSensorsEditorWidget.h>
 
-SerialSensorsEditorWidget::SerialSensorsEditorWidget(const QVector<SerialSensorData>& sensors, QWidget *parent) : QWidget(parent)
-, ui(new Ui::SerialSensorsEditorWidget)
+SerialSensorsEditorWidget::SerialSensorsEditorWidget(const QVector<SerialSensorData>& sensors, QWidget *parent) : BaseSensorsEditorWidget { parent }
 , mSensorsTableView(new SerialSensorsTableView(this))
 {
-    ui->setupUi(this);
     ui->mMainLayout->insertWidget(0, mSensorsTableView);
-
-    connect(ui->mAdd, SIGNAL(clicked(bool)), this, SLOT(addNewSensor()));
-    connect(ui->mDelete, SIGNAL(clicked(bool)), this, SLOT(deleteCurrentSelectedSensor()));
 
     QVariantList datalist;
 
@@ -22,11 +16,6 @@ SerialSensorsEditorWidget::SerialSensorsEditorWidget(const QVector<SerialSensorD
     }
 
     mSensorsTableView->clearAndFill(datalist, 0);
-}
-
-SerialSensorsEditorWidget::~SerialSensorsEditorWidget()
-{
-    delete ui;
 }
 
 QVector<SerialSensorData> SerialSensorsEditorWidget::updatedSensorData()
@@ -40,7 +29,7 @@ void SerialSensorsEditorWidget::addNewSensor()
 
     SerialSensorData s1;
     s1.sensor_name = s1.sensor_guid.toString(QUuid::WithoutBraces);
-    s1.sensor_portName = INVALID_SERIAL_PORT;
+    s1.sensor_serialPortName = INVALID_SERIAL_PORT;
 
     data.push_back(QVariant::fromValue(s1));
 

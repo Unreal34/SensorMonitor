@@ -39,6 +39,11 @@ private slots:
     void openSerialSensorsEditorDialog();
 
     /**
+     * @brief openSerialSensorsEditorDialog
+     */
+    void openUdpSensorsEditorDialog();
+
+    /**
      * @brief Starts or stops data acquisition using the sensor data list saved in the main manager.
      * @note Only serial sensor are supported yet.
      */
@@ -78,7 +83,7 @@ private:
     ImageViewerSubWindow* mImageViewer = nullptr;
 
     /**
-     * @brief Action visible in the toolbar to start and stop sensor acquisition.
+     * @brief Action available in the toolbar to start and stop sensor acquisition.
      */
     QAction* mActionPlayStopAcquisition = nullptr;
 };

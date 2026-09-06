@@ -5,7 +5,7 @@
 
 #include <QHeaderView>
 
-SerialSensorsTableView::SerialSensorsTableView(QWidget *parent) : BaseDataTableView(parent)
+SerialSensorsTableView::SerialSensorsTableView(QWidget *parent) : BaseDataTableView { parent }
 {
     setModel(new SerialSensorsTableModel(this));
     setItemDelegate(new SerialSensorsItemDelegate(this));
@@ -47,7 +47,7 @@ QVector<SerialSensorData> SerialSensorsTableView::sensorDataList()
 {
     QVariantList currentDataList = dataList();
     QVector<SerialSensorData> sensorDataList;
-    bool bSuccess = SensorUtility::variantListToSensorDataList(currentDataList, sensorDataList);
+    bool bSuccess = SensorUtility::variantListToSensorDataList<SerialSensorData>(currentDataList, sensorDataList);
     Q_ASSERT(bSuccess);
 
     return sensorDataList;
@@ -61,7 +61,7 @@ void SerialSensorsTableView::selectionChanged(const QItemSelection &selected, co
 
     if(indexes.size() > 0 && mClearing == false)
     {
-        mSelectedSensor = indexes.first().data(SerialSensorsTableModel::PersonnalDataRole::ValueType).value<SerialSensorData>();
+        mSelectedSensor = indexes.first().data(BaseDataTableModel::PersonnalDataRole::ValueType).value<SerialSensorData>();
         emit newSensorSelected(mSelectedSensor);
     }
     else

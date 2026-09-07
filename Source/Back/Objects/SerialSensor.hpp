@@ -35,6 +35,19 @@ public:
         Q_ASSERT(serialPort);
         return serialPort;
     }
+    /**
+     * @brief Set the baud rate of the serial port
+     * @param baudRate
+     * @param directions
+     */
+    void setBaudRate(qint32 baudRate, QSerialPort::Directions directions = QSerialPort::AllDirections);
+
+    /**
+     * @brief Return the baud rate of the serial port.
+     * @param directions
+     * @return
+     */
+    qint32 baudRate(QSerialPort::Directions directions = QSerialPort::AllDirections) const { return serialPort()->baudRate(directions); }
 
 private slots:
     /**

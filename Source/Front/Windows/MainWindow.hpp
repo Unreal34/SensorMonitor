@@ -2,9 +2,11 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
+#include <QMdiArea>
 
 #include "Back/Objects/SensorsManager.hpp"
 #include "Front/Widgets/ConsoleWidget.hpp"
+#include "Front/Windows/ImageViewerSubWindow.hpp"
 
 class MainWindow : public QMainWindow
 {
@@ -37,6 +39,11 @@ private slots:
     void openSerialSensorsEditorDialog();
 
     /**
+     * @brief openSerialSensorsEditorDialog
+     */
+    void openUdpSensorsEditorDialog();
+
+    /**
      * @brief Starts or stops data acquisition using the sensor data list saved in the main manager.
      * @note Only serial sensor are supported yet.
      */
@@ -64,5 +71,20 @@ private:
      * @brief Indicates whether a data acquisition is currently in progress or not.
      */
     bool mAcquisitionStarted = false;
+
+    /**
+     * @brief The centrala area where sub windows will be displayed.
+     */
+    QMdiArea* mMdiArea = nullptr;
+
+    /**
+     * @brief Sub window used to display frames from camera streaming.
+     */
+    ImageViewerSubWindow* mImageViewer = nullptr;
+
+    /**
+     * @brief Action available in the toolbar to start and stop sensor acquisition.
+     */
+    QAction* mActionPlayStopAcquisition = nullptr;
 };
 #endif // MAINWINDOW_HPP

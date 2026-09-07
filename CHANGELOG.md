@@ -1,3 +1,12 @@
+# v1.1.1
+
+- ESP32-CAM support over both Serial and UDP.
+- Improved SensorsManager.
+- Added UDP sensor support architecture.
+- Added OV7670 Serial support with grayscale frames.
+- Added UDP sensor editor UI.
+- Improved overall code architecture.
+
 # v1.0.1
 
 - Reorganized the project structure with a new root `Source` directory.

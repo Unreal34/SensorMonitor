@@ -14,7 +14,7 @@ public:
         Serial,
         Tcp,
         Udp,
-        MqttTopic
+        MqttTopic,
     };
     Q_ENUM(ESensorType)
 
@@ -62,13 +62,13 @@ public:
      * @brief Open the device in read-only mode by default.
      * @return
      */
-    bool open(QIODeviceBase::OpenModeFlag flag = QIODeviceBase::ReadOnly);
+    virtual bool open(QIODeviceBase::OpenModeFlag flag = QIODeviceBase::ReadOnly);
 
-private slots:
+protected slots:
     /**
      * @brief Data received from the device is handled by this slot.
      */
-    void onDataReceived();
+    virtual void onDataReceived();
 
 signals:
     /**

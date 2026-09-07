@@ -1,0 +1,4 @@
+#ifndef LOCALIZATION_HPP
+#define LOCALIZATION_HPP
+
+#endif // LOCALIZATION_HPP

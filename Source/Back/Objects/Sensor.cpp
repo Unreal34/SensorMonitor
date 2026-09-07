@@ -3,6 +3,8 @@
 #include <QUuid>
 #include "Back/Utility/SensorUtility.hpp"
 
+#include <QDebug>
+
 Sensor::Sensor(QObject *parent) : QObject { parent }
 , mName(SensorUtility::randomSensorName())
 {}
@@ -16,6 +18,8 @@ Sensor::Sensor(QIODevice *simulatedDevice, QObject *parent) : QObject { parent }
 
 Sensor::~Sensor()
 {
+    qDebug() << "~Sensor()" << name();
+
     Q_ASSERT(mDevice);
 
     disconnect(mDevice, nullptr, this, nullptr);

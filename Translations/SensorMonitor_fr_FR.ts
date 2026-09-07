@@ -38,39 +38,39 @@
         <translation>Console</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="52"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="54"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="53"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="55"/>
         <source>&amp;Tools</source>
         <translation>&amp;Outils</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="55"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="57"/>
         <source>Manage serial sensors</source>
         <translation>Gérer les capteurs avec connexion série</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="56"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="58"/>
         <source>Manage udp sensors</source>
         <translation>Gérer les capteurs de type UDP</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="186"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="188"/>
         <source>No sensor available!
 Please configure at least one sensor in one of the sensor editor tool.</source>
         <translation>Aucun capteur disponible ! Merci de configurer au moins un capteur dans un des outils d&apos;édition.</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="191"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="193"/>
         <source>At least one sensor triggered an error during sensor registration step.
 Aborting...</source>
         <translation>Au moins un capteur a déclenché une erreur pendant l&apos;étape d&apos;initialisation. Interruption de l’opération...</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="196"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="198"/>
         <source>At least one sensor triggered an error during sensor opening step.
 Aborting...</source>
         <translation>Au moins un capteur a déclenché une erreur pendant l&apos;étape d&apos;ouverture. Interruption de l’opération...</translation>
@@ -80,18 +80,18 @@ Aborting...</source>
         <translation type="vanished">Gérer les capteurs et les ports</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="57"/>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="207"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="59"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="209"/>
         <source>Start data acquisition</source>
         <translation>Démarrer l&apos;acquisition</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="58"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="60"/>
         <source>Exit</source>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="139"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="141"/>
         <source>New frame received from camera.</source>
         <translation>Nouvelle image reçue de la caméra.</translation>
     </message>
@@ -110,7 +110,7 @@ Plase configure at least one sensor in the sensor editor tool.</source>
         <translation type="vanished">Aucun capteur disponible ! Merci de configurer au moins un capteur dans l&apos;outil d&apos;édition des capteurs.</translation>
     </message>
     <message>
-        <location filename="../Source/Front/Windows/MainWindow.cpp" line="207"/>
+        <location filename="../Source/Front/Windows/MainWindow.cpp" line="209"/>
         <source>Stop data acquisition</source>
         <translation>Terminer l&apos;acquisition</translation>
     </message>
@@ -206,57 +206,57 @@ Plase configure at least one sensor in the sensor editor tool.</source>
 <context>
     <name>SerialSensor</name>
     <message>
-        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="47"/>
+        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="48"/>
         <source>No error.</source>
         <translation>Succés</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="52"/>
+        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="53"/>
         <source>The serial device was not found.</source>
         <translation>Le port série n&apos;existe pas.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="57"/>
+        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="58"/>
         <source>Permission denied while accessing the serial port.</source>
         <translation>Accés refusé sur le port série.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="62"/>
+        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="63"/>
         <source>The serial port could not be opened.</source>
         <translation>Le port série ne peut pas être ouvert.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="67"/>
+        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="68"/>
         <source>An error occurred while writing to the serial port.</source>
         <translation>Une erreur s&apos;est produite pendant une écriture sur le port série.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="72"/>
+        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="73"/>
         <source>An error occurred while reading from the serial port.</source>
         <translation>Une erreur s&apos;est produite pendant une lecture sur le port série.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="77"/>
+        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="78"/>
         <source>The serial device has been disconnected or is no longer available.</source>
         <translation>Le port série a été déconnecté ou n&apos;est plus disponible.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="82"/>
+        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="83"/>
         <source>The requested serial port operation is not supported.</source>
         <translation>L&apos;opération sur le port série n&apos;est pas supportée.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="87"/>
+        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="88"/>
         <source>An unknown serial port error occurred.</source>
         <translation>Une erreur inconnue s&apos;est produite sur le port série.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="92"/>
+        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="93"/>
         <source>The serial port operation timed out.</source>
         <translation>Délais d&apos;attente dépassé pour l&apos;opération courante sur le port série.</translation>
     </message>
     <message>
-        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="97"/>
+        <location filename="../Source/Back/Objects/SerialSensor.cpp" line="98"/>
         <source>The serial port is not open.</source>
         <translation>Le port série n&apos;est pas ouvert.</translation>
     </message>

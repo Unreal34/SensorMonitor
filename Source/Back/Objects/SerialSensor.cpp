@@ -29,6 +29,7 @@ SerialSensor::SerialSensor(QIODevice *simulatedDevice, QObject *parent) : Sensor
 
 void SerialSensor::setBaudRate(qint32 baudRate, QSerialPort::Directions directions)
 {
+    Q_ASSERT(serialPort());
     serialPort()->setBaudRate(baudRate, directions);
 }
 

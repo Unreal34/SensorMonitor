@@ -1,5 +1,6 @@
 #include <QtTest>
 
+#include <Back/Objects/Udp_ESP32Camera.hpp>
 #include "Back/Objects/SensorsManager.hpp"
 #include "Back/Objects/SimulatedDevice.hpp"
 
@@ -16,12 +17,17 @@ private slots:
     void openSensor();
     void errorHandled();
     void dataReceived();
+    void registerAndOpenSensorsFromSavedData();
 };
 
 void SensorsManagerTest::registerSensor()
 {
     SensorsManager manager;
     bool bSuccess = manager.registerNewSerialSensor("COM3", "TemperatureSensor");
+
+    QVERIFY(bSuccess == true);
+
+    bSuccess = manager.registerNewUdpSensor<Udp_ESP32Camera>(0, QHostAddress::LocalHost, ESP32_CAMERA);
 
     QVERIFY(bSuccess == true);
 }
@@ -132,6 +138,35 @@ void SensorsManagerTest::dataReceived()
 
     QCOMPARE(arguments.at(0).toByteArray(), QByteArray("Sensor1"));
     QCOMPARE(arguments.at(1).toByteArray(), QByteArray("Temperature:22.5"));
+}
+
+void SensorsManagerTest::registerAndOpenSensorsFromSavedData()
+{
+    SensorsManager manager;
+
+    SensorsManager::ESensorsManagerError error = manager.registerAndOpenSensorsFromSavedData();
+    QCOMPARE(error, SensorsManager::ESensorsManagerError::EmptySavedBuffer);
+
+    manager.setSavedUdpSensorsData( { UdpSensorData(ESP32_CAMERA_1, 0, QHostAddress::LocalHost), UdpSensorData(ESP32_CAMERA_2, 5001, QHostAddress("192.168.1.62")) });
+
+    error = manager.registerAndOpenSensorsFromSavedData();
+    QCOMPARE(error, SensorsManager::ESensorsManagerError::Success);
+
+    manager.setSavedSerialSensorsData( { SerialSensorData(GEIGER_SENSOR, "COM3"), SerialSensorData(HTU21D_SENSOR, "COM6") });
+    manager.clear();
+
+    QVERIFY(!manager.exists(ESP32_CAMERA_1));
+    QVERIFY(!manager.exists(ESP32_CAMERA_2));
+
+    error = manager.registerAndOpenSensorsFromSavedData();
+
+    QCOMPARE(error, SensorsManager::ESensorsManagerError::SensorOpeningError);
+
+    manager.clear();
+    manager.setSavedUdpSensorsData( { UdpSensorData(ESP32_CAMERA_1, 0, QHostAddress::LocalHost), UdpSensorData(ESP32_CAMERA_1, 5001, QHostAddress("192.168.1.62")) });
+    error = manager.registerAndOpenSensorsFromSavedData();
+
+    QCOMPARE(error, SensorsManager::ESensorsManagerError::SensorRegistrationError);
 }
 
 QTEST_MAIN(SensorsManagerTest)

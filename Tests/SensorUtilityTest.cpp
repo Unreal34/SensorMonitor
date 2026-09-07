@@ -8,18 +8,18 @@ class SensorUtilityTest : public QObject
     Q_OBJECT
 
 private slots:
-    void testUniqueName();
-    void testUniqueSerialPort();
-    void testUniqueIpAddress();
-    void testVariantListToSensorDataList();
-    void testVariantListToUdpDataList();
-    void testRandomSensorName();
+    void uniqueName();
+    void uniqueSerialPort();
+    void uniqueIpAddress();
+    void variantListToSensorDataList();
+    void variantListToUdpDataList();
+    void randomSensorName();
     void createGrayscaleImage_pixelData();
     void createGrayscaleImage();
     void createGrayscaleImage_data();
 };
 
-void SensorUtilityTest::testUniqueName()
+void SensorUtilityTest::uniqueName()
 {
     QVector<SerialSensorData> testDataList;
     testDataList.push_back(SerialSensorData("Sensor1", "COM1"));
@@ -44,7 +44,7 @@ void SensorUtilityTest::testUniqueName()
     QVERIFY(SensorUtility::checkUniqueName(testSensorData3.sensor_name, testDataList, testSensorData3.sensor_guid) == true);
 }
 
-void SensorUtilityTest::testUniqueSerialPort()
+void SensorUtilityTest::uniqueSerialPort()
 {
     QVector<SerialSensorData> testDataList;
     testDataList.push_back(SerialSensorData("Sensor1", "COM1"));
@@ -73,7 +73,7 @@ void SensorUtilityTest::testUniqueSerialPort()
     QVERIFY(SensorUtility::checkUniqueSerialPort(testSensorData4.sensor_serialPortName, testDataList, testSensorData4.sensor_guid) == true);
 }
 
-void SensorUtilityTest::testUniqueIpAddress()
+void SensorUtilityTest::uniqueIpAddress()
 {
     QVector<UdpSensorData> testDataList;
     testDataList.push_back(UdpSensorData("Sensor1", 5000, QHostAddress("192.168.1.62")));
@@ -102,7 +102,7 @@ void SensorUtilityTest::testUniqueIpAddress()
     QVERIFY(SensorUtility::checkUniqueSenderIpAddress(testSensorData4.sensor_sender_ipAddress, testDataList, testSensorData4.sensor_guid) == true);
 }
 
-void SensorUtilityTest::testVariantListToSensorDataList()
+void SensorUtilityTest::variantListToSensorDataList()
 {
     QVariantList variantList;
     variantList.push_back(QVariant::fromValue(SerialSensorData("Sensor1", "COM1")));
@@ -118,7 +118,7 @@ void SensorUtilityTest::testVariantListToSensorDataList()
     QVERIFY(SensorUtility::variantListToSensorDataList<SerialSensorData>(variantList, dataList) == false);
 }
 
-void SensorUtilityTest::testVariantListToUdpDataList()
+void SensorUtilityTest::variantListToUdpDataList()
 {
     QVariantList variantList;
     variantList.push_back(QVariant::fromValue(UdpSensorData("Sensor1", 5000, QHostAddress("192.168.1.62"))));
@@ -134,13 +134,14 @@ void SensorUtilityTest::testVariantListToUdpDataList()
     QVERIFY(SensorUtility::variantListToSensorDataList<UdpSensorData>(variantList, dataList) == false);
 }
 
-void SensorUtilityTest::testRandomSensorName()
+void SensorUtilityTest::randomSensorName()
 {
     QString name = SensorUtility::randomSensorName();
 
     QVERIFY(!QUuid::fromString(name).isNull());
 }
 
+// use _data suffix to work with createGrayscaleImage()
 void SensorUtilityTest::createGrayscaleImage_data()
 {
     QTest::addColumn<QByteArray>("data");

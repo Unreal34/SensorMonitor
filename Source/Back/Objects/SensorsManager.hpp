@@ -263,7 +263,7 @@ private:
     /**
      * @brief Holds udp sensor information (name, port and sender) updated from the editor.
      */
-    QVector<UdpSensorData> mSavedUdpSensorsData = { UdpSensorData(ESP32_CAMERA, 5555, QHostAddress("192.168.1.62"))};
+    QVector<UdpSensorData> mSavedUdpSensorsData = {};
 };
 
 #endif // SENSORSMANAGER_HPP

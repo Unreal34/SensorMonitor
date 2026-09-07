@@ -41,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(mSensorsManager, &SensorsManager::errorHandled, this, &MainWindow::onErrorReceived);
 
     setCentralWidget(mMdiArea);
+
+    mSensorsManager->setSavedUdpSensorsData( { UdpSensorData(ESP32_CAMERA, 5555, QHostAddress("192.168.1.62")) } );
 }
 
 void MainWindow::initializeActions()
